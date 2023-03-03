@@ -1,6 +1,8 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import { Inter } from 'next/font/google';
+import styled from 'styled-components';
+
 import styles from '@/styles/Home.module.css';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -16,6 +18,7 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
         <div className={styles.description}>
+          <StyledButton bg="yellow">hi</StyledButton>
           <p>
             Get started by editing&nbsp;
             <code className={styles.code}>src/pages/index.tsx</code>
@@ -114,3 +117,12 @@ export default function Home() {
     </>
   );
 }
+
+type StyleProps = { bg: string };
+const StyledButton = styled.button<StyleProps>`
+  min-width: 200px;
+  border: none;
+  font-size: 18px;
+  padding: 7px 10px;
+  background-color: ${(props) => props.bg};
+`;
