@@ -1,5 +1,6 @@
+import { Button, Icon } from '@/components';
+import styled from '@emotion/styled';
 import Head from 'next/head';
-import Image from 'next/image';
 
 export default function Home() {
   return (
@@ -11,7 +12,39 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
+        <div style={{ display: 'flex', paddingInline: 20, gap: 16 }}>
+          <Button variant="outlined" Icon={<ColorLeftArrow color="primary" type="leftArrow" />}>
+            Prev
+          </Button>
+          <Button variant="filled" Icon={<Icon type="rightArrow" />} iconPosition="end">
+            Next
+          </Button>
+        </div>
+        <div style={{ display: 'flex', paddingInline: 20, gap: 16, marginTop: 16 }}>
+          <Button
+            hierarchy="secondary"
+            variant="outlined"
+            Icon={<ColorLeftArrow color="secondary" type="leftArrow" />}
+          >
+            Prev
+          </Button>
+          <Button
+            hierarchy="secondary"
+            variant="filled"
+            Icon={<Icon type="rightArrow" />}
+            iconPosition="end"
+          >
+            Next
+          </Button>
+        </div>
       </main>
     </>
   );
 }
+
+const ColorLeftArrow = styled(Icon)<{ color: 'primary' | 'secondary' }>`
+  & > path {
+    fill: ${({ theme, color }) =>
+      color === 'primary' ? theme.colors.primary : theme.colors.secondary};
+  }
+`;
