@@ -5,6 +5,7 @@ const nextConfig = {
     config.module.rules.push({
       test: /\.svg$/,
       use: ['@svgr/webpack'],
+      enforce: 'pre'
     });
     return config;
   },
