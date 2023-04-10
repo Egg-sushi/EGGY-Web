@@ -51,7 +51,8 @@ const Wrapper = styled.button<StyleProps>`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-block: 16px;
+  padding: 0;
+  padding-block: 14px;
   box-sizing: border-box;
   width: ${({ width }) => (typeof width === 'number' ? `${width}px` : width)};
   outline: none;
@@ -86,8 +87,7 @@ const IconWrapper = styled.span<IconStyleProps>`
   top: 50%;
   left: ${({ iconPosition }) => (iconPosition === 'start' ? '24px' : 'auto')};
   right: ${({ iconPosition }) => (iconPosition === 'end' ? '24px' : 'auto')};
-  transform: ${({ iconPosition }) =>
-    iconPosition === 'start' ? 'translate(0, -50%)' : 'translate(-50%, -50%)'};
+  transform: translateY(-50%);
 `;
 
 export default Button;
