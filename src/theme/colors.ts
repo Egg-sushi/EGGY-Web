@@ -29,8 +29,15 @@ export const colors = {
   green700: '#2f4620',
   green800: '#182310',
 
+  /* baige scale */
+  baige100: '#f9f5ec',
+  baige200: '#ede0c5',
+  baige300: '#e0cc9e',
+
   /* primary: blue500 */
   primary: '#2b63da',
   /* secondary: green600 */
   secondary: '#476a30',
+  /* teritiary: baige100 */
+  teritiary: '#f9f3ec',
 } as const;
