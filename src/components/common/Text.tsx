@@ -65,7 +65,7 @@ interface Props extends React.ComponentPropsWithoutRef<'div'> {
   color?: typeof theme.colors[keyof typeof theme.colors];
   align?: React.CSSProperties['textAlign'];
   weight?: React.CSSProperties['fontWeight'];
-  fontFamily?: 'pretendard' | 'monteserrat' | 'playFair' | 'bodoniModar';
+  fontFamily?: keyof typeof fontFamilys;
 }
 
 function Text(props: React.PropsWithChildren<Props>) {
