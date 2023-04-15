@@ -41,7 +41,7 @@ export default function Home() {
           </Button>
         </div>
         <Text variant="h1">Pretendard H1</Text>
-        <Text variant="h2" fontWeight={800}>
+        <Text variant="h2" weight={800}>
           Pretendard H2
         </Text>
         <Text variant="h3" color={theme.colors.primary}>

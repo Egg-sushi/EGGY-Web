@@ -63,8 +63,8 @@ const fontFamilys = {
 interface Props extends React.ComponentPropsWithoutRef<'div'> {
   variant: keyof typeof theme.fonts;
   color?: typeof theme.colors[keyof typeof theme.colors];
-  textAlign?: React.CSSProperties['textAlign'];
-  fontWeight?: React.CSSProperties['fontWeight'];
+  align?: React.CSSProperties['textAlign'];
+  weight?: React.CSSProperties['fontWeight'];
   fontFamily?: 'pretendard' | 'monteserrat' | 'playFair' | 'bodoniModar';
 }
 
@@ -72,8 +72,8 @@ function Text(props: React.PropsWithChildren<Props>) {
   const {
     variant,
     color = theme.colors.gray600,
-    textAlign = 'start',
-    fontWeight = 500,
+    align = 'start',
+    weight = 500,
     fontFamily = 'pretendard',
     children,
     ...restProps
@@ -84,8 +84,8 @@ function Text(props: React.PropsWithChildren<Props>) {
     <Wrapper
       variant={variant}
       color={color}
-      textAlign={textAlign}
-      fontWeight={fontWeight}
+      align={align}
+      weight={weight}
       className={fontClassName}
       {...restProps}
     >
@@ -94,12 +94,12 @@ function Text(props: React.PropsWithChildren<Props>) {
   );
 }
 
-type StyleProps = Pick<Props, 'variant' | 'color' | 'textAlign' | 'fontWeight'>;
+type StyleProps = Pick<Props, 'variant' | 'color' | 'align' | 'weight'>;
 const Wrapper = styled.div<StyleProps>`
   ${({ variant }) => theme.fonts[variant]}
 
-  font-weight: ${({ fontWeight }) => fontWeight};
-  text-align: ${({ textAlign }) => textAlign};
+  font-weight: ${({ weight }) => weight};
+  text-align: ${({ align }) => align};
   color: ${({ color }) => color};
 `;
 
