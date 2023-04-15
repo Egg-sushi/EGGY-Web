@@ -73,7 +73,7 @@ function Text(props: React.PropsWithChildren<Props>) {
     variant,
     color = theme.colors.gray600,
     align = 'start',
-    weight = 500,
+    weight = variant.includes('h') ? 700 : 500,
     fontFamily = 'pretendard',
     children,
     ...restProps
