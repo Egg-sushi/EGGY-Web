@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import localFont from 'next/font/local';
 
 const resetCss = css`
   html,
@@ -127,6 +128,40 @@ const resetCss = css`
   }
 `;
 
+const pretendard = localFont({
+  src: [
+    {
+      path: '../../public/fonts/Pretendard-ExtraBold.woff2',
+      weight: '800',
+      style: 'bold',
+    },
+    {
+      path: '../../public/fonts/Pretendard-Bold.woff2',
+      weight: '700',
+      style: 'bold',
+    },
+    {
+      path: '../../public/fonts/Pretendard-SemiBold.woff2',
+      weight: '600',
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/Pretendard-Medium.woff2',
+      weight: '500',
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/Pretendard-Regular.woff2',
+      weight: '400',
+      style: 'normal',
+    },
+  ],
+});
+
 export const globalStyles = css`
   ${resetCss}
-`
+
+  body {
+    font-family: ${pretendard.style.fontFamily};
+  }
+`;

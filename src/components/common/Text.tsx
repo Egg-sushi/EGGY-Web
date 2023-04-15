@@ -1,39 +1,8 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { Bodoni_Moda, Montserrat, Playfair_Display } from 'next/font/google';
-import localFont from 'next/font/local';
 
 import { theme } from '@/theme';
-
-const pretendard = localFont({
-  src: [
-    {
-      path: '../../../public/fonts/Pretendard-ExtraBold.woff2',
-      weight: '800',
-      style: 'bold',
-    },
-    {
-      path: '../../../public/fonts/Pretendard-Bold.woff2',
-      weight: '700',
-      style: 'bold',
-    },
-    {
-      path: '../../../public/fonts/Pretendard-SemiBold.woff2',
-      weight: '600',
-      style: 'normal',
-    },
-    {
-      path: '../../../public/fonts/Pretendard-Medium.woff2',
-      weight: '500',
-      style: 'normal',
-    },
-    {
-      path: '../../../public/fonts/Pretendard-Regular.woff2',
-      weight: '400',
-      style: 'normal',
-    },
-  ],
-});
 
 const monteserrat = Montserrat({
   weight: ['500', '700'],
@@ -54,7 +23,6 @@ const bodoniModar = Bodoni_Moda({
 });
 
 const fontFamilys = {
-  pretendard,
   monteserrat,
   playFair,
   bodoniModar,
@@ -65,7 +33,7 @@ interface Props extends React.ComponentPropsWithoutRef<'div'> {
   color?: typeof theme.colors[keyof typeof theme.colors];
   align?: React.CSSProperties['textAlign'];
   weight?: React.CSSProperties['fontWeight'];
-  fontFamily?: keyof typeof fontFamilys;
+  fontFamily?: keyof typeof fontFamilys | 'pretendard';
 }
 
 function Text(props: React.PropsWithChildren<Props>) {
@@ -73,12 +41,12 @@ function Text(props: React.PropsWithChildren<Props>) {
     variant,
     color = theme.colors.gray600,
     align = 'start',
-    weight = variant.includes('h') ? 700 : 500,
+    weight = variant.includes('h') ? 700 : 400,
     fontFamily = 'pretendard',
     children,
     ...restProps
   } = props;
-  const fontClassName = fontFamilys[fontFamily].className;
+  const fontClassName = fontFamily === 'pretendard' ? '' : fontFamilys[fontFamily].className;
 
   return (
     <Wrapper

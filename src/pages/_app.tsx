@@ -1,4 +1,3 @@
-import localFont from 'next/font/local';
 import type { AppProps } from 'next/app';
 import { Global, ThemeProvider } from '@emotion/react';
 import { ReactQueryDevtools } from 'react-query/devtools';
