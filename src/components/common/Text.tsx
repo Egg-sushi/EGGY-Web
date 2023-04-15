@@ -5,19 +5,16 @@ import { Bodoni_Moda, Montserrat, Playfair_Display } from 'next/font/google';
 import { theme } from '@/theme';
 
 const monteserrat = Montserrat({
-  weight: ['500', '700'],
   style: ['normal'],
   subsets: ['latin'],
 });
 
 const playFair = Playfair_Display({
-  weight: ['500', '700'],
   style: ['normal'],
   subsets: ['latin'],
 });
 
 const bodoniModar = Bodoni_Moda({
-  weight: ['500', '700'],
   style: ['normal'],
   subsets: ['latin'],
 });
