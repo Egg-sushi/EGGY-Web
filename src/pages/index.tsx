@@ -1,8 +1,11 @@
-import { Button, Icon } from '@/components';
+import { Button, Icon, Text } from '@/components';
+import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import Head from 'next/head';
 
 export default function Home() {
+  const theme = useTheme();
+
   return (
     <>
       <Head>
@@ -37,6 +40,35 @@ export default function Home() {
             Next
           </Button>
         </div>
+        <Text variant="h1">Pretendard H1</Text>
+        <Text variant="h2" weight={800}>
+          Pretendard H2
+        </Text>
+        <Text variant="h3" color={theme.colors.primary}>
+          Pretendard H3
+        </Text>
+        <Text variant="h4" color={theme.colors.secondary}>
+          Pretendard H4
+        </Text>
+        <Text variant="h5" color={theme.colors.teritiary}>
+          Pretendard H5
+        </Text>
+        <Text variant="h6">Pretendard H6</Text>
+        <Text variant="h7">Pretendard H7</Text>
+        <Text variant="body1">Pretendard Body1</Text>
+        <Text variant="body2">Pretendard Body2</Text>
+        <Text variant="body3">Pretendard Body3</Text>
+        <Text variant="body4">Pretendard Body4</Text>
+        <Text variant="body5">Pretendard Body5</Text>
+        <Text variant="h3" fontFamily="monteserrat">
+          Monteserrat H3
+        </Text>
+        <Text variant="h3" fontFamily="playFair">
+          PlayFair H3
+        </Text>
+        <Text variant="h3" fontFamily="bodoniModar">
+          BodoniModar H3
+        </Text>
       </main>
     </>
   );
