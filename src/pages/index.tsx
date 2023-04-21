@@ -1,11 +1,23 @@
+import { useGetBaumannTest } from '@/api/query';
+import { BaumannService } from '@/api/service';
 import { Button, Icon, Text } from '@/components';
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import Head from 'next/head';
 import Link from 'next/link';
+import { QueryClient, dehydrate } from 'react-query';
 
 export default function Home() {
   const theme = useTheme();
+  const { isLoading, isError, data } = useGetBaumannTest();
+
+  if (isLoading) {
+    return <>loading..</>;
+  }
+
+  if (isError) {
+    return <>Error</>;
+  }
 
   return (
     <>
@@ -71,6 +83,7 @@ export default function Home() {
           BodoniModar H3
         </Text>
         <Link href="/baumann">baumann</Link>
+        {data?.data}
       </main>
     </>
   );
@@ -82,3 +95,18 @@ const ColorLeftArrow = styled(Icon)<{ color: 'primary' | 'secondary' }>`
       color === 'primary' ? theme.colors.primary : theme.colors.secondary};
   }
 `;
+
+export const getStaticProps = async () => {
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery({
+    queryKey: ['baumann'],
+    queryFn: () => BaumannService.test(),
+  });
+
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
+  };
+};
