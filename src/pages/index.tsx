@@ -2,6 +2,7 @@ import { Button, Icon, Text } from '@/components';
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import Head from 'next/head';
+import Link from 'next/link';
 
 export default function Home() {
   const theme = useTheme();
@@ -69,6 +70,7 @@ export default function Home() {
         <Text variant="h3" fontFamily="bodoniModar">
           BodoniModar H3
         </Text>
+        <Link href="/baumann">baumann</Link>
       </main>
     </>
   );
