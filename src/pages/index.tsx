@@ -1,3 +1,4 @@
+import { useGetBaumannTest } from '@/api/query';
 import { Button, Icon, Text } from '@/components';
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -6,6 +7,11 @@ import Link from 'next/link';
 
 export default function Home() {
   const theme = useTheme();
+  const test = useGetBaumannTest();
+
+  if (test.isLoading) {
+    return <>loading..</>;
+  }
 
   return (
     <>
@@ -71,6 +77,7 @@ export default function Home() {
           BodoniModar H3
         </Text>
         <Link href="/baumann">baumann</Link>
+        {test.data?.data}
       </main>
     </>
   );
