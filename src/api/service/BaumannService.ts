@@ -5,7 +5,7 @@ class BaumannService extends HTTPInterface {
     super('baumann');
   }
 
-  public test(): Promise<{ data: string}> {
+  public test(): Promise<{ data: string }> {
     return this.baseHTTP
       .get('test')
       .then(HTTPInterface._handleResponse)
