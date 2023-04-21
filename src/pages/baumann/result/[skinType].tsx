@@ -1,9 +1,11 @@
-import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import Head from 'next/head';
-import Link from 'next/link';
+import { useRouter } from 'next/router';
 
-export default function BaumannIntro() {
+export default function BaumannResult() {
+  const router = useRouter();
+  const { skinType } = router.query;
+
   return (
     <>
       <Head>
@@ -13,10 +15,7 @@ export default function BaumannIntro() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Content>
-          <Link href="/baumann/question">question</Link>
-          <Link href="/baumann/result">result</Link>
-        </Content>
+        <Content>{skinType}</Content>
       </main>
     </>
   );
