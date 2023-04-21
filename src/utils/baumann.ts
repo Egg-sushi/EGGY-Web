@@ -1,5 +1,6 @@
-import { UserAnswer } from '../../@types/baumann';
 import { safeSessionStorage } from './storage';
+
+import type { UserAnswer } from '@/types/baumann';
 
 const EGGY_BAUMANN_ANSWER_STORAGE_KEY = 'EGGY_BAUMANN_ANSWER_STORAGE_KEY';
 
