@@ -8,12 +8,12 @@ export const getAnswers = () => {
 };
 
 export const pushAnswer = (userAnswer: UserAnswer) => {
-  const prevAnswersStr = safeSessionStorage.get(EGGY_BAUMANN_ANSWER_STORAGE_KEY);
+  const prevAnswersItem = safeSessionStorage.get(EGGY_BAUMANN_ANSWER_STORAGE_KEY);
 
-  if (prevAnswersStr === null) {
+  if (prevAnswersItem === null) {
     safeSessionStorage.set(EGGY_BAUMANN_ANSWER_STORAGE_KEY, JSON.stringify([userAnswer]));
   } else {
-    const prevAnswers: UserAnswer[] = JSON.parse(prevAnswersStr);
+    const prevAnswers: UserAnswer[] = JSON.parse(prevAnswersItem);
     safeSessionStorage.set(
       EGGY_BAUMANN_ANSWER_STORAGE_KEY,
       JSON.stringify([...prevAnswers, userAnswer]),
