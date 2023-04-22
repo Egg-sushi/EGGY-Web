@@ -171,4 +171,7 @@ export const globalStyles = css`
     height: 100vh;
     height: calc(var(--vh, 1vh) * 100);
   }
+
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom)
+    env(safe-area-inset-left);
 `;
