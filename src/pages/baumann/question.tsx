@@ -3,31 +3,13 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { useTheme } from '@emotion/react';
 
+import { DUMMY_BAUMANN_B } from '@/dummy/baumann';
 import { BaumannQNA, UserAnswer } from '@/types/baumann';
-import { BaumannAType, Button, Flex, Icon, Text } from '@/components';
-
-const DUMMY_BAUMANN: BaumannQNA = {
-  id: 1,
-  question: 'What happens after you have had many days of consecutive sun exposure',
-  type: 'SEBUM',
-  questionType: 'A',
-  imageUrl: '',
-  Baumann_Answer: [
-    { id: 1, answer: 'I sunburn and blister, but my skin does not change color.', imageUrl: '' },
-    { id: 2, answer: 'My skin becomes slightly darker.', imageUrl: '' },
-    { id: 3, answer: 'My skin becomes much darker.', imageUrl: '' },
-    {
-      id: 4,
-      answer: 'My skin is already dark, so it is hard to see if it gets darker.',
-      imageUrl: '',
-    },
-    { id: 5, answer: 'Unsure', imageUrl: '' },
-  ],
-};
+import { BaumannAType, BaumannBType, Button, Flex, Icon, Text } from '@/components';
 
 const QNAComponentsByType = {
   A: BaumannAType,
-  B: BaumannAType,
+  B: BaumannBType,
 } as const;
 
 export default function BaumannTest() {
@@ -36,7 +18,7 @@ export default function BaumannTest() {
   const [activeAnswer, setActiveAnswer] = React.useState<BaumannQNA['Baumann_Answer'][0] | null>(
     null,
   );
-  const BaumannQNAComponent = QNAComponentsByType[DUMMY_BAUMANN.questionType]; // 현재 타입에 따른 바우만 컴포넌트
+  const BaumannQNAComponent = QNAComponentsByType[DUMMY_BAUMANN_B.questionType]; // 현재 타입에 따른 바우만 컴포넌트
 
   const stopSyntheticEvent = React.useCallback((e: React.BaseSyntheticEvent) => {
     e.preventDefault();
@@ -67,7 +49,10 @@ export default function BaumannTest() {
     if (activeAnswer == null) {
       return;
     }
-    setUserAnswer((prev) => [...prev, { questionId: DUMMY_BAUMANN.id, answerId: activeAnswer.id }]);
+    setUserAnswer((prev) => [
+      ...prev,
+      { questionId: DUMMY_BAUMANN_B.id, answerId: activeAnswer.id },
+    ]);
     setActiveAnswer(null);
   }, [activeAnswer]);
 
@@ -87,9 +72,10 @@ export default function BaumannTest() {
         <Content>
           <BaumannQNAComponent
             baumann={{
-              id: DUMMY_BAUMANN.id,
-              question: DUMMY_BAUMANN.question,
-              answers: DUMMY_BAUMANN.Baumann_Answer,
+              id: DUMMY_BAUMANN_B.id,
+              question: DUMMY_BAUMANN_B.question,
+              answers: DUMMY_BAUMANN_B.Baumann_Answer,
+              imageUrl: DUMMY_BAUMANN_B.imageUrl,
             }}
             activeAnswer={activeAnswer}
             onClickItem={handleClickAnswerItem}
