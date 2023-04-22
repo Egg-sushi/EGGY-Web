@@ -10,6 +10,20 @@ export default function App({ Component, pageProps }: AppProps) {
   const [queryClient] = React.useState(() => new QueryClient());
   const dehydratedState = dehydrate(queryClient);
 
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const handleResizeWindow = () => {
+        const vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+      };
+      window.addEventListener('resize', handleResizeWindow);
+
+      return () => {
+        window.removeEventListener('resize', handleResizeWindow);
+      };
+    }
+  }, []);
+
   return (
     <ThemeProvider theme={theme}>
       <Global styles={globalStyles} />
