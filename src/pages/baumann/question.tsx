@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { useTheme } from '@emotion/react';
 
 import { DUMMY_BAUMANN_B } from '@/dummy/baumann';
-import { BaumannQNA, UserAnswer } from '@/types/baumann';
+import { BaumannQNA, BaumannQuestion, UserAnswer } from '@/types/baumann';
 import { BaumannAType, BaumannBType, Button, Flex, Icon, Text } from '@/components';
 
 const QNAComponentsByType = {
@@ -68,49 +68,51 @@ export default function BaumannTest() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
-        <Content>
-          <BaumannQNAComponent
-            baumann={{
-              id: DUMMY_BAUMANN_B.id,
-              question: DUMMY_BAUMANN_B.question,
-              answers: DUMMY_BAUMANN_B.Baumann_Answer,
-              imageUrl: DUMMY_BAUMANN_B.imageUrl,
-            }}
-            activeAnswer={activeAnswer}
-            onClickItem={handleClickAnswerItem}
-          />
-          <BottomPosition>
-            <Flex justifyContent="space-between" gap="16px">
-              <Button
-                variant="outlined"
-                Icon={<ColorLeftArrow color="primary" type="leftArrow" style={{ height: 14 }} />}
-                onClick={handleClickPrev}
-              >
-                <Text variant="body2" color={theme.colors.primary}>
-                  Prev
-                </Text>
-              </Button>
-              <Button
-                variant="filled"
-                Icon={<Icon type="rightArrow" style={{ height: 14 }} />}
-                onClick={handleClickNext}
-                iconPosition="end"
-              >
-                <Text variant="body2" color={theme.colors.white}>
-                  Next
-                </Text>
-              </Button>
-            </Flex>
-          </BottomPosition>
-        </Content>
-      </main>
+      <div style={{ height: 120, content: '', width: '100%' }}></div>
+      <Content questionType={DUMMY_BAUMANN_B.questionType as BaumannQuestion['questionType']}>
+        <BaumannQNAComponent
+          baumann={{
+            id: DUMMY_BAUMANN_B.id,
+            question: DUMMY_BAUMANN_B.question,
+            answers: DUMMY_BAUMANN_B.Baumann_Answer,
+            imageUrl: DUMMY_BAUMANN_B.imageUrl,
+          }}
+          activeAnswer={activeAnswer}
+          onClickItem={handleClickAnswerItem}
+        />
+        <BottomPosition>
+          <Flex justifyContent="space-between" gap="16px">
+            <Button
+              variant="outlined"
+              Icon={<ColorLeftArrow color="primary" type="leftArrow" style={{ height: 14 }} />}
+              onClick={handleClickPrev}
+            >
+              <Text variant="body2" color={theme.colors.primary}>
+                Prev
+              </Text>
+            </Button>
+            <Button
+              variant="filled"
+              Icon={<Icon type="rightArrow" style={{ height: 14 }} />}
+              onClick={handleClickNext}
+              iconPosition="end"
+            >
+              <Text variant="body2" color={theme.colors.white}>
+                Next
+              </Text>
+            </Button>
+          </Flex>
+        </BottomPosition>
+      </Content>
     </>
   );
 }
 
-const Content = styled.div`
+const Content = styled.div<{ questionType: BaumannQuestion['questionType'] }>`
+  padding-top: 40px;
   padding-inline: 20px;
+  height: calc(100% - 160px);
+  background-color: ${({ theme, questionType }) => questionType === 'B' && theme.colors.blue50};
 `;
 
 const ColorLeftArrow = styled(Icon)`

@@ -76,9 +76,8 @@ const Circle = styled.span<IsActive>`
   border-radius: 50%;
   box-sizing: border-box;
   background-color: ${({ theme }) => theme.colors.white};
-  border: 1px solid;
-  border-color: ${({ isActive, theme }) =>
-    isActive ? theme.colors.primary : theme.colors.gray300};
+  border: ${({ isActive }) => !isActive && '1px solid'};
+  border-color: ${({ theme }) => theme.colors.gray300};
   box-shadow: ${({ isActive, theme }) => isActive && `inset 0 0 0 8px ${theme.colors.primary}`};
   transition: all 0.1s ease-in;
 `;
