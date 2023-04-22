@@ -16,6 +16,7 @@ function CircleCheckBox({ checked }: Props) {
 
 const Wrapper = styled.span`
   position: relative;
+  align-self: center;
 `;
 
 const Input = styled.input`
@@ -35,11 +36,12 @@ const Input = styled.input`
 
 const Label = styled.label`
   position: absolute;
-  top: 1px;
+  top: 0;
   left: 0;
   width: 20px;
   height: 20px;
   border-radius: 50%;
+  box-sizing: border-box;
   background-color: ${({ theme }) => theme.colors.white};
   border: 1px solid ${({ theme }) => theme.colors.gray200};
   cursor: pointer;
@@ -51,8 +53,8 @@ const Label = styled.label`
     height: 5px;
     opacity: 0;
     position: absolute;
-    top: 5px;
-    left: 4px;
+    top: 4px;
+    left: 3px;
     transform: rotate(-45deg);
     border: ${({ theme }) => `2px solid ${theme.colors.white}`};
     border-top: none;

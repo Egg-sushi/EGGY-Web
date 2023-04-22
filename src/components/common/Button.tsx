@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import React from 'react';
 
-interface Props {
+interface Props extends React.ComponentPropsWithoutRef<'button'> {
   variant: 'filled' | 'outlined';
   hierarchy?: 'primary' | 'secondary';
   width?: React.CSSProperties['width'];
@@ -52,7 +52,7 @@ const Wrapper = styled.button<StyleProps>`
   justify-content: center;
   align-items: center;
   padding: 0;
-  padding-block: 14px;
+  padding-block: 10px;
   box-sizing: border-box;
   width: ${({ width }) => (typeof width === 'number' ? `${width}px` : width)};
   outline: none;
@@ -84,7 +84,7 @@ const Wrapper = styled.button<StyleProps>`
 type IconStyleProps = Pick<Props, 'iconPosition'>;
 const IconWrapper = styled.span<IconStyleProps>`
   position: absolute;
-  top: 50%;
+  top: 52%;
   left: ${({ iconPosition }) => (iconPosition === 'start' ? '24px' : 'auto')};
   right: ${({ iconPosition }) => (iconPosition === 'end' ? '24px' : 'auto')};
   transform: translateY(-50%);

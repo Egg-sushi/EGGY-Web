@@ -1,6 +1,80 @@
 import Head from 'next/head';
+import React from 'react';
+import styled from '@emotion/styled';
+import { useTheme } from '@emotion/react';
+
+import { BaumannQNA, UserAnswer } from '@/types/baumann';
+import { BaumannAType, Button, Flex, Icon, Text } from '@/components';
+
+const DUMMY_BAUMANN: BaumannQNA = {
+  id: 1,
+  question: 'What happens after you have had many days of consecutive sun exposure',
+  type: 'SEBUM',
+  questionType: 'A',
+  imageUrl: '',
+  Baumann_Answer: [
+    { id: 1, answer: 'I sunburn and blister, but my skin does not change color.', imageUrl: '' },
+    { id: 2, answer: 'My skin becomes slightly darker.', imageUrl: '' },
+    { id: 3, answer: 'My skin becomes much darker.', imageUrl: '' },
+    {
+      id: 4,
+      answer: 'My skin is already dark, so it is hard to see if it gets darker.',
+      imageUrl: '',
+    },
+    { id: 5, answer: 'Unsure', imageUrl: '' },
+  ],
+};
+
+const QNAComponentsByType = {
+  A: BaumannAType,
+  B: BaumannAType,
+} as const;
 
 export default function BaumannTest() {
+  const theme = useTheme();
+  const [userAnswer, setUserAnswer] = React.useState<UserAnswer[]>([]);
+  const [activeAnswer, setActiveAnswer] = React.useState<BaumannQNA['Baumann_Answer'][0] | null>(
+    null,
+  );
+  const BaumannQNAComponent = QNAComponentsByType[DUMMY_BAUMANN.questionType]; // 현재 타입에 따른 바우만 컴포넌트
+
+  const stopSyntheticEvent = React.useCallback((e: React.BaseSyntheticEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+  }, []);
+
+  const handleClickAnswerItem = React.useCallback(
+    (answer: BaumannQNA['Baumann_Answer'][0], e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+      stopSyntheticEvent(e);
+      if (activeAnswer === answer) {
+        setActiveAnswer(null);
+      } else {
+        setActiveAnswer(answer);
+      }
+    },
+    [activeAnswer, stopSyntheticEvent],
+  );
+
+  const handleClickPrev = React.useCallback(() => {
+    if (userAnswer.length === 0) {
+      return;
+    }
+    setUserAnswer((prev) => prev.slice(0, -1));
+    setActiveAnswer(null);
+  }, [userAnswer.length]);
+
+  const handleClickNext = React.useCallback(() => {
+    if (activeAnswer == null) {
+      return;
+    }
+    setUserAnswer((prev) => [...prev, { questionId: DUMMY_BAUMANN.id, answerId: activeAnswer.id }]);
+    setActiveAnswer(null);
+  }, [activeAnswer]);
+
+  React.useEffect(() => {
+    console.log(userAnswer);
+  }, [userAnswer]);
+
   return (
     <>
       <Head>
@@ -9,7 +83,58 @@ export default function BaumannTest() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main></main>
+      <main>
+        <Content>
+          <BaumannQNAComponent
+            baumann={{
+              id: DUMMY_BAUMANN.id,
+              question: DUMMY_BAUMANN.question,
+              answers: DUMMY_BAUMANN.Baumann_Answer,
+            }}
+            activeAnswer={activeAnswer}
+            onClickItem={handleClickAnswerItem}
+          />
+          <BottomPosition>
+            <Flex justifyContent="space-between" gap="16px">
+              <Button
+                variant="outlined"
+                Icon={<ColorLeftArrow color="primary" type="leftArrow" style={{ height: 14 }} />}
+                onClick={handleClickPrev}
+              >
+                <Text variant="body2" color={theme.colors.primary}>
+                  Prev
+                </Text>
+              </Button>
+              <Button
+                variant="filled"
+                Icon={<Icon type="rightArrow" style={{ height: 14 }} />}
+                onClick={handleClickNext}
+                iconPosition="end"
+              >
+                <Text variant="body2" color={theme.colors.white}>
+                  Next
+                </Text>
+              </Button>
+            </Flex>
+          </BottomPosition>
+        </Content>
+      </main>
     </>
   );
 }
+
+const Content = styled.div`
+  padding-inline: 20px;
+`;
+
+const ColorLeftArrow = styled(Icon)`
+  & > path {
+    fill: ${({ theme }) => theme.colors.primary};
+  }
+`;
+
+const BottomPosition = styled.div`
+  width: calc(100% - 40px);
+  position: absolute;
+  bottom: 50px;
+`;
