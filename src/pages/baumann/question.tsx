@@ -84,7 +84,7 @@ export default function BaumannTest() {
           <Flex justifyContent="space-between" gap="16px">
             <Button
               variant="outlined"
-              Icon={<ColorLeftArrow color="primary" type="leftArrow" style={{ height: 14 }} />}
+              Icon={<Icon fill={theme.colors.primary} type="leftArrow" width={14} height={14} />}
               onClick={handleClickPrev}
             >
               <Text variant="body2" color={theme.colors.primary}>
@@ -93,7 +93,7 @@ export default function BaumannTest() {
             </Button>
             <Button
               variant="filled"
-              Icon={<Icon type="rightArrow" style={{ height: 14 }} />}
+              Icon={<Icon type="rightArrow" width={14} height={14} />}
               onClick={handleClickNext}
               iconPosition="end"
             >
@@ -113,12 +113,6 @@ const Content = styled.div<{ questionType: BaumannQuestion['questionType'] }>`
   padding-inline: 20px;
   height: calc(100% - 160px);
   background-color: ${({ theme, questionType }) => questionType === 'B' && theme.colors.blue50};
-`;
-
-const ColorLeftArrow = styled(Icon)`
-  & > path {
-    fill: ${({ theme }) => theme.colors.primary};
-  }
 `;
 
 const BottomPosition = styled.div`
