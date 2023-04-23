@@ -165,11 +165,14 @@ export const globalStyles = css`
     font-family: ${pretendard.style.fontFamily};
   }
 
-  body,
-  #__next {
+  body {
     width: 100%;
     height: 100vh;
     height: calc(var(--vh, 1vh) * 100);
+  }
+
+  #__next {
+    height: 100%;
   }
 
   padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom)
