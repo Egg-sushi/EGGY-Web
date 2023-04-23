@@ -10,8 +10,8 @@ export const Flex = styled.div<React.CSSProperties>`
   flex: ${({ flex }) => flex};
   flex-wrap: ${({ flexWrap }) => flexWrap};
   flex-grow: ${({ flexGrow }) => flexGrow};
-  flex-direction: ${({ direction }) => direction};
+  flex-direction: ${({ flexDirection }) => flexDirection};
   flex-shrink: ${({ flexShrink }) => flexShrink};
   flex-basis: ${({ flexBasis }) => flexBasis};
-  gap: ${({ gap }) => gap};
+  gap: ${({ gap }) => (typeof gap === 'number' ? `${gap}px` : gap)};
 `;

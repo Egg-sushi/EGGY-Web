@@ -26,7 +26,7 @@ export default function BaumannTest() {
   }, []);
 
   const handleClickAnswerItem = React.useCallback(
-    (answer: BaumannQNA['Baumann_Answer'][0], e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+    (answer: BaumannQNA['Baumann_Answer'][0], e: React.MouseEvent<HTMLElement, MouseEvent>) => {
       stopSyntheticEvent(e);
       if (activeAnswer === answer) {
         setActiveAnswer(null);

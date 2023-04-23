@@ -30,10 +30,6 @@ function Icon(props: Props) {
 
 type StyleProps = Pick<Props, 'width' | 'height' | 'fill' | 'stroke'>;
 const Wrapper = styled.span<StyleProps>`
-  width: ${({ width }) => (typeof width === 'number' ? `${width}px` : width)};
-  height: ${({ height }) => (typeof height === 'number' ? `${height}px` : height)};
-  line-height: ${({ height }) => (typeof height === 'number' ? `${height}px` : height)};
-
   &,
   & svg {
     width: ${({ width }) => (typeof width === 'number' ? `${width}px` : width)};

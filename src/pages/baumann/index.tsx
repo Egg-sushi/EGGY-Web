@@ -3,7 +3,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
-import { Button, CircleCheckBox, Header, Icon, Text, Title } from '@/components';
+import { Button, CircleCheckBox, Flex, Header, Icon, Text, Title } from '@/components';
 
 const BAUMANN_FEATURES = [
   'Improved your skin health 1',
@@ -23,19 +23,19 @@ export default function BaumannIntroPage() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <Wrapper>
+      <Wrapper as={'section'} flexDirection="column" justifyContent="space-evenly">
         <Title title={'Baumann Test'} description={'Do you wanna know Your Skin Type?'} />
         <ImageWrapper>
           <Image priority width={140} height={120} src="/Diamond2.png" alt="baumman-thumbnail" />
         </ImageWrapper>
-        <FeatureList>
+        <Flex as={'ul'} flexDirection="column" gap={24}>
           {BAUMANN_FEATURES.map((feature) => (
             <FeatureItem key={feature}>
               <CircleCheckBox checked={true} />
               <Text variant="body2">{feature}</Text>
             </FeatureItem>
           ))}
-        </FeatureList>
+        </Flex>
         <Button
           variant="filled"
           Icon={<Icon type="rightArrow" width={14} height={14} />}
@@ -50,25 +50,16 @@ export default function BaumannIntroPage() {
   );
 }
 
-const Wrapper = styled.section`
+const Wrapper = styled(Flex)`
   padding-top: 60px;
   padding-inline: 34px;
   height: calc(100% - 60px);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
   background-color: ${({ theme }) => theme.colors.blue50};
 `;
 
 const ImageWrapper = styled.div`
   position: relative;
   text-align: center;
-`;
-
-const FeatureList = styled.ul`
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
 `;
 
 const FeatureItem = styled.li`

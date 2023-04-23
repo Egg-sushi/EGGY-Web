@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 
 import type { BaumannQNA, BaumannQuestion } from '@/types/baumann';
-import { CircleCheckBox, Text } from '@/components';
+import { CircleCheckBox, Flex, Text } from '@/components';
 
 interface Props {
   baumann: {
@@ -13,17 +13,18 @@ interface Props {
   activeAnswer: BaumannQNA['Baumann_Answer'][0] | null;
   onClickItem: (
     userAnswer: BaumannQNA['Baumann_Answer'][0],
-    e: React.MouseEvent<HTMLLIElement, MouseEvent>,
+    e: React.MouseEvent<HTMLElement, MouseEvent>,
   ) => void;
 }
 
 function BaumannAType({ baumann, activeAnswer, onClickItem }: Props) {
   return (
-    <Wrapper>
+    <Flex as={'section'} flexDirection="column" gap={50}>
       <Text variant="body1">{baumann.question}</Text>
-      <AnswerList>
+      <Flex as={'ul'} flexDirection="column" gap={16}>
         {baumann.answers.map((answer) => (
           <AnswerItem
+            as={'li'}
             key={answer.id}
             isActive={answer === activeAnswer}
             onClick={(e) => onClickItem(answer, e)}
@@ -32,26 +33,13 @@ function BaumannAType({ baumann, activeAnswer, onClickItem }: Props) {
             <Text variant="body2">{answer.answer}</Text>
           </AnswerItem>
         ))}
-      </AnswerList>
-    </Wrapper>
+      </Flex>
+    </Flex>
   );
 }
 
-const Wrapper = styled.section`
-  display: flex;
-  flex-direction: column;
-  gap: 50px;
-`;
-
-const AnswerList = styled.ul`
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-`;
-
 type StyleAnswerProps = { isActive: boolean };
-const AnswerItem = styled.li<StyleAnswerProps>`
-  display: flex;
+const AnswerItem = styled(Flex)<StyleAnswerProps>`
   border-radius: 10px;
   padding: 20px;
   background-color: ${({ theme, isActive }) =>

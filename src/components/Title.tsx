@@ -1,5 +1,5 @@
-import styled from '@emotion/styled';
 import { Text } from './common';
+import { Flex } from './styled';
 
 interface Props {
   title: string;
@@ -8,19 +8,13 @@ interface Props {
 
 function Title({ title, description }: Props) {
   return (
-    <Wrapper>
+    <Flex flexDirection="column" gap={20}>
       <Text variant="h3" weight={800}>
         {title}
       </Text>
       <Text variant="body2">: {description}</Text>
-    </Wrapper>
+    </Flex>
   );
 }
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-`;
 
 export default Title;
