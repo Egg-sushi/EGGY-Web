@@ -161,7 +161,17 @@ const pretendard = localFont({
 export const globalStyles = css`
   ${resetCss}
 
-  body {
+  html {
     font-family: ${pretendard.style.fontFamily};
   }
+
+  body,
+  #__next {
+    width: 100%;
+    height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
+  }
+
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom)
+    env(safe-area-inset-left);
 `;

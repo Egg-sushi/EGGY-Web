@@ -1,6 +1,65 @@
 import Head from 'next/head';
+import React from 'react';
+import styled from '@emotion/styled';
+import { useTheme } from '@emotion/react';
+
+import { DUMMY_BAUMANN_B } from '@/dummy/baumann';
+import { BaumannQNA, BaumannQuestion, UserAnswer } from '@/types/baumann';
+import { BaumannAType, BaumannBType, Button, Flex, Icon, Text } from '@/components';
+
+const QNAComponentsByType = {
+  A: BaumannAType,
+  B: BaumannBType,
+} as const;
 
 export default function BaumannTest() {
+  const theme = useTheme();
+  const [userAnswer, setUserAnswer] = React.useState<UserAnswer[]>([]);
+  const [activeAnswer, setActiveAnswer] = React.useState<BaumannQNA['Baumann_Answer'][0] | null>(
+    null,
+  );
+  const BaumannQNAComponent = QNAComponentsByType[DUMMY_BAUMANN_B.questionType]; // 현재 타입에 따른 바우만 컴포넌트
+
+  const stopSyntheticEvent = React.useCallback((e: React.BaseSyntheticEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+  }, []);
+
+  const handleClickAnswerItem = React.useCallback(
+    (answer: BaumannQNA['Baumann_Answer'][0], e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+      stopSyntheticEvent(e);
+      if (activeAnswer === answer) {
+        setActiveAnswer(null);
+      } else {
+        setActiveAnswer(answer);
+      }
+    },
+    [activeAnswer, stopSyntheticEvent],
+  );
+
+  const handleClickPrev = React.useCallback(() => {
+    if (userAnswer.length === 0) {
+      return;
+    }
+    setUserAnswer((prev) => prev.slice(0, -1));
+    setActiveAnswer(null);
+  }, [userAnswer.length]);
+
+  const handleClickNext = React.useCallback(() => {
+    if (activeAnswer == null) {
+      return;
+    }
+    setUserAnswer((prev) => [
+      ...prev,
+      { questionId: DUMMY_BAUMANN_B.id, answerId: activeAnswer.id },
+    ]);
+    setActiveAnswer(null);
+  }, [activeAnswer]);
+
+  React.useEffect(() => {
+    console.log(userAnswer);
+  }, [userAnswer]);
+
   return (
     <>
       <Head>
@@ -9,7 +68,61 @@ export default function BaumannTest() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main></main>
+      <div style={{ height: 120, content: '', width: '100%' }}></div>
+      <Content questionType={DUMMY_BAUMANN_B.questionType as BaumannQuestion['questionType']}>
+        <BaumannQNAComponent
+          baumann={{
+            id: DUMMY_BAUMANN_B.id,
+            question: DUMMY_BAUMANN_B.question,
+            answers: DUMMY_BAUMANN_B.Baumann_Answer,
+            imageUrl: DUMMY_BAUMANN_B.imageUrl,
+          }}
+          activeAnswer={activeAnswer}
+          onClickItem={handleClickAnswerItem}
+        />
+        <BottomPosition>
+          <Flex justifyContent="space-between" gap="16px">
+            <Button
+              variant="outlined"
+              Icon={<ColorLeftArrow color="primary" type="leftArrow" style={{ height: 14 }} />}
+              onClick={handleClickPrev}
+            >
+              <Text variant="body2" color={theme.colors.primary}>
+                Prev
+              </Text>
+            </Button>
+            <Button
+              variant="filled"
+              Icon={<Icon type="rightArrow" style={{ height: 14 }} />}
+              onClick={handleClickNext}
+              iconPosition="end"
+            >
+              <Text variant="body2" color={theme.colors.white}>
+                Next
+              </Text>
+            </Button>
+          </Flex>
+        </BottomPosition>
+      </Content>
     </>
   );
 }
+
+const Content = styled.div<{ questionType: BaumannQuestion['questionType'] }>`
+  padding-top: 40px;
+  padding-inline: 20px;
+  height: calc(100% - 160px);
+  background-color: ${({ theme, questionType }) => questionType === 'B' && theme.colors.blue50};
+`;
+
+const ColorLeftArrow = styled(Icon)`
+  & > path {
+    fill: ${({ theme }) => theme.colors.primary};
+  }
+`;
+
+const BottomPosition = styled.div`
+  width: calc(100% - 40px);
+  position: absolute;
+  bottom: 50px;
+`;

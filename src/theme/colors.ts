@@ -10,7 +10,9 @@ export const colors = {
   gray600: '#25282b',
 
   // blue scale
-  blue100: '#d8e2f8',
+  blue50: '#f7fafd',
+  blue100: '#ecf2ff',
+  blue150: '#d8e2f8',
   blue200: '#acc2f1',
   blue300: '#81a2e9',
   blue400: '#538bff',
