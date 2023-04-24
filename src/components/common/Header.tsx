@@ -30,7 +30,9 @@ const Wrapper = styled(Flex)`
   position: fixed;
   padding-inline: 32px;
   padding-block: 16px;
-  background-color: ${({ theme }) => theme.colors.white};
+  z-index: 995;
+  -webkit-backdrop-filter: saturate(50%) blur(4px);
+  backdrop-filter: blur(4px);
 `;
 
 export default Header;
