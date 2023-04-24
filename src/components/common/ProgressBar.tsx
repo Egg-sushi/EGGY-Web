@@ -5,14 +5,15 @@ import { Flex } from '../styled';
 import { useTheme } from '@emotion/react';
 
 interface Props {
-  stepCurIdx: number;
-  stepNames: string[];
   title: string;
-  currentSubStep: number;
-  totalSubStep: number;
+  stepNames: string[];
+  currentStepIndex: number;
+  currentSubStepIndex: number;
+  totalSubStepNum: number;
 }
 function ProgressBar(props: React.PropsWithChildren<Props>) {
-  const { stepCurIdx, stepNames, title, currentSubStep, totalSubStep, ...restProps } = props;
+  const { title, stepNames, currentStepIndex, currentSubStepIndex, totalSubStepNum, ...restProps } =
+    props;
   const stepNum = stepNames.length;
 
   const theme = useTheme();
@@ -21,23 +22,23 @@ function ProgressBar(props: React.PropsWithChildren<Props>) {
     <Flex width="100%" flexDirection="column" alignItems="center" {...restProps}>
       <Title variant="h3">{title}</Title>
       <SubTitle variant="h6">
-        <b>{currentSubStep}</b>/{totalSubStep}
+        <b>{currentSubStepIndex}</b>/{totalSubStepNum}
       </SubTitle>
       <Wrapper>
         <StatusBar width={`${(100 / stepNum) * (stepNum - 1)}%`}>
-          <CurrentStatusBar width={`${(100 / (stepNum - 1)) * stepCurIdx}%`} />
+          <CurrentStatusBar width={`${(100 / (stepNum - 1)) * currentStepIndex}%`} />
         </StatusBar>
         <StepWrapper>
           {stepNames.map((name, idx) => (
             <Step
               key={idx}
               width={`${100 / stepNum}%`}
-              isVisited={idx <= stepCurIdx}
-              isCurrent={idx === stepCurIdx}
+              isVisited={idx <= currentStepIndex}
+              isCurrent={idx === currentStepIndex}
             >
               <StyledText
                 variant="body4"
-                color={idx <= stepCurIdx ? theme.colors.primary : theme.colors.gray400}
+                color={idx <= currentStepIndex ? theme.colors.primary : theme.colors.gray400}
               >
                 {name}
               </StyledText>
