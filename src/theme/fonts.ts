@@ -7,38 +7,44 @@ export const fonts = {
     letter-spacing: -0.015em;
     line-height: 1.4;
   `,
-  /** font-size: 24px */
+  /** font-size: 32px */
   h2: css`
+    font-size: 2rem;
+    letter-spacing: -0.015em;
+    line-height: 1.4;
+  `,
+  /** font-size: 24px */
+  h3: css`
     font-size: 1.5rem;
     letter-spacing: -0.015em;
     line-height: 1.4;
   `,
   /** font-size: 20px */
-  h3: css`
+  h4: css`
     font-size: 1.25rem;
     letter-spacing: -0.015em;
     line-height: 1.4;
   `,
   /** font-size: 18px */
-  h4: css`
+  h5: css`
     font-size: 1.125rem;
     letter-spacing: -0.015em;
     line-height: 1.4;
   `,
   /** font-size: 16px */
-  h5: css`
+  h6: css`
     font-size: 1rem;
     letter-spacing: -0.015em;
     line-height: 1.4;
   `,
   /** font-size: 14px */
-  h6: css`
+  h7: css`
     font-size: 0.875rem;
     letter-spacing: -0.015em;
     line-height: 1.4;
   `,
   /** font-size: 12px */
-  h7: css`
+  h8: css`
     font-size: 0.75rem;
     letter-spacing: -0.015em;
     line-height: 1.4;
