@@ -73,10 +73,10 @@ export default function BaumannTest() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <StyledProgressBar
-        stepCurIdx={stepIdx}
+        currentStepIndex={stepIdx}
         title="SEBUM"
-        currentSubStep={4}
-        totalSubStep={15}
+        currentSubStepIndex={4}
+        totalSubStepNum={15}
         stepNames={['Step 1', 'Step 2', 'Step 3', 'Step 4']}
       />
       <Content questionType={DUMMY_BAUMANN_B.questionType as BaumannQuestion['questionType']}>
