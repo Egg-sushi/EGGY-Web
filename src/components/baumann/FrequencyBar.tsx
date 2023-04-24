@@ -1,7 +1,9 @@
-import { BaumannQNA } from '@/types/baumann';
 import styled from '@emotion/styled';
-import { Text } from '../common';
 import { useTheme } from '@emotion/react';
+
+import { Text } from '../common';
+import { Flex } from '../styled';
+import type { BaumannQNA } from '@/types/baumann';
 
 interface Props {
   answers: BaumannQNA['Baumann_Answer'];
@@ -18,7 +20,7 @@ function FrequencyBar({ answers, activeAnswer, onClickItem }: Props) {
   return (
     <Wrapper>
       <GrayBar />
-      <CircleList>
+      <Flex as={'ul'} justifyContent="space-between">
         {answers.map((answer) => {
           const isActive = answer.id === activeAnswer?.id;
           return (
@@ -34,7 +36,7 @@ function FrequencyBar({ answers, activeAnswer, onClickItem }: Props) {
             </Item>
           );
         })}
-      </CircleList>
+      </Flex>
     </Wrapper>
   );
 }
@@ -51,12 +53,6 @@ const GrayBar = styled.span`
   height: 1px;
   position: absolute;
   background-color: ${({ theme }) => theme.colors.gray300};
-`;
-
-const CircleList = styled.ul`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
 `;
 
 const Item = styled.li`

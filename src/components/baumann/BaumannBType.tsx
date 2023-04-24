@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import Image from 'next/image';
 
 import type { BaumannQNA, BaumannQuestion } from '@/types/baumann';
-import { Text } from '@/components';
+import { Flex, Text } from '@/components';
 import FrequencyBar from './FrequencyBar';
 
 interface Props {
@@ -22,7 +22,7 @@ interface Props {
 
 function BaumannBType({ baumann, activeAnswer, onClickItem }: Props) {
   return (
-    <Wrapper>
+    <Flex as={'section'} flexDirection="column">
       <Text variant="body1">{baumann.question}</Text>
       <ImageWrapper>
         <Image width={180} height={180} src={baumann.imageUrl} alt="quiz-thumbnail" />
@@ -32,14 +32,9 @@ function BaumannBType({ baumann, activeAnswer, onClickItem }: Props) {
         activeAnswer={activeAnswer}
         onClickItem={onClickItem}
       />
-    </Wrapper>
+    </Flex>
   );
 }
-
-const Wrapper = styled.section`
-  display: flex;
-  flex-direction: column;
-`;
 
 const ImageWrapper = styled.div`
   margin: 30px auto 50px auto;
