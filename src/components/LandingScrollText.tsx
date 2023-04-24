@@ -9,19 +9,19 @@ interface Props {
   row: number;
 }
 
-function LandingScrollText({ row }: Props) {
+function LandingScrollText({ row, ...restProps }: Props) {
   const theme = useTheme();
   const texts = [...Array(row)].map(() => SLOGAN);
 
   return (
-    <Wrapper>
+    <Wrapper {...restProps}>
       {texts.map((text, idx) => (
-        <MarQuee key={idx} x={idx * 100}>
-          <AnimationText variant="h1" color={theme.colors.gray400}>
-            {text}
+        <MarQuee key={idx} x={idx * 100} speed={Math.max(Math.random() * 10, 7)}>
+          <AnimationText variant="h1" fontColor={theme.colors.gray400}>
+            {text}&nbsp;
           </AnimationText>
-          <AnimationText variant="h1" color={theme.colors.gray400}>
-            {text}
+          <AnimationText variant="h1" fontColor={theme.colors.gray400}>
+            {text}&nbsp;
           </AnimationText>
         </MarQuee>
       ))}
@@ -43,12 +43,12 @@ const RightToLeft = keyframes`
   }
 `;
 
-type X = { x: number };
+type X = { x: number; speed: number };
 const MarQuee = styled.div<X>`
   white-space: nowrap;
   overflow: hidden;
   display: inline-block;
-  animation: ${RightToLeft} 8s linear infinite;
+  animation: ${RightToLeft} ${({ speed }) => `${speed}s`} linear infinite;
   position: relative;
   left: ${({ x }) => `${x}px`};
 `;
