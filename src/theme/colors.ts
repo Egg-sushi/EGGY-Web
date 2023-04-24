@@ -43,3 +43,6 @@ export const colors = {
   /* teritiary: baige100 */
   teritiary: '#f9f3ec',
 } as const;
+
+export type ColorKeyType = keyof typeof colors;
+export type ColorValueType = (typeof colors)[keyof typeof colors];

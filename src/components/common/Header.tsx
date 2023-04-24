@@ -13,7 +13,7 @@ function Header() {
     <Wrapper as={'header'} justifyContent="space-between" alignItems="center">
       <Text
         variant="h2"
-        color={theme.colors.gray400}
+        fontColor={theme.colors.gray400}
         fontFamily="monteserrat"
         role="button"
         onClick={() => router.push('/')}

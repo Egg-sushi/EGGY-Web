@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { Bodoni_Moda, Montserrat, Playfair_Display } from 'next/font/google';
 
-import { theme } from '@/theme';
+import { ColorValueType, theme } from '@/theme';
 
 const monteserrat = Montserrat({
   style: ['normal'],
@@ -27,16 +27,16 @@ const fontFamilys = {
 
 interface Props extends React.ComponentPropsWithoutRef<'div'> {
   variant: keyof typeof theme.fonts;
-  color?: typeof theme.colors[keyof typeof theme.colors];
   align?: React.CSSProperties['textAlign'];
   weight?: React.CSSProperties['fontWeight'];
+  fontColor?: ColorValueType;
   fontFamily?: keyof typeof fontFamilys | 'pretendard';
 }
 
 function Text(props: React.PropsWithChildren<Props>) {
   const {
     variant,
-    color = theme.colors.gray600,
+    fontColor = theme.colors.gray600,
     align = 'start',
     weight = variant.includes('h') ? 700 : 400,
     fontFamily = 'pretendard',
@@ -48,7 +48,7 @@ function Text(props: React.PropsWithChildren<Props>) {
   return (
     <Wrapper
       variant={variant}
-      color={color}
+      fontColor={fontColor}
       align={align}
       weight={weight}
       className={fontClassName}
@@ -59,13 +59,13 @@ function Text(props: React.PropsWithChildren<Props>) {
   );
 }
 
-type StyleProps = Pick<Props, 'variant' | 'color' | 'align' | 'weight'>;
+type StyleProps = Pick<Props, 'variant' | 'fontColor' | 'align' | 'weight'>;
 const Wrapper = styled.div<StyleProps>`
   ${({ variant }) => theme.fonts[variant]}
 
   font-weight: ${({ weight }) => weight};
   text-align: ${({ align }) => align};
-  color: ${({ color }) => color};
+  color: ${({ fontColor }) => fontColor};
 `;
 
 export default Text;

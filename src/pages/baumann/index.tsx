@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 import { Button, CircleCheckBox, Flex, Header, Icon, Text, Title } from '@/components';
+import { theme } from '@/theme';
 
 const BAUMANN_FEATURES = [
   'Improved your skin health 1',
@@ -24,7 +25,12 @@ export default function BaumannIntroPage() {
       </Head>
       <Header />
       <Wrapper as={'section'} flexDirection="column" justifyContent="space-evenly">
-        <Title title={'Baumann Test'} description={'Do you wanna know Your Skin Type?'} />
+        <Title
+          size="lg"
+          title={'Baumann Test'}
+          description={'Do you wanna know Your Skin Type?'}
+          color={theme.colors.primary}
+        />
         <ImageWrapper>
           <Image priority width={140} height={120} src="/Diamond2.png" alt="baumman-thumbnail" />
         </ImageWrapper>
