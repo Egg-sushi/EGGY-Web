@@ -72,7 +72,7 @@ export default function BaumannTest() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <ProgressBar
+      <StyledProgressBar
         stepCurrentIdx={stepIdx}
         title="SEBUM"
         currentSubStep={4}
@@ -117,6 +117,10 @@ export default function BaumannTest() {
     </>
   );
 }
+
+const StyledProgressBar = styled(ProgressBar)`
+  padding: 1rem 0;
+`;
 
 const Content = styled.div<{ questionType: BaumannQuestion['questionType'] }>`
   padding-top: 40px;

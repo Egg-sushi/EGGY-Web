@@ -10,11 +10,11 @@ interface Props {
   totalSubStep: number;
 }
 function ProgressBar(props: React.PropsWithChildren<Props>) {
-  const { stepCurrentIdx, stepNames, title, currentSubStep, totalSubStep } = props;
+  const { stepCurrentIdx, stepNames, title, currentSubStep, totalSubStep, ...restProps } = props;
   const stepNum = stepNames.length;
 
   return (
-    <Container>
+    <Container {...restProps}>
       <Title variant="h3">{title}</Title>
       <SubTitle variant="body2">
         <b>{currentSubStep}</b>/{totalSubStep}
