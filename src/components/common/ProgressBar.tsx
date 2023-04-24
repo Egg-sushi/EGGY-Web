@@ -5,14 +5,14 @@ import { Flex } from '../styled';
 import { useTheme } from '@emotion/react';
 
 interface Props {
-  stepCurrentIdx: number;
+  stepCurIdx: number;
   stepNames: string[];
   title: string;
   currentSubStep: number;
   totalSubStep: number;
 }
 function ProgressBar(props: React.PropsWithChildren<Props>) {
-  const { stepCurrentIdx, stepNames, title, currentSubStep, totalSubStep, ...restProps } = props;
+  const { stepCurIdx, stepNames, title, currentSubStep, totalSubStep, ...restProps } = props;
   const stepNum = stepNames.length;
 
   const theme = useTheme();
@@ -25,19 +25,19 @@ function ProgressBar(props: React.PropsWithChildren<Props>) {
       </SubTitle>
       <Wrapper>
         <StatusBar width={`${(100 / stepNum) * (stepNum - 1)}%`}>
-          <CurrentStatusBar width={`${(100 / (stepNum - 1)) * stepCurrentIdx}%`} />
+          <CurrentStatusBar width={`${(100 / (stepNum - 1)) * stepCurIdx}%`} />
         </StatusBar>
         <StepWrapper>
           {stepNames.map((name, idx) => (
             <Step
               key={idx}
               width={`${100 / stepNum}%`}
-              isVisited={idx <= stepCurrentIdx}
-              isCurrent={idx === stepCurrentIdx}
+              isVisited={idx <= stepCurIdx}
+              isCurrent={idx === stepCurIdx}
             >
               <StyledText
                 variant="body4"
-                color={idx <= stepCurrentIdx ? theme.colors.primary : theme.colors.gray400}
+                color={idx <= stepCurIdx ? theme.colors.primary : theme.colors.gray400}
               >
                 {name}
               </StyledText>

@@ -73,7 +73,7 @@ export default function BaumannTest() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <StyledProgressBar
-        stepCurrentIdx={stepIdx}
+        stepCurIdx={stepIdx}
         title="SEBUM"
         currentSubStep={4}
         totalSubStep={15}
