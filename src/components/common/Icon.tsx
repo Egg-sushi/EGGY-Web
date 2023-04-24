@@ -17,30 +17,26 @@ interface Props extends React.ComponentPropsWithoutRef<'svg'> {
   stroke?: React.CSSProperties['stroke'];
 }
 
-function Icon(props: Props) {
-  const { type, width = 20, height = 20, fill, stroke, ...restProps } = props;
+function IconBase(props: Props) {
+  const { type, ...restProps } = props;
 
-  return React.cloneElement(
-    <Wrapper width={width} height={height} fill={fill} stroke={stroke}>
-      {ICONS[type]}
-    </Wrapper>,
-    restProps,
-  );
+  return React.cloneElement(ICONS[type], restProps);
 }
 
 type StyleProps = Pick<Props, 'width' | 'height' | 'fill' | 'stroke'>;
-const Wrapper = styled.span<StyleProps>`
-  &,
-  & svg {
+const Icon = styled(IconBase)<StyleProps>`
+  & {
     width: ${({ width }) => (typeof width === 'number' ? `${width}px` : width)};
     height: ${({ height }) => (typeof height === 'number' ? `${height}px` : height)};
     line-height: ${({ height }) => (typeof height === 'number' ? `${height}px` : height)};
   }
 
-  & svg path {
-    fill: ${({ fill }) => (fill ? fill : fill)};
+  & path {
+    fill: ${({ fill }) => (fill ? fill : 'none')};
     stroke: ${({ stroke }) => (stroke ? stroke : 'none')};
   }
 `;
+
+const Wrapper = styled.span<StyleProps>``;
 
 export default Icon;

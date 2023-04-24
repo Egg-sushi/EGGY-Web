@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic';
 
-export const Menu = dynamic(() => import('./Menu'));
-export const LeftArrow = dynamic(() => import('./LeftArrow'));
-export const RightArrow = dynamic(() => import('./RightArrow'));
+export const Menu = dynamic(() => import('./Menu.svg'));
+export const LeftArrow = dynamic(() => import('./LeftArrow.svg'));
+export const RightArrow = dynamic(() => import('./RightArrow.svg'));
