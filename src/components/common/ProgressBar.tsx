@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
 import React from 'react';
 import Text from './Text';
+import { Flex } from '../styled';
+import { useTheme } from '@emotion/react';
 
 interface Props {
   stepCurrentIdx: number;
@@ -13,10 +15,12 @@ function ProgressBar(props: React.PropsWithChildren<Props>) {
   const { stepCurrentIdx, stepNames, title, currentSubStep, totalSubStep, ...restProps } = props;
   const stepNum = stepNames.length;
 
+  const theme = useTheme();
+
   return (
-    <Container {...restProps}>
+    <Flex width="100%" flexDirection="column" alignItems="center" {...restProps}>
       <Title variant="h3">{title}</Title>
-      <SubTitle variant="body2">
+      <SubTitle variant="h6">
         <b>{currentSubStep}</b>/{totalSubStep}
       </SubTitle>
       <Wrapper>
@@ -31,12 +35,17 @@ function ProgressBar(props: React.PropsWithChildren<Props>) {
               isVisited={idx <= stepCurrentIdx}
               isCurrent={idx === stepCurrentIdx}
             >
-              {name}
+              <StyledText
+                variant="body4"
+                color={idx <= stepCurrentIdx ? theme.colors.primary : theme.colors.gray400}
+              >
+                {name}
+              </StyledText>
             </Step>
           ))}
         </StepWrapper>
       </Wrapper>
-    </Container>
+    </Flex>
   );
 }
 
@@ -47,18 +56,10 @@ const Title = styled(Text)`
 
 const SubTitle = styled(Text)`
   font-weight: 600;
-
+  padding-top: 0.5rem;
   b {
     color: ${({ theme }) => theme.colors.primary};
   }
-`;
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  width: 100%;
 `;
 
 const Wrapper = styled.div`
@@ -97,19 +98,18 @@ const StepWrapper = styled.ul`
   list-style: none;
 `;
 
+const StyledText = styled(Text)`
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: top;
+`;
+
 const Step = styled.li<StyleProps>`
   display: inline-block;
   width: ${({ width }) => (typeof width === 'number' ? `${width}px` : width)};
   padding-top: 35px;
-  font-size: 0.75rem;
-  font-weight: 500;
-  line-height: 14px;
-  color: ${({ isVisited, theme }) => (isVisited ? theme.colors.primary : theme.colors.gray400)};
-  vertical-align: top;
   position: relative;
-  text-align: center;
-  overflow: hidden;
-  text-overflow: ellipsis;
 
   transition: color 0.5s linear 1s;
 
