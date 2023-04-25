@@ -3,17 +3,11 @@ import { safeSessionStorage } from './storage';
 import type { UserAnswer } from '@/types/baumann';
 
 const EGGY_BAUMANN_ANSWER_STORAGE_KEY = 'EGGY_BAUMANN_ANSWER_STORAGE_KEY';
-type BaumannAnswerStorageData = {
-  [key: number]: number;
-};
+type BaumannAnswerStorageData = Record<number, number>;
 
 export const getAnswers: () => BaumannAnswerStorageData = () => {
   const items = safeSessionStorage.get(EGGY_BAUMANN_ANSWER_STORAGE_KEY);
-  if (items === null) {
-    return [];
-  }
-
-  return JSON.parse(items);
+  return items === null ? {} : JSON.parse(items);
 };
 
 export const saveAnswer = (userAnswer: UserAnswer) => {

@@ -19,18 +19,16 @@ export default function BaumannTest() {
   const topRef = React.useRef<HTMLDivElement>(null);
 
   const {
-    prevQna,
-    currentQna,
-    nextQna,
-    BaumannQNAComponent,
-    currentSubStepIndex,
-    totalSubStepNum,
-    currentStepIndex,
     qnaType,
-    qnaSize,
+    currentQna,
+    prevQna,
+    nextQna,
+    isLastQna,
+    currentSubStepIndex,
+    currentStepIndex,
+    totalSubStepNum,
+    BaumannQNAComponent,
   } = useBaumann(currentQnaIndex);
-
-  const isLastQna = currentQnaIndex === qnaSize - 1;
 
   const handleScrollToTop = () => {
     if (topRef?.current) {
@@ -56,6 +54,12 @@ export default function BaumannTest() {
     [activeAnswer, stopSyntheticEvent],
   );
 
+  const loadAnswerFromSessionStorage = (qna: BaumannQNA) => {
+    const savedAnswerId = getAnswers()[qna.id];
+
+    setActiveAnswer(qna.Baumann_Answer.find((answer) => answer.id === savedAnswerId) || null);
+  };
+
   const handleClickPrev = React.useCallback(() => {
     if (currentQnaIndex <= 0) {
       return;
@@ -65,16 +69,8 @@ export default function BaumannTest() {
       saveAnswer({ questionId: currentQna.id, answerId: activeAnswer.id });
     }
 
-    const savedPrevAnswer = getAnswers()[prevQna.id];
-    const prevAnswer = prevQna.Baumann_Answer.find((answer) => answer.id === savedPrevAnswer);
-
+    loadAnswerFromSessionStorage(prevQna);
     setCurrentQnaIndex((prev) => prev - 1);
-
-    if (prevAnswer) {
-      setActiveAnswer(prevAnswer);
-    } else {
-      setActiveAnswer(null);
-    }
   }, [activeAnswer, currentQna, currentQnaIndex, prevQna]);
 
   const handleClickNext = React.useCallback(() => {
@@ -90,16 +86,8 @@ export default function BaumannTest() {
       return;
     }
 
-    const savedNextAnswer = getAnswers()[nextQna.id];
-    const nextAnswer = nextQna.Baumann_Answer.find((answer) => answer.id === savedNextAnswer);
-
+    loadAnswerFromSessionStorage(nextQna);
     setCurrentQnaIndex((prev) => prev + 1);
-
-    if (nextAnswer) {
-      setActiveAnswer(nextAnswer);
-    } else {
-      setActiveAnswer(null);
-    }
   }, [activeAnswer, currentQna, isLastQna, nextQna]);
 
   React.useEffect(() => {
