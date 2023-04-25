@@ -22,7 +22,7 @@ interface Props {
 
 function BaumannBType({ baumann, activeAnswer, onClickItem }: Props) {
   return (
-    <Flex as={'section'} flexDirection="column">
+    <StyledFlex as={'section'} flexDirection="column" paddingBottom="60px">
       <Text variant="body1">{baumann.question}</Text>
       <ImageWrapper>
         <Image width={180} height={180} src={baumann.imageUrl} alt="quiz-thumbnail" />
@@ -32,12 +32,16 @@ function BaumannBType({ baumann, activeAnswer, onClickItem }: Props) {
         activeAnswer={activeAnswer}
         onClickItem={onClickItem}
       />
-    </Flex>
+    </StyledFlex>
   );
 }
 
 const ImageWrapper = styled.div`
   margin: 30px auto 50px auto;
+`;
+
+const StyledFlex = styled(Flex)`
+  padding-bottom: ${({ paddingBottom }) => paddingBottom};
 `;
 
 export default BaumannBType;
