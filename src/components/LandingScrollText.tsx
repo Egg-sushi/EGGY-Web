@@ -16,7 +16,7 @@ function LandingScrollText({ row, ...restProps }: Props) {
   return (
     <Wrapper {...restProps}>
       {texts.map((text, idx) => (
-        <MarQuee key={idx} x={idx * 100} speed={Math.max(Math.random() * 10, 7)}>
+        <MarQuee key={idx} x={idx * 100} speed={[7, 10, 12, 8, 6][idx]}>
           <AnimationText variant="h1" fontColor={theme.colors.gray400}>
             {text}&nbsp;
           </AnimationText>
