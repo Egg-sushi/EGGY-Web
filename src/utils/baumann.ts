@@ -3,25 +3,27 @@ import { safeSessionStorage } from './storage';
 import type { UserAnswer } from '@/types/baumann';
 
 const EGGY_BAUMANN_ANSWER_STORAGE_KEY = 'EGGY_BAUMANN_ANSWER_STORAGE_KEY';
-
-export const getAnswers = () => {
-  return safeSessionStorage.get(EGGY_BAUMANN_ANSWER_STORAGE_KEY);
+type BaumannAnswerStorageData = {
+  [key: number]: number;
 };
 
-export const pushAnswer = (userAnswer: UserAnswer) => {
-  const prevAnswersItem = safeSessionStorage.get(EGGY_BAUMANN_ANSWER_STORAGE_KEY);
-
-  if (prevAnswersItem === null) {
-    safeSessionStorage.set(EGGY_BAUMANN_ANSWER_STORAGE_KEY, JSON.stringify([userAnswer]));
-  } else {
-    const prevAnswers: UserAnswer[] = JSON.parse(prevAnswersItem);
-    safeSessionStorage.set(
-      EGGY_BAUMANN_ANSWER_STORAGE_KEY,
-      JSON.stringify([...prevAnswers, userAnswer]),
-    );
+export const getAnswers: () => BaumannAnswerStorageData = () => {
+  const items = safeSessionStorage.get(EGGY_BAUMANN_ANSWER_STORAGE_KEY);
+  if (items === null) {
+    return [];
   }
+
+  return JSON.parse(items);
 };
 
-export const resetAnswer = () => {
+export const saveAnswer = (userAnswer: UserAnswer) => {
+  const items = safeSessionStorage.get(EGGY_BAUMANN_ANSWER_STORAGE_KEY);
+  const nextAnswers: BaumannAnswerStorageData = items === null ? {} : JSON.parse(items);
+  nextAnswers[userAnswer.questionId] = userAnswer.answerId;
+
+  safeSessionStorage.set(EGGY_BAUMANN_ANSWER_STORAGE_KEY, JSON.stringify(nextAnswers));
+};
+
+export const resetAnswers = () => {
   safeSessionStorage.remove(EGGY_BAUMANN_ANSWER_STORAGE_KEY);
 };
