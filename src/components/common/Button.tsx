@@ -62,7 +62,7 @@ const Hierarchy: Record<
   teritiary: {
     color: colors.teritiary,
     border: colors.teritiary,
-    backgroundColor: colors.baige300,
+    backgroundColor: colors.beige300,
   },
 };
 
