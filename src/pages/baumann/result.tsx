@@ -2,9 +2,8 @@ import styled from '@emotion/styled';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
-import { BaumannPercentResult, Button, Flex, Header, Text } from '@/components';
+import { BaumannPercentResult, Button, Flex, Header, SkeletonImage, Text } from '@/components';
 import { useTheme } from '@emotion/react';
-import Image from 'next/image';
 import { ColorValueType } from '@/theme';
 
 const BAUMANN_RESULT = {
@@ -38,11 +37,18 @@ export default function BaumannResultPage() {
         <Text variant="body2" fontColor={theme.colors.gray400}>
           Your Skin Type is :
         </Text>
+
         <ImageWrapper>
           <Text variant="h3" fontColor={theme.colors.primary} align="center">
             {BAUMANN_RESULT.type}
           </Text>
-          <Image priority width={140} height={120} src="/Diamond2.png" alt="baumman-thumbnail" />
+          <SkeletonImage
+            priority
+            width={140}
+            height={120}
+            src="/Diamond2.png"
+            alt="baumman-thumbnail"
+          />
         </ImageWrapper>
         <Flex justifyContent="space-between" gap={48}>
           <Button variant="outlined">Retry</Button>
@@ -81,7 +87,7 @@ const Wrapper = styled(Flex)<StyleProps>`
 
 const ImageWrapper = styled.div`
   position: relative;
-  text-align: center;
+  margin-inline: auto;
 `;
 
 const Card = styled(Text)`
