@@ -144,17 +144,17 @@ export default function BaumannTest() {
               Icon={<Icon fill={theme.colors.primary} type="leftArrow" width={14} height={14} />}
               onClick={handleClickPrev}
             >
-              <Text variant="body2" color={theme.colors.primary}>
+              <Text variant="body2" fontColor={theme.colors.primary}>
                 Prev
               </Text>
             </Button>
             <Button
               variant="filled"
-              Icon={<Icon type="rightArrow" width={14} height={14} />}
+              Icon={<Icon type="rightArrow" fill={theme.colors.white} width={14} height={14} />}
               onClick={handleClickNext}
               iconPosition="end"
             >
-              <Text variant="body2" color={theme.colors.white}>
+              <Text variant="body2" fontColor={theme.colors.white}>
                 {isLastQna ? 'End' : 'Next'}
               </Text>
             </Button>
