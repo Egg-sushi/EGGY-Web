@@ -6,6 +6,7 @@ import { useTheme } from '@emotion/react';
 import { DUMMY_BAUMANN_B } from '@/dummy/baumann';
 import { BaumannQNA, BaumannQuestion, UserAnswer } from '@/types/baumann';
 import { BaumannAType, BaumannBType, Button, Flex, Icon, Text } from '@/components';
+import ProgressBar from '@/components/common/ProgressBar';
 
 const QNAComponentsByType = {
   A: BaumannAType,
@@ -18,6 +19,7 @@ export default function BaumannTest() {
   const [activeAnswer, setActiveAnswer] = React.useState<BaumannQNA['Baumann_Answer'][0] | null>(
     null,
   );
+  const [stepIdx, setStepIdx] = React.useState<number>(0);
   const BaumannQNAComponent = QNAComponentsByType[DUMMY_BAUMANN_B.questionType]; // 현재 타입에 따른 바우만 컴포넌트
 
   const stopSyntheticEvent = React.useCallback((e: React.BaseSyntheticEvent) => {
@@ -38,6 +40,7 @@ export default function BaumannTest() {
   );
 
   const handleClickPrev = React.useCallback(() => {
+    setStepIdx((prev) => prev - 1);
     if (userAnswer.length === 0) {
       return;
     }
@@ -46,6 +49,7 @@ export default function BaumannTest() {
   }, [userAnswer.length]);
 
   const handleClickNext = React.useCallback(() => {
+    setStepIdx((prev) => prev + 1);
     if (activeAnswer == null) {
       return;
     }
@@ -68,7 +72,13 @@ export default function BaumannTest() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div style={{ height: 120, content: '', width: '100%' }}></div>
+      <StyledProgressBar
+        currentStepIndex={stepIdx}
+        title="SEBUM"
+        currentSubStepIndex={4}
+        totalSubStepNum={15}
+        stepNames={['Step 1', 'Step 2', 'Step 3', 'Step 4']}
+      />
       <Content questionType={DUMMY_BAUMANN_B.questionType as BaumannQuestion['questionType']}>
         <BaumannQNAComponent
           baumann={{
@@ -107,6 +117,10 @@ export default function BaumannTest() {
     </>
   );
 }
+
+const StyledProgressBar = styled(ProgressBar)`
+  padding: 1rem 0;
+`;
 
 const Content = styled.div<{ questionType: BaumannQuestion['questionType'] }>`
   padding-top: 40px;
