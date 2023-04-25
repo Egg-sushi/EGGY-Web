@@ -132,7 +132,7 @@ export default function BaumannTest() {
             id: currentQna.id,
             question: currentQna.question,
             answers: currentQna.Baumann_Answer,
-            imageUrl: DUMMY_BAUMANN_B.imageUrl,
+            imageUrl: currentQna?.imageUrl ?? DUMMY_BAUMANN_B.imageUrl,
           }}
           activeAnswer={activeAnswer}
           onClickItem={handleClickAnswerItem}
