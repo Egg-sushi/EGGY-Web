@@ -1,9 +1,9 @@
-import styled from '@emotion/styled';
 import Head from 'next/head';
+import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
+import { useTheme } from '@emotion/react';
 
 import { BaumannPercentResult, Button, Flex, Header, SkeletonImage, Text } from '@/components';
-import { useTheme } from '@emotion/react';
 import { ColorValueType } from '@/theme';
 
 const BAUMANN_RESULT = {
@@ -75,6 +75,40 @@ export default function BaumannResultPage() {
           </Card>
         </Flex>
       </Wrapper>
+      <Wrapper flexDirection="column" paddingTop={56} color={theme.colors.teritiary} gap={28}>
+        <Text variant="h6" fontColor={theme.colors.blue800}>
+          Discover Your Cosmetic
+        </Text>
+        <Flex flexDirection="column" gap={16}>
+          <CosmeticCard gap={24}>
+            <CosmeticCardBackground />
+            <SkeletonImage
+              priority
+              width={74}
+              height={68}
+              src="/Diamond2.png"
+              alt="baumman-thumbnail"
+              style={{ zIndex: 999 }}
+            />
+            <Flex flexDirection="column" gap={12} alignContent="center" style={{ zIndex: 999 }}>
+              <Text variant="body2" fontColor={theme.colors.blue800}>
+                Cosmetic
+              </Text>
+              <Text variant="body4" fontColor={theme.colors.blue800}>
+                This cosmetic suits you well!
+              </Text>
+            </Flex>
+          </CosmeticCard>
+          <Button
+            variant="filled"
+            hierarchy="teritiary"
+            style={{ marginTop: 32, paddingBlock: 12 }}
+            onClick={() => router.push('/cosmetics')}
+          >
+            Find more your Cosmetic !
+          </Button>
+        </Flex>
+      </Wrapper>
     </>
   );
 }
@@ -95,4 +129,24 @@ const Card = styled(Text)`
   border-radius: 4px;
   background-color: ${({ theme }) => theme.colors.blue50};
   filter: drop-shadow(2px 4px 4px rgba(0, 0, 0, 0.1));
+`;
+
+const CosmeticCard = styled(Flex)`
+  position: relative;
+  margin-top: 16px;
+  padding-left: 24px;
+`;
+
+const CosmeticCardBackground = styled.div`
+  width: 100%;
+  height: calc(100% + 48px);
+  padding: 32px 24px;
+  box-sizing: border-box;
+  position: absolute;
+  top: -24px;
+  left: 0px;
+  background-color: ${({ theme }) => theme.colors.gray200};
+  opacity: 0.5;
+  border-radius: 8px;
+  z-index: 992;
 `;
