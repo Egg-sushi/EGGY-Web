@@ -5,6 +5,8 @@ import { useTheme } from '@emotion/react';
 
 import { BaumannPercentResult, Button, Flex, Header, SkeletonImage, Text } from '@/components';
 import { ColorValueType } from '@/theme';
+import React from 'react';
+import { share } from '@/utils';
 
 const BAUMANN_RESULT = {
   type: 'DSNT',
@@ -24,6 +26,22 @@ export default function BaumannResultPage() {
   const theme = useTheme();
   const router = useRouter();
 
+  const handleClickResetButton = React.useCallback(() => {
+    // TODO: 세션 초기화 ?
+    router.push('/baumann');
+  }, [router]);
+
+  const handleClickShareButton = React.useCallback(async () => {
+    const result = await share({
+      title: 'Find your SkinType',
+      text: 'Do you want to know your skinType?',
+      url: 'https://eggy-frontend.netlify.app',
+    });
+    if (result === 'copiedToClipboard') {
+      alert('Copy completed.');
+    }
+  }, []);
+
   return (
     <>
       <Head>
@@ -37,7 +55,6 @@ export default function BaumannResultPage() {
         <Text variant="body2" fontColor={theme.colors.gray400}>
           Your Skin Type is :
         </Text>
-
         <ImageWrapper>
           <Text variant="h3" fontColor={theme.colors.primary} align="center">
             {BAUMANN_RESULT.type}
@@ -51,8 +68,12 @@ export default function BaumannResultPage() {
           />
         </ImageWrapper>
         <Flex justifyContent="space-between" gap={48}>
-          <Button variant="outlined">Retry</Button>
-          <Button variant="filled">Share</Button>
+          <Button variant="outlined" onClick={handleClickResetButton}>
+            Retry
+          </Button>
+          <Button variant="filled" onClick={handleClickShareButton}>
+            Share
+          </Button>
         </Flex>
         <BaumannPercentResult skinType={BAUMANN_RESULT.type} scores={BAUMANN_RESULT.percents} />
       </Wrapper>
