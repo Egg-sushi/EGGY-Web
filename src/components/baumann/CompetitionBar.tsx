@@ -27,7 +27,7 @@ function CompetitionBar({
       <Text variant="body4" color={theme.colors.black} align="center">
         {title}
       </Text>
-      <Wrapper justifyContent="space-between">
+      <Wrapper justifyContent="space-between" alignContent="center">
         <ItemWrapper isLeft>
           <Text
             variant="body5"
@@ -68,44 +68,44 @@ function CompetitionBar({
 }
 
 const Wrapper = styled(Flex)`
-  display: flex;
   box-sizing: border-box;
   height: 12px;
   background: ${({ theme }) => theme.colors.blue50};
   border-radius: 12px;
 `;
 
-const LeftBar = styled.div<{ isActive: boolean; rate: number }>`
+const BaseActiveBar = styled.div<{ isActive: boolean; rate: number }>`
   position: absolute;
-  top: 0;
-  left: 0;
-  width: ${({ rate }) => `${rate}%`};
+  top: 1px;
   height: 12px;
   background: ${({ isActive, theme }) => (isActive ? theme.colors.primary : 'none')};
   border: ${({ rate, theme }) => (rate !== 0 ? `1px solid ${theme.colors.primary}` : 'none')};
+`;
+
+const LeftBar = styled(BaseActiveBar)`
+  left: 32px;
+  width: ${({ rate, isActive }) => `calc(${rate}% ${isActive ? '-' : '+'} 32px)`};
   border-radius: ${({ rate }) => `${rate === 100 ? '12px' : '12px 0 0 12px'}`};
 `;
 
-const RightBar = styled.div<{ isActive: boolean; rate: number }>`
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: ${({ rate }) => `${rate}%`};
-  height: 12px;
-  border: ${({ rate, theme }) => (rate !== 0 ? `1px solid ${theme.colors.primary}` : 'none')};
-  background: ${({ isActive, theme }) => (isActive ? theme.colors.primary : 'none')};
+const RightBar = styled(BaseActiveBar)`
+  right: 32px;
+  width: ${({ rate, isActive }) => `calc(${rate}% ${isActive ? '-' : '+'} 32px)`};
   border-radius: ${({ rate }) => `${rate === 100 ? '12px' : '0 12px 12px 0px'}`};
 `;
 
 const Bar = styled.div`
   position: relative;
-  left: 10px;
-  width: calc(100% - 40px);
+  flex-grow: 1;
 `;
 
 type IsLeft = { isLeft?: boolean };
 const ItemWrapper = styled.div<IsLeft>`
   position: relative;
+  left: ${({ isLeft }) => (isLeft ? '0px' : 'none')};
+  right: ${({ isLeft }) => (isLeft ? '0px' : '20px')};
+  flex-shrink: 0;
+  max-width: 32px;
 
   & > div {
     position: absolute;
