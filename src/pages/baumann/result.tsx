@@ -68,10 +68,10 @@ export default function BaumannResultPage() {
           />
         </ImageWrapper>
         <Flex justifyContent="space-between" gap={48}>
-          <Button variant="outlined" onClick={handleClickResetButton}>
+          <Button variant="outlined" onClick={handleClickResetButton} borderRadius={24}>
             Retry
           </Button>
-          <Button variant="filled" onClick={handleClickShareButton}>
+          <Button variant="filled" onClick={handleClickShareButton} borderRadius={24}>
             Share
           </Button>
         </Flex>
