@@ -80,10 +80,12 @@ const Wrapper = styled.button<StyleProps>`
   box-sizing: border-box;
   width: ${({ width }) => (typeof width === 'number' ? `${width}px` : width)};
   outline: none;
-  color: ${({ variant, theme, hierarchy }) =>
-    variant === 'outlined' && typeof hierarchy !== 'undefined'
-      ? Hierarchy[hierarchy].color
-      : theme.colors.white};
+  color: ${({ variant, theme, hierarchy }) => {
+    if (variant === 'outlined' && typeof hierarchy !== 'undefined') {
+      return Hierarchy[hierarchy];
+    }
+    return theme.colors.white;
+  }};
   border: ${({ variant, hierarchy }) => {
     if (variant === 'outlined' && typeof hierarchy !== 'undefined') {
       return `1px solid ${Hierarchy[hierarchy].border}`;
