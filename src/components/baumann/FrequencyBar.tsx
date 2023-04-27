@@ -28,7 +28,7 @@ function FrequencyBar({ answers, activeAnswer, onClickItem }: Props) {
               <Circle key={answer.id} isActive={isActive} />
               <CircleLabel
                 variant="body2"
-                color={isActive ? theme.colors.primary : theme.colors.gray500}
+                fontColor={isActive ? theme.colors.primary : theme.colors.gray500}
                 weight={isActive ? 800 : 400}
               >
                 {answer.answer}
