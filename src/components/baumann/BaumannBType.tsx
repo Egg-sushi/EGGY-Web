@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from '@emotion/styled';
 
 import type { BaumannQNA, BaumannQuestion } from '@/types/baumann';
 import { Flex, SkeletonImage, Text } from '@/components';
@@ -20,7 +21,7 @@ interface Props {
 
 function BaumannBType({ baumann, activeAnswer, onClickItem }: Props) {
   return (
-    <Flex as={'section'} flexDirection="column">
+    <StyledFlex as={'section'} flexDirection="column">
       <Text variant="body1">{baumann.question}</Text>
       <SkeletonImage
         width={180}
@@ -34,8 +35,12 @@ function BaumannBType({ baumann, activeAnswer, onClickItem }: Props) {
         activeAnswer={activeAnswer}
         onClickItem={onClickItem}
       />
-    </Flex>
+    </StyledFlex>
   );
 }
+
+const StyledFlex = styled(Flex)`
+  padding-bottom: 60px;
+`;
 
 export default BaumannBType;

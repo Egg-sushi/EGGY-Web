@@ -4,23 +4,38 @@ import styled from '@emotion/styled';
 import { useTheme } from '@emotion/react';
 
 import { DUMMY_BAUMANN_B } from '@/dummy/baumann';
-import { BaumannQNA, BaumannQuestion, UserAnswer } from '@/types/baumann';
-import { BaumannAType, BaumannBType, Button, Flex, Icon, Text } from '@/components';
+import { BaumannQNA, BaumannQuestion } from '@/types/baumann';
+import { Button, Flex, Icon, Text } from '@/components';
 import ProgressBar from '@/components/common/ProgressBar';
-
-const QNAComponentsByType = {
-  A: BaumannAType,
-  B: BaumannBType,
-} as const;
+import { getAnswers, saveAnswer, resetAnswers } from '@/utils/baumann';
+import useBaumann from '@/hooks/useBaumann';
 
 export default function BaumannTest() {
   const theme = useTheme();
-  const [userAnswer, setUserAnswer] = React.useState<UserAnswer[]>([]);
   const [activeAnswer, setActiveAnswer] = React.useState<BaumannQNA['Baumann_Answer'][0] | null>(
     null,
   );
-  const [stepIdx, setStepIdx] = React.useState<number>(0);
-  const BaumannQNAComponent = QNAComponentsByType[DUMMY_BAUMANN_B.questionType]; // 현재 타입에 따른 바우만 컴포넌트
+  const [currentQnaIndex, setCurrentQnaIndex] = React.useState<number>(0);
+  const topRef = React.useRef<HTMLDivElement>(null);
+
+  const {
+    qnaType,
+    currentQna,
+    prevQna,
+    nextQna,
+    isLastQna,
+    currentSubStepIndex,
+    currentStepIndex,
+    totalSubStepNum,
+    BaumannQNAComponent,
+  } = useBaumann(currentQnaIndex);
+
+  const handleScrollToTop = () => {
+    if (topRef?.current) {
+      const topElement = topRef.current as HTMLDivElement;
+      topElement.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }
+  };
 
   const stopSyntheticEvent = React.useCallback((e: React.BaseSyntheticEvent) => {
     e.preventDefault();
@@ -39,30 +54,49 @@ export default function BaumannTest() {
     [activeAnswer, stopSyntheticEvent],
   );
 
+  const loadAnswerFromSessionStorage = (qna: BaumannQNA) => {
+    const savedAnswerId = getAnswers()[qna.id];
+
+    setActiveAnswer(qna.Baumann_Answer.find((answer) => answer.id === savedAnswerId) || null);
+  };
+
   const handleClickPrev = React.useCallback(() => {
-    setStepIdx((prev) => prev - 1);
-    if (userAnswer.length === 0) {
+    if (currentQnaIndex <= 0) {
       return;
     }
-    setUserAnswer((prev) => prev.slice(0, -1));
-    setActiveAnswer(null);
-  }, [userAnswer.length]);
+
+    if (activeAnswer) {
+      saveAnswer({ questionId: currentQna.id, answerId: activeAnswer.id });
+    }
+
+    loadAnswerFromSessionStorage(prevQna);
+    setCurrentQnaIndex((prev) => prev - 1);
+  }, [activeAnswer, currentQna, currentQnaIndex, prevQna]);
 
   const handleClickNext = React.useCallback(() => {
-    setStepIdx((prev) => prev + 1);
-    if (activeAnswer == null) {
+    if (!activeAnswer) {
       return;
     }
-    setUserAnswer((prev) => [
-      ...prev,
-      { questionId: DUMMY_BAUMANN_B.id, answerId: activeAnswer.id },
-    ]);
-    setActiveAnswer(null);
-  }, [activeAnswer]);
+
+    saveAnswer({ questionId: currentQna.id, answerId: activeAnswer.id });
+
+    if (isLastQna) {
+      console.log(getAnswers());
+      console.log('검사 끝');
+      return;
+    }
+
+    loadAnswerFromSessionStorage(nextQna);
+    setCurrentQnaIndex((prev) => prev + 1);
+  }, [activeAnswer, currentQna, isLastQna, nextQna]);
 
   React.useEffect(() => {
-    console.log(userAnswer);
-  }, [userAnswer]);
+    resetAnswers();
+  }, []);
+
+  React.useEffect(() => {
+    handleScrollToTop();
+  }, [currentQnaIndex]);
 
   return (
     <>
@@ -72,20 +106,21 @@ export default function BaumannTest() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <TopRef ref={topRef} />
       <StyledProgressBar
-        currentStepIndex={stepIdx}
-        title="SEBUM"
-        currentSubStepIndex={4}
-        totalSubStepNum={15}
+        currentStepIndex={currentStepIndex}
+        title={currentQna.type}
+        currentSubStepIndex={currentSubStepIndex}
+        totalSubStepNum={totalSubStepNum}
         stepNames={['Step 1', 'Step 2', 'Step 3', 'Step 4']}
       />
-      <Content questionType={DUMMY_BAUMANN_B.questionType as BaumannQuestion['questionType']}>
+      <Content questionType={qnaType}>
         <BaumannQNAComponent
           baumann={{
-            id: DUMMY_BAUMANN_B.id,
-            question: DUMMY_BAUMANN_B.question,
-            answers: DUMMY_BAUMANN_B.Baumann_Answer,
-            imageUrl: DUMMY_BAUMANN_B.imageUrl,
+            id: currentQna.id,
+            question: currentQna.question,
+            answers: currentQna.Baumann_Answer,
+            imageUrl: currentQna?.imageUrl ?? DUMMY_BAUMANN_B.imageUrl,
           }}
           activeAnswer={activeAnswer}
           onClickItem={handleClickAnswerItem}
@@ -103,12 +138,12 @@ export default function BaumannTest() {
             </Button>
             <Button
               variant="filled"
-              Icon={<Icon type="rightArrow" width={14} height={14} fill={theme.colors.white} />}
+              Icon={<Icon type="rightArrow" fill={theme.colors.white} width={14} height={14} />}
               onClick={handleClickNext}
               iconPosition="end"
             >
               <Text variant="body2" fontColor={theme.colors.white}>
-                Next
+                {isLastQna ? 'End' : 'Next'}
               </Text>
             </Button>
           </Flex>
@@ -117,6 +152,8 @@ export default function BaumannTest() {
     </>
   );
 }
+
+const TopRef = styled.div``;
 
 const StyledProgressBar = styled(ProgressBar)`
   padding: 1rem 0;
@@ -130,7 +167,6 @@ const Content = styled.div<{ questionType: BaumannQuestion['questionType'] }>`
 `;
 
 const BottomPosition = styled.div`
-  width: calc(100% - 40px);
-  position: absolute;
+  padding: 50px 0;
   bottom: 50px;
 `;
