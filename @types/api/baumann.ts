@@ -1,6 +1,6 @@
 export interface BaumannResultResponse {
-  skinType: string;
-  scores: {
+  type: string;
+  percents: {
     D: number;
     O: number;
     S: number;
