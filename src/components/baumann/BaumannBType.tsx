@@ -1,9 +1,7 @@
 import React from 'react';
-import styled from '@emotion/styled';
-import Image from 'next/image';
 
 import type { BaumannQNA, BaumannQuestion } from '@/types/baumann';
-import { Flex, Text } from '@/components';
+import { Flex, SkeletonImage, Text } from '@/components';
 import FrequencyBar from './FrequencyBar';
 
 interface Props {
@@ -24,9 +22,13 @@ function BaumannBType({ baumann, activeAnswer, onClickItem }: Props) {
   return (
     <Flex as={'section'} flexDirection="column">
       <Text variant="body1">{baumann.question}</Text>
-      <ImageWrapper>
-        <Image width={180} height={180} src={baumann.imageUrl} alt="quiz-thumbnail" />
-      </ImageWrapper>
+      <SkeletonImage
+        width={180}
+        height={180}
+        src={baumann.imageUrl}
+        alt="quiz-thumbnail"
+        style={{ margin: '30px auto 50px auto' }}
+      />
       <FrequencyBar
         answers={baumann.answers}
         activeAnswer={activeAnswer}
@@ -35,9 +37,5 @@ function BaumannBType({ baumann, activeAnswer, onClickItem }: Props) {
     </Flex>
   );
 }
-
-const ImageWrapper = styled.div`
-  margin: 30px auto 50px auto;
-`;
 
 export default BaumannBType;

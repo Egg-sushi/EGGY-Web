@@ -1,9 +1,12 @@
+import type { ColorValueType } from '@/theme';
+import { colors } from '@/theme';
 import styled from '@emotion/styled';
 import React from 'react';
 
+type HierarchyType = 'primary' | 'secondary' | 'teritiary';
 interface Props extends React.ComponentPropsWithoutRef<'button'> {
   variant: 'filled' | 'outlined';
-  hierarchy?: 'primary' | 'secondary';
+  hierarchy?: HierarchyType;
   width?: React.CSSProperties['width'];
   disabled?: boolean;
   Icon?: React.ReactElement;
@@ -42,6 +45,27 @@ function Button(props: React.PropsWithChildren<Props>) {
   );
 }
 
+const Hierarchy: Record<
+  HierarchyType,
+  { color: ColorValueType; backgroundColor: ColorValueType; border: ColorValueType }
+> = {
+  primary: {
+    color: colors.primary,
+    border: colors.primary,
+    backgroundColor: colors.primary,
+  },
+  secondary: {
+    color: colors.secondary,
+    border: colors.secondary,
+    backgroundColor: colors.secondary,
+  },
+  teritiary: {
+    color: colors.teritiary,
+    border: colors.teritiary,
+    backgroundColor: colors.beige300,
+  },
+};
+
 type StyleProps = Pick<
   Props,
   'width' | 'borderRadius' | 'hierarchy' | 'variant' | 'disabled' | 'iconPosition'
@@ -56,25 +80,23 @@ const Wrapper = styled.button<StyleProps>`
   box-sizing: border-box;
   width: ${({ width }) => (typeof width === 'number' ? `${width}px` : width)};
   outline: none;
-  color: ${({ variant, theme, hierarchy }) =>
-    variant === 'outlined'
-      ? hierarchy === 'primary'
-        ? theme.colors.primary
-        : theme.colors.secondary
-      : theme.colors.white};
-  border: ${({ variant, hierarchy, theme }) => {
-    if (variant === 'outlined') {
-      return hierarchy === 'primary'
-        ? `1px solid ${theme.colors.primary}`
-        : `1px solid ${theme.colors.secondary}`;
+  color: ${({ variant, theme, hierarchy }) => {
+    if (variant === 'outlined' && typeof hierarchy !== 'undefined') {
+      return Hierarchy[hierarchy];
+    }
+    return theme.colors.white;
+  }};
+  border: ${({ variant, hierarchy }) => {
+    if (variant === 'outlined' && typeof hierarchy !== 'undefined') {
+      return `1px solid ${Hierarchy[hierarchy].border}`;
     }
     return 'none';
   }};
   border-radius: ${({ borderRadius }) =>
     typeof borderRadius === 'number' ? `${borderRadius}px` : borderRadius};
   background-color: ${({ variant, theme, hierarchy }) => {
-    if (variant === 'filled') {
-      return hierarchy === 'primary' ? theme.colors.primary : theme.colors.secondary;
+    if (variant === 'filled' && typeof hierarchy !== 'undefined') {
+      return Hierarchy[hierarchy].backgroundColor;
     }
     return theme.colors.white;
   }};

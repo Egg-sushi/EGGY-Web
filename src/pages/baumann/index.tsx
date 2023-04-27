@@ -3,7 +3,16 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
-import { Button, CircleCheckBox, Flex, Header, Icon, Text, Title } from '@/components';
+import {
+  Button,
+  CircleCheckBox,
+  Flex,
+  Header,
+  Icon,
+  SkeletonImage,
+  Text,
+  Title,
+} from '@/components';
 import { theme } from '@/theme';
 
 const BAUMANN_FEATURES = [
@@ -31,9 +40,14 @@ export default function BaumannIntroPage() {
           description={'Do you wanna know Your Skin Type?'}
           color={theme.colors.primary}
         />
-        <ImageWrapper>
-          <Image priority width={140} height={120} src="/Diamond2.png" alt="baumman-thumbnail" />
-        </ImageWrapper>
+        <SkeletonImage
+          priority
+          width={140}
+          height={120}
+          src="/Diamond2.png"
+          alt="baumman-thumbnail"
+          style={{ marginInline: 'auto' }}
+        />
         <Flex as={'ul'} flexDirection="column" gap={24}>
           {BAUMANN_FEATURES.map((feature) => (
             <FeatureItem key={feature}>
@@ -61,11 +75,6 @@ const Wrapper = styled(Flex)`
   padding-inline: 34px;
   height: calc(100% - 60px);
   background-color: ${({ theme }) => theme.colors.blue50};
-`;
-
-const ImageWrapper = styled.div`
-  position: relative;
-  text-align: center;
 `;
 
 const FeatureItem = styled.li`
