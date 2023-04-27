@@ -19,7 +19,7 @@ export default function Home() {
       </Head>
       <Header />
       <InfiniteScrollText row={5} />
-      <main style={{ paddingInline: 34 }}>
+      <main style={{ paddingInline: 34, paddingBottom: 80 }}>
         <Flex gap={24}>
           <Bar>
             <Circle isActive={true} y={0} />
@@ -45,22 +45,22 @@ export default function Home() {
                 </Text>
               </Button>
             </Card>
-            <Temp style={{ marginTop: 48, marginBottom: 36 }}>
+            <Flex style={{ marginTop: 48, marginBottom: 36 }}>
               <Text variant="h7" fontColor={theme.colors.gray400}>
                 Recommend K-Skincare
               </Text>
               <Text variant="body5" fontColor={theme.colors.gray400}>
                 : Do you wanna K-Skincare for your Skin Type?
               </Text>
-            </Temp>
-            <Temp>
+            </Flex>
+            <Flex>
               <Text variant="h7" fontColor={theme.colors.gray400}>
                 Check Skincare For You (OCR)
               </Text>
               <Text variant="body5" fontColor={theme.colors.gray400}>
                 : Do you wanna know if your Skincare fit your Skin Type?
               </Text>
-            </Temp>
+            </Flex>
           </Flex>
         </Flex>
       </main>
@@ -78,12 +78,6 @@ const Card = styled(Flex)`
   background: ${({ theme }) => theme.colors.blue50};
   box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.1);
   border-radius: 3px;
-`;
-
-const Temp = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
 `;
 
 const Bar = styled.div`
