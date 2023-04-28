@@ -1,17 +1,19 @@
 import Head from 'next/head';
 import React from 'react';
 import styled from '@emotion/styled';
+import { useRouter } from 'next/router';
 import { useTheme } from '@emotion/react';
 
 import { DUMMY_BAUMANN_B } from '@/dummy/baumann';
-import { BaumannQNA, BaumannQuestion } from '@/types/baumann';
 import { Button, Flex, Icon, Text } from '@/components';
+import { BaumannQNA, BaumannQuestion } from '@/types/baumann';
 import ProgressBar from '@/components/common/ProgressBar';
 import { getAnswers, saveAnswer, resetAnswers } from '@/utils/baumann';
 import useBaumann from '@/hooks/useBaumann';
 
 export default function BaumannTest() {
   const theme = useTheme();
+  const router = useRouter();
   const [activeAnswer, setActiveAnswer] = React.useState<BaumannQNA['Baumann_Answer'][0] | null>(
     null,
   );
@@ -77,18 +79,14 @@ export default function BaumannTest() {
     if (!activeAnswer) {
       return;
     }
-
     saveAnswer({ questionId: currentQna.id, answerId: activeAnswer.id });
-
     if (isLastQna) {
-      console.log(getAnswers());
-      console.log('검사 끝');
+      router.push('/baumann/result');
       return;
     }
-
     loadAnswerFromSessionStorage(nextQna);
     setCurrentQnaIndex((prev) => prev + 1);
-  }, [activeAnswer, currentQna, isLastQna, nextQna]);
+  }, [activeAnswer, currentQna.id, isLastQna, nextQna, router]);
 
   React.useEffect(() => {
     resetAnswers();

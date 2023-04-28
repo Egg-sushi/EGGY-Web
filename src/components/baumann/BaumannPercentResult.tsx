@@ -31,13 +31,12 @@ const BAUMANN_TEXT = [
   },
 ] as const;
 
-function BaumannPercentResult({ skinType, scores }: Props) {
+function BaumannPercentResult({ type, percents }: Props) {
   const theme = useTheme();
-
   return (
     <Flex as="section" flexDirection="column" gap={10}>
       <Text variant="body2" fontColor={theme.colors.blue800}>
-        Why {skinType} ?
+        Why {type} ?
       </Text>
       <FlexWithLine flexDirection="column" gap={16}>
         {BAUMANN_TEXT.map((baumannText) => (
@@ -45,9 +44,9 @@ function BaumannPercentResult({ skinType, scores }: Props) {
             key={baumannText.title}
             title={baumannText.title}
             firstItemText={baumannText.firstItemText}
-            firstItemRate={scores[baumannText.firstType]}
+            firstItemRate={percents[baumannText.firstType]}
             secondItemText={baumannText.secondItemText}
-            secondItemRate={scores[baumannText.secondType]}
+            secondItemRate={percents[baumannText.secondType]}
           />
         ))}
       </FlexWithLine>
