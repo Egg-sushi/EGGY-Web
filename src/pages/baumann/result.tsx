@@ -6,6 +6,7 @@ import { useTheme } from '@emotion/react';
 
 import { ColorValueType } from '@/theme';
 import { getAnswers, share } from '@/utils';
+import { BASE_FRONT_URL } from '@/constants';
 import { useCalculateSkinTypes } from '@/api/query';
 import { BaumannPercentResult, Button, Flex, Header, SkeletonImage, Text } from '@/components';
 
@@ -27,7 +28,7 @@ export default function BaumannResultPage() {
     const result = await share({
       title: 'Find your SkinType',
       text: 'Do you want to know your skinType?',
-      url: `https://eggy-frontend.netlify.app/baumann/shared/${calculatedSkinTypeData.data?.type}`,
+      url: `${BASE_FRONT_URL}/baumann/shared/${calculatedSkinTypeData.data?.type}`,
     });
     if (result === 'copiedToClipboard') {
       alert('Copy completed.');
