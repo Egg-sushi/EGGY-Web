@@ -1,7 +1,8 @@
+import React from 'react';
+import axios from 'axios';
 import Head from 'next/head';
 import Image from 'next/image';
 import styled from '@emotion/styled';
-import { useRouter } from 'next/router';
 
 import { theme } from '@/theme';
 import { CircleCheckBox, Flex, Header, Text, Title } from '@/components';
@@ -9,7 +10,35 @@ import { CircleCheckBox, Flex, Header, Text, Title } from '@/components';
 const OCR_FEATURES = ['Find your cosmetic', 'Is good for your skin?'];
 
 export default function OCRPage() {
-  const router = useRouter();
+  const [imageUrl, setImageUrl] = React.useState<string>('');
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+
+  const handleChangeFile = React.useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files && files.length > 0) {
+      setIsLoading(true);
+      const file = files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = async () => {
+        setImageUrl(reader.result as string);
+        const imageData = reader.result?.toString()?.split(',')[1];
+        if (imageData) {
+          try {
+            const response = await axios.post<{ text: string }>('/api/ocr', { imageData });
+            console.log(response.data.text);
+            // TODO: text를 가지고 백엔드에 검색해봐야 함
+          } catch (error) {
+            console.error(error);
+          } finally {
+            setIsLoading(false);
+          }
+        } else {
+          setIsLoading(false);
+        }
+      };
+    }
+  }, []);
 
   return (
     <>
@@ -27,6 +56,8 @@ export default function OCRPage() {
           description={'Do you want to check your cosmetics?'}
           color={theme.colors.black}
         />
+        {/* FIXME: spinner, 아래 이미지는 테스트용. 삭제해야 함 */}
+        {imageUrl && <Image src={imageUrl} alt="i" width={80} height={80} />}
         <Flex flexDirection="column" gap={16}>
           <Text variant="h4" fontColor={theme.colors.blue800}>
             Upload Image
@@ -38,7 +69,7 @@ export default function OCRPage() {
             alignContent="center"
             style={{ position: 'relative' }}
           >
-            <FileInput type="file" accept="image/*" capture />
+            <FileInput type="file" accept="image/*" capture onChange={handleChangeFile} />
             <Image
               src="/Upload.png"
               alt="upload-image"
