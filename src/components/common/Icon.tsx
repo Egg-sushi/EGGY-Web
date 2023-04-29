@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { LeftArrow, Menu, RightArrow, Search } from '../icons';
+import { Filter, LeftArrow, Menu, RightArrow, Search } from '../icons';
 import styled from '@emotion/styled';
 
 const ICONS = {
@@ -8,6 +8,7 @@ const ICONS = {
   rightArrow: <RightArrow />,
   menu: <Menu />,
   search: <Search />,
+  filter: <Filter />,
 };
 
 interface Props extends React.ComponentPropsWithoutRef<'svg'> {

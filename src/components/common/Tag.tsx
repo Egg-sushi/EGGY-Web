@@ -2,17 +2,32 @@ import styled from '@emotion/styled';
 
 import Text from './Text';
 import { ColorValueType, colors } from '@/theme';
+import { Flex } from '../styled';
+import Icon from './Icon';
 
 interface Props {
   size: 'sm';
   text: string;
   hierarchy: 'primary' | 'skyblue';
+  icons?: Parameters<typeof Icon>[0] & { position: 'start' | 'end' };
 }
 
 function Tag(props: Props) {
-  const { size, text, hierarchy, ...restProps } = props;
+  const { size, text, hierarchy, icons, ...restProps } = props;
 
-  return (
+  return icons ? (
+    <Wrapper variant="h9" size={size} hierarchy={hierarchy} {...restProps}>
+      <Flex
+        as={'span'}
+        flexDirection={icons.position === 'start' ? 'row' : 'row-reverse'}
+        gap={6}
+        alignItems="center"
+      >
+        <Icon {...icons} />
+        {text}
+      </Flex>
+    </Wrapper>
+  ) : (
     <Wrapper variant="h9" size={size} hierarchy={hierarchy} {...restProps}>
       {text}
     </Wrapper>
