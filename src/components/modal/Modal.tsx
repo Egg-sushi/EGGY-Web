@@ -50,10 +50,7 @@ function Modal({ type, ...modalProps }: Props) {
           onClick={() => modalProps.onClose()}
         />
       </Flex>
-      {React.cloneElement(ModalContentByType[type], {
-        onSaveClose: modalProps.onSaveClose,
-        data: modalProps.data,
-      })}
+      {React.cloneElement(ModalContentByType[type], modalProps)}
     </Wrapper>
   );
 }
