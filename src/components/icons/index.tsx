@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic';
 
+export const X = dynamic(() => import('./X.svg'));
 export const Menu = dynamic(() => import('./Menu.svg'));
 export const Filter = dynamic(() => import('./Filter.svg'));
 export const Search = dynamic(() => import('./Search.svg'));

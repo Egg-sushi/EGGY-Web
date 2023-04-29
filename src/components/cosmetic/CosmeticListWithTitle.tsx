@@ -2,8 +2,9 @@ import { useTheme } from '@emotion/react';
 
 import { Flex } from '@/components/styled';
 import type { Cosmetic } from '@/types/cosmetic';
-import { CosmeticListItem, Icon, SkeletonImage, Text } from '@/components';
+import { CosmeticListItem, Text } from '@/components';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 interface Props {
   title: string;
@@ -12,6 +13,7 @@ interface Props {
 
 function CosmeticListWithTitle({ title, cosmetics }: Props) {
   const theme = useTheme();
+  const router = useRouter();
 
   return (
     <Flex flexDirection="column" gap={16} justifyContent="space-between" alignItems="center">
@@ -19,7 +21,7 @@ function CosmeticListWithTitle({ title, cosmetics }: Props) {
         <Text variant="h6" fontColor={theme.colors.blue800}>
           {title}
         </Text>
-        <Link href={`/cosmetics/${title}`}>
+        <Link href={`/cosmetics?categories=${title}`}>
           <Text
             variant="body5"
             fontColor={theme.colors.blue500}
@@ -31,7 +33,11 @@ function CosmeticListWithTitle({ title, cosmetics }: Props) {
       </Flex>
       <Flex flexDirection="column" gap={16} style={{ width: '100%' }}>
         {cosmetics.map((cosmetic, idx) => (
-          <CosmeticListItem cosmetic={cosmetic} key={idx} />
+          <CosmeticListItem
+            cosmetic={cosmetic}
+            key={idx}
+            onClick={() => router.push(`/cosmetics/${cosmetic.id}`)}
+          />
         ))}
       </Flex>
     </Flex>

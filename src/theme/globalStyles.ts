@@ -175,6 +175,10 @@ export const globalStyles = css`
     height: 100%;
   }
 
+  .ReactModal__Overlay {
+    z-index: 999;
+  }
+
   padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom)
     env(safe-area-inset-left);
 `;

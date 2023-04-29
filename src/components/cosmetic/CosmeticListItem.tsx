@@ -7,13 +7,20 @@ import { Icon, SkeletonImage, Text } from '@/components';
 
 interface Props {
   cosmetic: Cosmetic;
+  onClick: VoidFunction;
 }
 
-function CosmeticListItem({ cosmetic }: Props) {
+function CosmeticListItem({ cosmetic, onClick }: Props) {
   const theme = useTheme();
 
   return (
-    <Flex justifyContent="space-between" alignItems="center" gap={20} style={{ width: '100%' }}>
+    <Flex
+      justifyContent="space-between"
+      alignItems="center"
+      gap={20}
+      style={{ width: '100%' }}
+      onClick={onClick}
+    >
       <ProductImage src={cosmetic.imageUrl} alt={'cosmetic-item-image'} width={50} height={50} />
       <Flex flexDirection="column" gap={8} flex={1} flexShrink={0}>
         <Text variant="h7">{cosmetic.title}</Text>

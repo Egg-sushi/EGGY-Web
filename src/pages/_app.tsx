@@ -1,4 +1,5 @@
 import React from 'react';
+import Modal from 'react-modal';
 import type { AppProps } from 'next/app';
 import { Global, ThemeProvider } from '@emotion/react';
 import { ReactQueryDevtools } from 'react-query/devtools';
@@ -36,3 +37,5 @@ export default function App({ Component, pageProps }: AppProps) {
     </ThemeProvider>
   );
 }
+
+Modal.setAppElement('#__next');

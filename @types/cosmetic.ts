@@ -18,3 +18,8 @@ export interface Cosmetic {
   Brand: Brand;
   category: Category;
 }
+
+export interface CosmeticFilter {
+  categories: string[];
+  search: string;
+}
