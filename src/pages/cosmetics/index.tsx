@@ -1,10 +1,53 @@
+import React from 'react';
 import Head from 'next/head';
-
-import { DUMMY_COSMETIC } from '@/dummy/cosmetic';
-import { CosmeticListWithTitle, Flex, Header } from '@/components';
 import styled from '@emotion/styled';
+import { useRouter } from 'next/router';
+import { ReadonlyURLSearchParams, useSearchParams } from 'next/navigation';
+
+import { useDisclosure } from '@/hooks';
+import { DUMMY_COSMETIC } from '@/dummy/cosmetic';
+import type { CosmeticFilter } from '@/types/cosmetic';
+import { CosmeticListWithTitle, Flex, Header, Modal, SearchBar } from '@/components';
+
+const initialFilters = (searchParams: ReadonlyURLSearchParams) => ({
+  categories: searchParams.get('categories')?.split(',') ?? [],
+  search: searchParams.get('search') ?? '',
+});
 
 export default function CosmeticList() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const { isOpen, onClose, onOpen } = useDisclosure();
+  const [filters, setFilters] = React.useState<CosmeticFilter>(initialFilters(searchParams));
+
+  const saveOnParams = React.useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams);
+
+      params.set(name, value);
+      return params.toString();
+    },
+    [searchParams],
+  );
+
+  const handleFilterModalClose = React.useCallback(
+    (categories: CosmeticFilter['categories']) => {
+      setFilters((prev) => ({ ...prev, categories }));
+      router.push(`/cosmetics?${saveOnParams('categories', categories.map((v) => v).join(','))}`);
+      onClose();
+    },
+    [onClose, router, saveOnParams],
+  );
+
+  const handleClickSearch = React.useCallback(() => {
+    router.push(`/cosmetics?${saveOnParams('search', filters.search)}`);
+  }, [filters.search, router, saveOnParams]);
+
+  React.useEffect(() => {
+    const initFilters = initialFilters(searchParams);
+    setFilters({ ...initFilters, categories: initFilters.categories.filter((v) => v !== '') });
+  }, [searchParams]);
+
   return (
     <>
       <Head>
@@ -15,21 +58,35 @@ export default function CosmeticList() {
       </Head>
       <Header />
       <main style={{ paddingInline: 34, paddingBlock: 80 }}>
-        <FlexWithLine flexDirection="column" gap={32}>
+        <SearchBar
+          value={filters.search}
+          filters={filters.categories}
+          onChange={(e) => setFilters((prev) => ({ ...prev, search: e.target.value }))}
+          onClickFilter={onOpen}
+          onSearch={handleClickSearch}
+        />
+        <FlexWithLine flexDirection="column" gap={32} style={{ marginTop: 28 }}>
           <CosmeticListWithTitle
             title={'SERUM'}
             cosmetics={[...Array(3)].map(() => DUMMY_COSMETIC)}
           />
           <CosmeticListWithTitle
-            title={'SERUM'}
+            title={'Cleansing'}
             cosmetics={[...Array(3)].map(() => DUMMY_COSMETIC)}
           />
           <CosmeticListWithTitle
-            title={'SERUM'}
+            title={'LOTION'}
             cosmetics={[...Array(3)].map(() => DUMMY_COSMETIC)}
           />
         </FlexWithLine>
       </main>
+      <Modal
+        type="filter"
+        isOpen={isOpen}
+        onClose={onClose}
+        onSaveClose={handleFilterModalClose}
+        data={filters}
+      />
     </>
   );
 }
