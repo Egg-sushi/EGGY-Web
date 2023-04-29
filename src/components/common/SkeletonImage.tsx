@@ -29,7 +29,7 @@ function SkeletonImage(props: Props) {
   const imageRef = React.useRef<HTMLImageElement | null>(null);
   const [isLoaded, setIsLoaded] = React.useState<boolean>(false);
 
-  const { src, alt, style, width, height, priority, placeholder = 'empty' } = props;
+  const { src, alt, style, width, height, priority, placeholder = 'empty', ...restProps } = props;
 
   React.useEffect(() => {
     const handleLoadImage = () => setIsLoaded(true);
@@ -51,7 +51,7 @@ function SkeletonImage(props: Props) {
   }, [imageRef]);
 
   return (
-    <Wrapper width={width} height={height} style={style}>
+    <Wrapper width={width} height={height} style={style} {...restProps}>
       <Image
         ref={imageRef}
         priority={priority}

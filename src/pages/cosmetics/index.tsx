@@ -1,5 +1,8 @@
-import { Header } from '@/components';
 import Head from 'next/head';
+
+import { DUMMY_COSMETIC } from '@/dummy/cosmetic';
+import { CosmeticListWithTitle, Flex, Header } from '@/components';
+import styled from '@emotion/styled';
 
 export default function CosmeticList() {
   return (
@@ -11,7 +14,29 @@ export default function CosmeticList() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <main style={{ paddingInline: 34, paddingTop: 80 }}>Cosmetic List</main>
+      <main style={{ paddingInline: 34, paddingBlock: 80 }}>
+        <FlexWithLine flexDirection="column" gap={32}>
+          <CosmeticListWithTitle
+            title={'SERUM'}
+            cosmetics={[...Array(3)].map(() => DUMMY_COSMETIC)}
+          />
+          <CosmeticListWithTitle
+            title={'SERUM'}
+            cosmetics={[...Array(3)].map(() => DUMMY_COSMETIC)}
+          />
+          <CosmeticListWithTitle
+            title={'SERUM'}
+            cosmetics={[...Array(3)].map(() => DUMMY_COSMETIC)}
+          />
+        </FlexWithLine>
+      </main>
     </>
   );
 }
+
+const FlexWithLine = styled(Flex)`
+  & > div:not(:first-of-type) {
+    padding-top: 16px;
+    border-top: ${({ theme }) => `1px solid ${theme.colors.gray200}`};
+  }
+`;
