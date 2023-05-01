@@ -5,7 +5,7 @@ import { useTheme } from '@emotion/react';
 
 import { Flex } from '../styled';
 import { Icon, Text } from '../common';
-import CosmeticSearchFilter from './CosmeticSearchFilter';
+import ProductSearchFilter from './ProductSearchFilter';
 
 interface Props extends ReactModal.Props {
   type: 'filter';
@@ -16,7 +16,7 @@ interface Props extends ReactModal.Props {
 
 const ModalContentByType: Record<Props['type'], React.ReactElement> = {
   filter: (
-    <CosmeticSearchFilter
+    <ProductSearchFilter
       onSaveClose={() => {
         alert('No Props');
       }}

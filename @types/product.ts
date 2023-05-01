@@ -9,7 +9,7 @@ export interface Brand {
   title: string;
 }
 
-export interface Cosmetic {
+export interface Product {
   id: number;
   title: string;
   description: string;
@@ -19,7 +19,7 @@ export interface Cosmetic {
   category: Category;
 }
 
-export interface CosmeticFilter {
+export interface ProductFilter {
   categories: string[];
   search: string;
 }

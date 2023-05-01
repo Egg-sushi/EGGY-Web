@@ -4,11 +4,11 @@ import styled from '@emotion/styled';
 
 import { Button, Tag, Text } from '../common';
 import { Flex } from '../styled';
-import type { CosmeticFilter } from '@/types/cosmetic';
+import type { ProductFilter } from '@/types/product';
 
 interface Props {
-  data?: CosmeticFilter;
-  onSaveClose: (data: CosmeticFilter['categories']) => void;
+  data?: ProductFilter;
+  onSaveClose: (data: ProductFilter['categories']) => void;
 }
 
 function CosmeticSearchFilter({ data, onSaveClose }: Props) {

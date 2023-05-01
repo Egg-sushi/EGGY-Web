@@ -1,6 +1,6 @@
-import { Cosmetic } from '@/types/cosmetic';
+import { Product } from '@/types/product';
 
-export const DUMMY_COSMETIC: Cosmetic = {
+export const DUMMY_PRODUCT: Product = {
   id: 1,
   title: 'Saturn Sulfur',
   description: 'description',

@@ -5,20 +5,20 @@ import { useRouter } from 'next/router';
 import { ReadonlyURLSearchParams, useSearchParams } from 'next/navigation';
 
 import { useDisclosure } from '@/hooks';
-import { DUMMY_COSMETIC } from '@/dummy/cosmetic';
-import type { CosmeticFilter } from '@/types/cosmetic';
-import { CosmeticListWithTitle, Flex, Header, Modal, SearchBar } from '@/components';
+import { DUMMY_PRODUCT } from '@/dummy/cosmetic';
+import type { ProductFilter } from '@/types/product';
+import { ProductListWithTitle, Flex, Header, Modal, SearchBar } from '@/components';
 
 const initialFilters = (searchParams: ReadonlyURLSearchParams) => ({
   categories: searchParams.get('categories')?.split(',') ?? [],
   search: searchParams.get('search') ?? '',
 });
 
-export default function CosmeticList() {
+export default function ProductList() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { isOpen, onClose, onOpen } = useDisclosure();
-  const [filters, setFilters] = React.useState<CosmeticFilter>(initialFilters(searchParams));
+  const [filters, setFilters] = React.useState<ProductFilter>(initialFilters(searchParams));
 
   const saveOnParams = React.useCallback(
     (name: string, value: string) => {
@@ -31,16 +31,16 @@ export default function CosmeticList() {
   );
 
   const handleFilterModalClose = React.useCallback(
-    (categories: CosmeticFilter['categories']) => {
+    (categories: ProductFilter['categories']) => {
       setFilters((prev) => ({ ...prev, categories }));
-      router.push(`/cosmetics?${saveOnParams('categories', categories.map((v) => v).join(','))}`);
+      router.push(`/products?${saveOnParams('categories', categories.map((v) => v).join(','))}`);
       onClose();
     },
     [onClose, router, saveOnParams],
   );
 
   const handleClickSearch = React.useCallback(() => {
-    router.push(`/cosmetics?${saveOnParams('search', filters.search)}`);
+    router.push(`/products?${saveOnParams('search', filters.search)}`);
   }, [filters.search, router, saveOnParams]);
 
   React.useEffect(() => {
@@ -66,17 +66,14 @@ export default function CosmeticList() {
           onSearch={handleClickSearch}
         />
         <FlexWithLine flexDirection="column" gap={32} style={{ marginTop: 28 }}>
-          <CosmeticListWithTitle
-            title={'SERUM'}
-            cosmetics={[...Array(3)].map(() => DUMMY_COSMETIC)}
-          />
-          <CosmeticListWithTitle
+          <ProductListWithTitle title={'SERUM'} products={[...Array(3)].map(() => DUMMY_PRODUCT)} />
+          <ProductListWithTitle
             title={'Cleansing'}
-            cosmetics={[...Array(3)].map(() => DUMMY_COSMETIC)}
+            products={[...Array(3)].map(() => DUMMY_PRODUCT)}
           />
-          <CosmeticListWithTitle
+          <ProductListWithTitle
             title={'LOTION'}
-            cosmetics={[...Array(3)].map(() => DUMMY_COSMETIC)}
+            products={[...Array(3)].map(() => DUMMY_PRODUCT)}
           />
         </FlexWithLine>
       </main>

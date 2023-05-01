@@ -1,7 +1,7 @@
 import { Header } from '@/components';
 import Head from 'next/head';
 
-export default function CosmeticDetailPage() {
+export default function ProductDetailPage() {
   return (
     <>
       <Head>
