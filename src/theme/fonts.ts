@@ -49,6 +49,12 @@ export const fonts = {
     letter-spacing: -0.015em;
     line-height: 1.4;
   `,
+  /** font-size: 10px */
+  h9: css`
+    font-size: 0.625rem;
+    letter-spacing: -0.015em;
+    line-height: 1.4;
+  `,
   /** font-size: 18px */
   body1: css`
     font-size: 1.125rem;

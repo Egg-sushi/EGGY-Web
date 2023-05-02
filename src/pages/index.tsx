@@ -24,7 +24,7 @@ export default function Home() {
           <Bar>
             <Circle isActive={true} y={0} />
             <Circle isActive={false} y={164} />
-            <Circle isActive={false} y={246} />
+            <Circle isActive={false} y={244} />
           </Bar>
           <Flex flexDirection="column">
             <Card as={'section'} flexDirection="column" gap={'8px'}>
@@ -45,7 +45,7 @@ export default function Home() {
                 </Text>
               </Button>
             </Card>
-            <Flex style={{ marginTop: 48, marginBottom: 36 }}>
+            <Flex flexDirection="column" gap={8} style={{ marginTop: 48, marginBottom: 36 }}>
               <Text variant="h7" fontColor={theme.colors.gray400}>
                 Recommend K-Skincare
               </Text>
@@ -53,7 +53,7 @@ export default function Home() {
                 : Do you wanna K-Skincare for your Skin Type?
               </Text>
             </Flex>
-            <Flex>
+            <Flex flexDirection="column" gap={8}>
               <Text variant="h7" fontColor={theme.colors.gray400}>
                 Check Skincare For You (OCR)
               </Text>

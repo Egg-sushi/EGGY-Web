@@ -1,7 +1,7 @@
 import { Header } from '@/components';
 import Head from 'next/head';
 
-export default function CosmeticList() {
+export default function ProductDetailPage() {
   return (
     <>
       <Head>
@@ -11,7 +11,12 @@ export default function CosmeticList() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <main style={{ paddingInline: 34, paddingTop: 80 }}>Cosmetic List</main>
+      <div>hihi</div>
+      <div>hihi</div>
+      <div>hihi</div>
+      <div>hihi</div>
+      <div>hihi</div>
+      <div>Cosmetic Detail</div>
     </>
   );
 }

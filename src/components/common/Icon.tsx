@@ -1,12 +1,15 @@
 import React from 'react';
 
-import { LeftArrow, Menu, RightArrow } from '../icons';
+import { Filter, LeftArrow, Menu, RightArrow, Search, X } from '../icons';
 import styled from '@emotion/styled';
 
 const ICONS = {
+  x: <X />,
+  menu: <Menu />,
+  search: <Search />,
+  filter: <Filter />,
   leftArrow: <LeftArrow />,
   rightArrow: <RightArrow />,
-  menu: <Menu />,
 };
 
 interface Props extends React.ComponentPropsWithoutRef<'svg'> {
