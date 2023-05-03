@@ -25,14 +25,13 @@ function ProgressBar(props: React.PropsWithChildren<Props>) {
         <b>{currentSubStepIndex}</b>/{totalSubStepNum}
       </SubTitle>
       <Wrapper>
-        <StatusBar width={`${(100 / stepNum) * (stepNum - 1)}%`}>
+        <StatusBar>
           <CurrentStatusBar width={`${(100 / (stepNum - 1)) * currentStepIndex}%`} />
         </StatusBar>
         <StepWrapper>
           {stepNames.map((name, idx) => (
             <Step
               key={idx}
-              width={`${100 / stepNum}%`}
               isVisited={idx <= currentStepIndex}
               isCurrent={idx === currentStepIndex}
             >
@@ -65,16 +64,18 @@ const SubTitle = styled(Text)`
 
 const Wrapper = styled.div`
   width: 100%;
+  padding: 0 20px;
+  box-sizing: border-box;
 `;
 
 interface StyleProps {
-  width: React.CSSProperties['width'];
+  width?: React.CSSProperties['width'];
   isVisited?: boolean;
   isCurrent?: boolean;
 }
-const StatusBar = styled.div<StyleProps>`
+const StatusBar = styled.div`
   height: 2px;
-  width: ${({ width }) => (typeof width === 'number' ? `${width}px` : width)};
+  width: calc(100% - (0.75rem * 3));
   background: ${({ theme }) => theme.colors.gray200};
   position: relative;
   top: 20px;
@@ -97,22 +98,27 @@ const StepWrapper = styled.ul`
   padding: 0;
   font-size: 0;
   list-style: none;
+
+  display: flex;
+  justify-content: space-between;
 `;
 
 const StyledText = styled(Text)`
   text-align: center;
-  overflow: hidden;
   text-overflow: ellipsis;
   vertical-align: top;
 `;
 
 const Step = styled.li<StyleProps>`
-  display: inline-block;
-  width: ${({ width }) => (typeof width === 'number' ? `${width}px` : width)};
+  display: flex;
   padding-top: 35px;
   position: relative;
 
   transition: color 0.5s linear 1s;
+
+  justify-content: center;
+
+  width: calc(0.75rem * 3);
 
   &:before {
     content: ' ';
