@@ -1,11 +1,12 @@
-import { useGetBaumannQuestions, useGetBaumannTest } from '@/api/query';
-import { BaumannAType, BaumannBType } from '@/components';
-import { DUMMY_BAUMANN_A, DUMMY_BAUMANN_B } from '@/dummy/baumann';
-import { BaumannQuestion } from '@/types/baumann';
+import { useGetBaumannQuestions } from '@/api/query';
+import type { BaumannQuestion } from '@/types/baumann';
+import { BaumannLONGSTRINGType, BaumannPLAINType } from '@/components';
+import { DUMMY_BAUMANN_LONG_STRING, DUMMY_BAUMANN_PLAIN } from '@/dummy/baumann';
 
 const QNAComponentsByType = {
-  A: BaumannAType,
-  B: BaumannBType,
+  LONG_STRING: BaumannLONGSTRINGType,
+  PLAIN: BaumannPLAINType,
+  GRID_PICTURE: BaumannLONGSTRINGType,
 } as const;
 
 type BaumannQNASubSteps = Record<
@@ -15,7 +16,7 @@ type BaumannQNASubSteps = Record<
 
 export default function useBaumann(currentQnaIndex: number) {
   const { data, isLoading, isError } = useGetBaumannQuestions();
-  const dummy = [DUMMY_BAUMANN_A, DUMMY_BAUMANN_B];
+  const dummy = [DUMMY_BAUMANN_LONG_STRING, DUMMY_BAUMANN_PLAIN];
   const baumannQNAList = !isLoading && !isError ? data ?? dummy : dummy;
 
   let tmp = 0;
@@ -32,7 +33,7 @@ export default function useBaumann(currentQnaIndex: number) {
   const qnaSize = baumannQNAList.length;
 
   const currentQna = baumannQNAList[currentQnaIndex];
-  const qnaType = currentQna?.questionType ?? 'A';
+  const qnaType = currentQna?.questionType;
 
   return {
     qnaType,

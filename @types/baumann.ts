@@ -2,7 +2,7 @@ export interface BaumannQuestion {
   id: number;
   question: string;
   type: 'SEBUM' | 'SENSITIVITY' | 'PIGMENTATION' | 'WRINKLE';
-  questionType: 'A' | 'B';
+  questionType: 'PLAIN' | 'LONG_STRING' | 'GRID_PICTURE';
   imageUrl: string;
 }
 
