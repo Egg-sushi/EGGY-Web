@@ -8,6 +8,9 @@ const nextConfig = {
     });
     return config;
   },
+  images: {
+    domains: [process.env.S3_BUCKET]
+  }
 };
 
 module.exports = nextConfig
