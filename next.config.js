@@ -9,7 +9,7 @@ const nextConfig = {
     return config;
   },
   images: {
-    domains: [process.env.S3_BUCKET]
+    domains: [process.env.NEXT_PUBLIC_S3_BUCKET]
   }
 };
 
