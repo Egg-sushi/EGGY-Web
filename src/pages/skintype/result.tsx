@@ -10,7 +10,7 @@ import { BASE_FRONT_URL } from '@/constants';
 import { useCalculateSkinTypes } from '@/api/query';
 import { BaumannPercentResult, Button, Flex, Header, SkeletonImage, Text } from '@/components';
 
-export default function BaumannResultPage() {
+export default function SkinTypeTestResultPage() {
   const theme = useTheme();
   const router = useRouter();
   const calculatedSkinTypeData = useCalculateSkinTypes(
@@ -21,14 +21,14 @@ export default function BaumannResultPage() {
   );
 
   const handleClickResetButton = React.useCallback(() => {
-    router.push('/baumann');
+    router.push('/skintype');
   }, [router]);
 
   const handleClickShareButton = React.useCallback(async () => {
     const result = await share({
       title: 'Find your SkinType',
       text: 'Do you want to know your skinType?',
-      url: `${BASE_FRONT_URL}/baumann/shared/${calculatedSkinTypeData.data?.type}`,
+      url: `${BASE_FRONT_URL}/skintype/shared/${calculatedSkinTypeData.data?.type}`,
     });
     if (result === 'copiedToClipboard') {
       alert('Copy completed.');

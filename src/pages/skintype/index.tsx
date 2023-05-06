@@ -21,7 +21,7 @@ const BAUMANN_FEATURES = [
   'Improved your skin health 3',
 ];
 
-export default function BaumannIntroPage() {
+export default function SkinTypeTestIntroPage() {
   const router = useRouter();
 
   return (

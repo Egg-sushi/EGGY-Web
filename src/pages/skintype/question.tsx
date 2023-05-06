@@ -10,7 +10,7 @@ import ProgressBar from '@/components/common/ProgressBar';
 import { getAnswers, saveAnswer, resetAnswers } from '@/utils/baumann';
 import useBaumann from '@/hooks/useBaumann';
 
-export default function BaumannTest() {
+export default function SkinTypeTest() {
   const theme = useTheme();
   const router = useRouter();
   const [activeAnswer, setActiveAnswer] = React.useState<BaumannQNA['Baumann_Answer'][0] | null>(

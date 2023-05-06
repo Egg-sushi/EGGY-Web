@@ -29,7 +29,7 @@ export default function Home() {
           <Flex flexDirection="column">
             <Card as={'section'} flexDirection="column" gap={'8px'}>
               <Text variant="h7" fontColor={theme.colors.primary}>
-                Baumann Test
+                SkinType Test
               </Text>
               <Text variant="body5" fontColor={theme.colors.primary}>
                 Lorem Ipsum is simply dummy text of the printing and typesetting. Lorem Ipsum has
@@ -39,7 +39,7 @@ export default function Home() {
                 <Text
                   variant="body5"
                   fontColor={theme.colors.white}
-                  onClick={() => router.push('/baumann')}
+                  onClick={() => router.push('/skintype')}
                 >
                   Try it
                 </Text>
