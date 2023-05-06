@@ -10,7 +10,7 @@ export type NavigationKey =
 
 export type DynamicNavigationKey = Extract<NavigationKey, 'productItem'>;
 type NavigationHref<Key extends NavigationKey> = Key extends DynamicNavigationKey
-  ? (id: number) => string
+  ? (id: string) => string
   : string;
 
 type NavigationEntries = {
@@ -54,7 +54,7 @@ export const NAVIGATION: NavigationEntries = {
   },
   productItem: {
     title: 'Cosmetic',
-    href: (id: number) => `/products/${id}`,
+    href: (id: string) => `/products/${id}`,
     header: false,
   },
   login: {

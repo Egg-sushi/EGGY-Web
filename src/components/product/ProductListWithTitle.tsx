@@ -36,7 +36,7 @@ function ProductListWithTitle({ title, products }: Props) {
           <ProductListItem
             product={product}
             key={idx}
-            onClick={() => link.to('productItem', product.id)}
+            onClick={() => link.to('productItem', `${product.id}`)}
           />
         ))}
       </Flex>
