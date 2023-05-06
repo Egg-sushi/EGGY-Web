@@ -1,9 +1,9 @@
 import React from 'react';
 import Head from 'next/head';
 import styled from '@emotion/styled';
-import { useRouter } from 'next/router';
 import { useTheme } from '@emotion/react';
 
+import useLink from '@/hooks/useLink';
 import { ColorValueType } from '@/theme';
 import { getAnswers, share } from '@/utils';
 import { BASE_FRONT_URL } from '@/constants';
@@ -12,7 +12,8 @@ import { BaumannPercentResult, Button, Flex, Header, SkeletonImage, Text } from 
 
 export default function SkinTypeTestResultPage() {
   const theme = useTheme();
-  const router = useRouter();
+  const link = useLink();
+
   const calculatedSkinTypeData = useCalculateSkinTypes(
     Object.entries(getAnswers()).map((answer) => ({
       questionId: Number(answer[0]),
@@ -21,8 +22,8 @@ export default function SkinTypeTestResultPage() {
   );
 
   const handleClickResetButton = React.useCallback(() => {
-    router.push('/skintype');
-  }, [router]);
+    link.to('skinTypeTestIntro');
+  }, [link]);
 
   const handleClickShareButton = React.useCallback(async () => {
     const result = await share({
@@ -121,7 +122,7 @@ export default function SkinTypeTestResultPage() {
               variant="filled"
               hierarchy="teritiary"
               style={{ marginTop: 32, paddingBlock: 12 }}
-              onClick={() => router.push('/products')}
+              onClick={() => link.to('products')}
             >
               Find more your Cosmetic !
             </Button>

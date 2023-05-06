@@ -1,13 +1,13 @@
 import Head from 'next/head';
 import styled from '@emotion/styled';
-import { useRouter } from 'next/router';
 import { useTheme } from '@emotion/react';
 
+import useLink from '@/hooks/useLink';
 import { Button, Flex, Header, LandingScrollText, Text } from '@/components';
 
 export default function Home() {
   const theme = useTheme();
-  const router = useRouter();
+  const link = useLink();
 
   return (
     <>
@@ -39,7 +39,7 @@ export default function Home() {
                 <Text
                   variant="body5"
                   fontColor={theme.colors.white}
-                  onClick={() => router.push('/skintype')}
+                  onClick={() => link.to('skinTypeTestIntro')}
                 >
                   Try it
                 </Text>
