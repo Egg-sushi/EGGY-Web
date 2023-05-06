@@ -98,8 +98,8 @@ export default function BaumannResultPage() {
             Discover Your Cosmetic
           </Text>
           <Flex flexDirection="column" gap={16}>
-            <CosmeticCard gap={24}>
-              <CosmeticCardBackground />
+            <ProductCard gap={24}>
+              <ProductCardBackground />
               <SkeletonImage
                 priority
                 width={74}
@@ -116,12 +116,12 @@ export default function BaumannResultPage() {
                   This cosmetic suits you well!
                 </Text>
               </Flex>
-            </CosmeticCard>
+            </ProductCard>
             <Button
               variant="filled"
               hierarchy="teritiary"
               style={{ marginTop: 32, paddingBlock: 12 }}
-              onClick={() => router.push('/cosmetics')}
+              onClick={() => router.push('/products')}
             >
               Find more your Cosmetic !
             </Button>
@@ -151,13 +151,13 @@ const Card = styled(Text)`
   filter: drop-shadow(2px 4px 4px rgba(0, 0, 0, 0.1));
 `;
 
-const CosmeticCard = styled(Flex)`
+const ProductCard = styled(Flex)`
   position: relative;
   margin-top: 16px;
   padding-left: 24px;
 `;
 
-const CosmeticCardBackground = styled.div`
+const ProductCardBackground = styled.div`
   width: 100%;
   height: calc(100% + 48px);
   padding: 32px 24px;

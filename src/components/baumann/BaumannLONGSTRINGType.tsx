@@ -17,7 +17,7 @@ interface Props {
   ) => void;
 }
 
-function BaumannAType({ baumann, activeAnswer, onClickItem }: Props) {
+function BaumannLONGSTRINGType({ baumann, activeAnswer, onClickItem }: Props) {
   return (
     <Flex as={'section'} flexDirection="column" gap={50}>
       <Text variant="body1">{baumann.question}</Text>
@@ -30,7 +30,7 @@ function BaumannAType({ baumann, activeAnswer, onClickItem }: Props) {
             onClick={(e) => onClickItem(answer, e)}
           >
             <CircleCheckBox checked={answer === activeAnswer} />
-            <Text variant="body2">{answer.answer}</Text>
+            <StyledText variant="body2" dangerouslySetInnerHTML={{ __html: answer.answer }} />
           </AnswerItem>
         ))}
       </Flex>
@@ -63,4 +63,15 @@ const AnswerItem = styled(Flex)<StyleAnswerProps>`
   }
 `;
 
-export default BaumannAType;
+const StyledText = styled(Text)`
+  span {
+    display: inline-block;
+    width: 100%;
+  }
+
+  strong {
+    font-weight: 700;
+  }
+`;
+
+export default BaumannLONGSTRINGType;

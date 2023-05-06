@@ -4,7 +4,6 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useTheme } from '@emotion/react';
 
-import { DUMMY_BAUMANN_B } from '@/dummy/baumann';
 import { Button, Flex, Icon, Text } from '@/components';
 import { BaumannQNA, BaumannQuestion } from '@/types/baumann';
 import ProgressBar from '@/components/common/ProgressBar';
@@ -118,7 +117,7 @@ export default function BaumannTest() {
             id: currentQna.id,
             question: currentQna.question,
             answers: currentQna.Baumann_Answer,
-            imageUrl: currentQna?.imageUrl ?? DUMMY_BAUMANN_B.imageUrl,
+            imageUrl: currentQna?.imageUrl,
           }}
           activeAnswer={activeAnswer}
           onClickItem={handleClickAnswerItem}
@@ -161,7 +160,7 @@ const Content = styled.div<{ questionType: BaumannQuestion['questionType'] }>`
   padding-top: 40px;
   padding-inline: 20px;
   height: calc(100% - 160px);
-  background-color: ${({ theme, questionType }) => questionType === 'B' && theme.colors.blue50};
+  background-color: ${({ theme, questionType }) => questionType === 'PLAIN' && theme.colors.blue50};
 `;
 
 const BottomPosition = styled.div`
