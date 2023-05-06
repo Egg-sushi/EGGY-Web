@@ -6,9 +6,10 @@ import { useTheme } from '@emotion/react';
 import { Flex } from '../styled';
 import { Icon, Text } from '../common';
 import ProductSearchFilter from './ProductSearchFilter';
+import HeaderModal from './HeaderModal';
 
 interface Props extends ReactModal.Props {
-  type: 'filter';
+  type: 'filter' | 'header';
   data?: any;
   onClose: Function;
   onSaveClose?: Function;
@@ -22,6 +23,7 @@ const ModalContentByType: Record<Props['type'], React.ReactElement> = {
       }}
     />
   ),
+  header: <HeaderModal />,
 };
 
 function Modal({ type, ...modalProps }: Props) {
@@ -39,7 +41,7 @@ function Modal({ type, ...modalProps }: Props) {
         }}
       >
         <Text variant="h2" fontColor={theme.colors.gray400} fontFamily="monteserrat">
-          {type}
+          {type.toUpperCase()}
         </Text>
         <Icon
           type="x"
@@ -48,6 +50,7 @@ function Modal({ type, ...modalProps }: Props) {
           stroke={theme.colors.gray400}
           role="button"
           onClick={() => modalProps.onClose()}
+          style={{ cursor: 'pointer' }}
         />
       </Flex>
       {React.cloneElement(ModalContentByType[type], modalProps)}
@@ -59,6 +62,9 @@ const Wrapper = styled(ReactModal)`
   width: 100%;
   height: 100%;
   background-color: #fff;
+  z-index: 9995;
+  overflow: scroll;
+  overscroll-behavior-y: none;
 `;
 
 export default Modal;
