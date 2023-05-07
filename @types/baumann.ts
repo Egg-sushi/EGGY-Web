@@ -9,14 +9,20 @@ export interface BaumannQuestion {
 export interface BaumannAnswer {
   id: number;
   answer: string;
-  imageUrl?: string;
+  imageUrl: string;
 }
 
 export interface UserAnswer {
-  answerId: BaumannQuestion['id'];
-  questionId: BaumannAnswer['id'];
+  questionId: BaumannQuestion['id'];
+  answerId: BaumannAnswer['id'];
 }
 
 export interface BaumannQNA extends BaumannQuestion {
   Baumann_Answer: BaumannAnswer[];
+}
+
+export interface BaumannImage {
+  type: 'question' | 'answer';
+  id: BaumannQuestion['id'];
+  image: File;
 }
