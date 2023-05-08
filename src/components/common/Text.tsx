@@ -26,6 +26,7 @@ const fontFamilys = {
 } as const;
 
 interface Props extends React.ComponentPropsWithoutRef<'div'> {
+  as?: React.ElementType;
   variant: keyof typeof theme.fonts;
   align?: React.CSSProperties['textAlign'];
   weight?: React.CSSProperties['fontWeight'];
@@ -35,6 +36,7 @@ interface Props extends React.ComponentPropsWithoutRef<'div'> {
 
 function Text(props: React.PropsWithChildren<Props>) {
   const {
+    as,
     variant,
     fontColor = theme.colors.gray600,
     align = 'start',
@@ -47,6 +49,7 @@ function Text(props: React.PropsWithChildren<Props>) {
 
   return (
     <Wrapper
+      as={as}
       variant={variant}
       fontColor={fontColor}
       align={align}

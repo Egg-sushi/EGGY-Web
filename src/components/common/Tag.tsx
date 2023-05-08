@@ -43,16 +43,15 @@ function Tag(props: Props) {
 
   return icons ? (
     <Wrapper
+      as={'span'}
       variant={SizeVariable[size].fontSize}
       size={size}
       hierarchy={hierarchy}
-      {...restProps}
       onClick={onClick}
       role={onClick ? 'button' : 'none'}
-      style={{ cursor: onClick ? 'pointer' : 'default' }}
+      {...restProps}
     >
       <Flex
-        as={'span'}
         flexDirection={icons.position === 'start' ? 'row' : 'row-reverse'}
         gap={6}
         alignItems="center"
@@ -63,11 +62,11 @@ function Tag(props: Props) {
     </Wrapper>
   ) : (
     <Wrapper
+      as={'span'}
       variant={SizeVariable[size].fontSize}
       size={size}
       hierarchy={hierarchy}
       onClick={onClick}
-      style={{ cursor: onClick ? 'pointer' : 'default' }}
       {...restProps}
     >
       {text}
@@ -75,12 +74,15 @@ function Tag(props: Props) {
   );
 }
 
-type StyleProps = Pick<Props, 'size' | 'hierarchy'>;
+type StyleProps = Pick<Props, 'size' | 'hierarchy' | 'onClick'>;
 const Wrapper = styled(Text)<StyleProps>`
+  width: fit-content;
+  text-align: center;
   padding: ${({ size }) => `${SizeVariable[size].y} ${SizeVariable[size].x}`};
   border-radius: 4px;
   background-color: ${({ hierarchy }) => HierarchyColor[hierarchy].background};
   color: ${({ hierarchy }) => HierarchyColor[hierarchy].color};
+  cursor: ${({ onClick }) => (onClick ? 'pointer' : 'default')}};
 `;
 
 export default Tag;
