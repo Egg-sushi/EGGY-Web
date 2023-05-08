@@ -6,6 +6,7 @@ import { Header, ProductItem } from '@/components';
 import type { Product } from '@/types/product';
 import { useIsUserLikeProduct, useToggleUserLike } from '@/api/query';
 import React from 'react';
+import { DUMMY_PRODUCT } from '@/dummy/cosmetic';
 
 interface Props {
   product: Product;
@@ -48,20 +49,37 @@ const ProductDetailPage: NextPage<Props> = ({ product }) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const productIds = await ProductService.getAllIds();
+  try {
+    const productIds = await ProductService.getAllIds();
 
+    return {
+      paths: productIds.map((id) => ({ params: { id: String(id) } })),
+      fallback: true,
+    };
+  } catch (err) {
+    console.error(err);
+  }
   return {
-    paths: productIds.map((id) => ({ params: { id: String(id) } })),
-    fallback: true,
+    paths: [{ params: { id: '1' } }],
+    fallback: false,
   };
 };
 
 export const getStaticProps: GetStaticProps<Props, { id: string }> = async ({ params }) => {
-  const product = await ProductService.getProduct(params?.id ?? '1');
+  try {
+    const product = await ProductService.getProduct(params?.id ?? '1');
 
+    return {
+      props: {
+        product: product,
+      },
+    };
+  } catch (err) {
+    console.error(err);
+  }
   return {
     props: {
-      product: product,
+      product: DUMMY_PRODUCT,
     },
   };
 };
