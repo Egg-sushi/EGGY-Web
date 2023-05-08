@@ -31,15 +31,7 @@ function Modal({ type, ...modalProps }: Props) {
 
   return (
     <Wrapper {...modalProps}>
-      <Flex
-        justifyContent="space-between"
-        alignItems="center"
-        style={{
-          width: 'calc(100% - 64px)',
-          paddingInline: '32px',
-          paddingBlock: '16px',
-        }}
-      >
+      <ModalHeader>
         <Text variant="h2" fontColor={theme.colors.gray400} fontFamily="monteserrat">
           {type.toUpperCase()}
         </Text>
@@ -50,9 +42,8 @@ function Modal({ type, ...modalProps }: Props) {
           stroke={theme.colors.gray400}
           role="button"
           onClick={() => modalProps.onClose()}
-          style={{ cursor: 'pointer' }}
         />
-      </Flex>
+      </ModalHeader>
       {React.cloneElement(ModalContentByType[type], modalProps)}
     </Wrapper>
   );
@@ -65,6 +56,19 @@ const Wrapper = styled(ReactModal)`
   z-index: 9995;
   overflow: scroll;
   overscroll-behavior-y: none;
+`;
+
+const ModalHeader = styled.header`
+  width: calc(100% - 64px);
+  padding-inline: 32px;
+  padding-block: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  & > svg {
+    cursor: pointer;
+  }
 `;
 
 export default Modal;

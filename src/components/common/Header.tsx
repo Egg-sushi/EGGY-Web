@@ -19,7 +19,6 @@ function Header() {
         fontFamily="monteserrat"
         role="button"
         onClick={() => router.push('/')}
-        style={{ cursor: 'pointer' }}
       >
         EGGY
       </Text>
@@ -30,7 +29,6 @@ function Header() {
         stroke={theme.colors.gray400}
         role="button"
         onClick={() => setIsOpen(true)}
-        style={{ cursor: 'pointer' }}
       />
       <Modal type="header" isOpen={isOpen} onClose={() => setIsOpen(false)} />
     </Wrapper>
@@ -45,6 +43,11 @@ const Wrapper = styled(Flex)`
   z-index: 995;
   -webkit-backdrop-filter: saturate(50%) blur(4px);
   backdrop-filter: blur(4px);
+
+  & > div,
+  svg {
+    cursor: pointer;
+  }
 `;
 
 export default Header;
