@@ -18,6 +18,7 @@ export default function useLink() {
 
   return React.useMemo(() => {
     return {
+      ...router,
       back: () => {
         router.back();
       },
@@ -28,6 +29,10 @@ export default function useLink() {
       replace: (path: NavigationKey, id?: string) => {
         const href = generateNavigationHref(path, id);
         router.replace(href);
+      },
+      setQuery: (path: NavigationKey, query: string) => {
+        const queryString = query !== '' ? `?${query}` : '';
+        router.push(path + queryString);
       },
     };
   }, [router]);
