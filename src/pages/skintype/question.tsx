@@ -1,18 +1,18 @@
 import Head from 'next/head';
 import React from 'react';
 import styled from '@emotion/styled';
-import { useRouter } from 'next/router';
 import { useTheme } from '@emotion/react';
 
-import { Button, Flex, Icon, Text } from '@/components';
-import { BaumannQNA, BaumannQuestion } from '@/types/baumann';
-import ProgressBar from '@/components/common/ProgressBar';
-import { getAnswers, saveAnswer, resetAnswers } from '@/utils/baumann';
+import useLink from '@/hooks/useLink';
 import useBaumann from '@/hooks/useBaumann';
+import { Button, Flex, Icon, Text } from '@/components';
+import ProgressBar from '@/components/common/ProgressBar';
+import type { BaumannQNA, BaumannQuestion } from '@/types/baumann';
+import { getAnswers, saveAnswer, resetAnswers } from '@/utils/baumann';
 
-export default function BaumannTest() {
+export default function SkinTypeTest() {
   const theme = useTheme();
-  const router = useRouter();
+  const link = useLink();
   const [activeAnswer, setActiveAnswer] = React.useState<BaumannQNA['Baumann_Answer'][0] | null>(
     null,
   );
@@ -80,12 +80,12 @@ export default function BaumannTest() {
     }
     saveAnswer({ questionId: currentQna.id, answerId: activeAnswer.id });
     if (isLastQna) {
-      router.push('/baumann/result');
+      link.to('skinTypeTestResult');
       return;
     }
     loadAnswerFromSessionStorage(nextQna);
     setCurrentQnaIndex((prev) => prev + 1);
-  }, [activeAnswer, currentQna.id, isLastQna, nextQna, router]);
+  }, [activeAnswer, currentQna.id, isLastQna, link, nextQna]);
 
   React.useEffect(() => {
     resetAnswers();

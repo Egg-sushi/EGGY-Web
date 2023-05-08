@@ -38,4 +38,5 @@ next-env.d.ts
 .eslintcache
 .vscode
 
+.yarn/install-state.gz
 .env
