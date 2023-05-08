@@ -34,6 +34,7 @@ type FillProps = {
   style?: React.CSSProperties;
   priority?: boolean;
   placeholder?: 'blur' | 'empty';
+  unoptimized?: boolean;
 };
 type Props = XOR<WidthProps, FillProps>;
 
@@ -50,6 +51,7 @@ function SkeletonImage(props: Props) {
     height,
     priority,
     placeholder = 'empty',
+    unoptimized = false,
     ...restProps
   } = props;
 
@@ -83,6 +85,7 @@ function SkeletonImage(props: Props) {
         width={width}
         height={fill ? undefined : height}
         placeholder={placeholder}
+        unoptimized={unoptimized}
       />
       {!isLoaded && <SkeletonBox width={width} height={height} />}
     </Wrapper>
