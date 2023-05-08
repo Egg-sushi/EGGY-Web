@@ -2,6 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import styled from '@emotion/styled';
 import { keyframes } from '@emotion/react';
+import { XOR } from '@/utils';
 
 const EVENT_IMAGE_LOAD = 'event_image_load';
 const THRESHOLD = 0.5;
@@ -15,7 +16,7 @@ const onIntersection = (entries: IntersectionObserverEntry[], io: IntersectionOb
   });
 };
 
-interface Props {
+type WidthProps = {
   src: string;
   alt: string;
   width: number;
@@ -23,13 +24,34 @@ interface Props {
   style?: React.CSSProperties;
   priority?: boolean;
   placeholder?: 'blur' | 'empty';
-}
+};
+
+type FillProps = {
+  src: string;
+  alt: string;
+  height: number;
+  fill: boolean;
+  style?: React.CSSProperties;
+  priority?: boolean;
+  placeholder?: 'blur' | 'empty';
+};
+type Props = XOR<WidthProps, FillProps>;
 
 function SkeletonImage(props: Props) {
   const imageRef = React.useRef<HTMLImageElement | null>(null);
   const [isLoaded, setIsLoaded] = React.useState<boolean>(false);
 
-  const { src, alt, style, width, height, priority, placeholder = 'empty', ...restProps } = props;
+  const {
+    src,
+    alt,
+    style,
+    fill = false,
+    width,
+    height,
+    priority,
+    placeholder = 'empty',
+    ...restProps
+  } = props;
 
   React.useEffect(() => {
     const handleLoadImage = () => setIsLoaded(true);
@@ -57,8 +79,9 @@ function SkeletonImage(props: Props) {
         priority={priority}
         src={src}
         alt={alt}
+        fill={fill}
         width={width}
-        height={height}
+        height={fill ? undefined : height}
         placeholder={placeholder}
       />
       {!isLoaded && <SkeletonBox width={width} height={height} />}
