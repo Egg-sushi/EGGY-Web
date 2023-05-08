@@ -28,12 +28,13 @@ const HierarchyColor: Record<
   skyblue: { background: colors.blue300, color: colors.white },
   primary: { background: colors.primary, color: colors.white },
   gray: { background: colors.gray200, color: colors.white },
+  secondary: { background: colors.secondary, color: colors.white },
 };
 
 interface Props extends React.ComponentPropsWithoutRef<ElementType> {
   size: 'sm' | 'md';
   text: string;
-  hierarchy: 'primary' | 'skyblue' | 'gray';
+  hierarchy: 'primary' | 'skyblue' | 'gray' | 'secondary';
   icons?: Parameters<typeof Icon>[0] & { position: 'start' | 'end' };
 }
 
