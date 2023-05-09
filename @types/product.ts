@@ -1,3 +1,5 @@
+import { SkinType } from './baumann';
+
 export interface Category {
   id: number;
   title: string;
@@ -14,9 +16,11 @@ export interface Product {
   title: string;
   description: string;
   imageUrl: string;
-  price: number;
-  Brand: Brand;
-  category: Category;
+  brand: Brand['title'];
+  category: Category['title'];
+  priceRangeName: 'LOW' | 'MIDDLE' | 'HIGH';
+  goods: SkinType[];
+  bads: SkinType[];
 }
 
 export interface ProductFilter {

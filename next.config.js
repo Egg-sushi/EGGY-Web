@@ -9,8 +9,21 @@ const nextConfig = {
     return config;
   },
   images: {
-    domains: [process.env.NEXT_PUBLIC_S3_BUCKET]
-  }
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: process.env.NEXT_PUBLIC_S3_BUCKET,
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.sephora.ae',
+        port: '',
+        pathname: '/**'
+      },
+    ],
+  },
 };
 
 module.exports = nextConfig

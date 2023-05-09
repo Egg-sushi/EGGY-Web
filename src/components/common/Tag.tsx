@@ -28,12 +28,13 @@ const HierarchyColor: Record<
   skyblue: { background: colors.blue300, color: colors.white },
   primary: { background: colors.primary, color: colors.white },
   gray: { background: colors.gray200, color: colors.white },
+  secondary: { background: colors.secondary, color: colors.white },
 };
 
 interface Props extends React.ComponentPropsWithoutRef<ElementType> {
   size: 'sm' | 'md';
   text: string;
-  hierarchy: 'primary' | 'skyblue' | 'gray';
+  hierarchy: 'primary' | 'skyblue' | 'gray' | 'secondary';
   icons?: Parameters<typeof Icon>[0] & { position: 'start' | 'end' };
 }
 
@@ -42,16 +43,15 @@ function Tag(props: Props) {
 
   return icons ? (
     <Wrapper
+      as={'span'}
       variant={SizeVariable[size].fontSize}
       size={size}
       hierarchy={hierarchy}
-      {...restProps}
       onClick={onClick}
       role={onClick ? 'button' : 'none'}
-      style={{ cursor: onClick ? 'pointer' : 'default' }}
+      {...restProps}
     >
       <Flex
-        as={'span'}
         flexDirection={icons.position === 'start' ? 'row' : 'row-reverse'}
         gap={6}
         alignItems="center"
@@ -62,11 +62,11 @@ function Tag(props: Props) {
     </Wrapper>
   ) : (
     <Wrapper
+      as={'span'}
       variant={SizeVariable[size].fontSize}
       size={size}
       hierarchy={hierarchy}
       onClick={onClick}
-      style={{ cursor: onClick ? 'pointer' : 'default' }}
       {...restProps}
     >
       {text}
@@ -74,12 +74,15 @@ function Tag(props: Props) {
   );
 }
 
-type StyleProps = Pick<Props, 'size' | 'hierarchy'>;
+type StyleProps = Pick<Props, 'size' | 'hierarchy' | 'onClick'>;
 const Wrapper = styled(Text)<StyleProps>`
+  width: fit-content;
+  text-align: center;
   padding: ${({ size }) => `${SizeVariable[size].y} ${SizeVariable[size].x}`};
   border-radius: 4px;
   background-color: ${({ hierarchy }) => HierarchyColor[hierarchy].background};
   color: ${({ hierarchy }) => HierarchyColor[hierarchy].color};
+  cursor: ${({ onClick }) => (onClick ? 'pointer' : 'default')}};
 `;
 
 export default Tag;

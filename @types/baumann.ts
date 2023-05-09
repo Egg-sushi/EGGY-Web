@@ -26,3 +26,21 @@ export interface BaumannImage {
   id: BaumannQuestion['id'];
   image: File;
 }
+
+export type SkinType =
+  | 'DSPW'
+  | 'DSPT'
+  | 'DSNW'
+  | 'DSNT'
+  | 'DRPW'
+  | 'DRPT'
+  | 'DRNW'
+  | 'DRNT'
+  | 'OSPW'
+  | 'OSPT'
+  | 'OSNW'
+  | 'OSNT'
+  | 'ORPW'
+  | 'ORPT'
+  | 'ORNW'
+  | 'ORNT';

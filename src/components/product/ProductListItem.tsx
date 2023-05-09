@@ -25,7 +25,7 @@ function ProductListItem({ product, onClick }: Props) {
       <Flex flexDirection="column" gap={8} flex={1} flexShrink={0}>
         <Text variant="h7">{product.title}</Text>
         <Text variant="body4" color={theme.colors.gray300}>
-          {product.Brand.title}
+          {product.brand}
         </Text>
       </Flex>
       <Icon type="rightArrow" fill={theme.colors.gray500} width={10} height={14} />
