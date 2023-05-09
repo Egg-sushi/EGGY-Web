@@ -36,3 +36,9 @@ export type ResponseProductList = {
   totalCount: number;
   data: ProductInList[];
 };
+
+export type FilterList = {
+  categories: Category['title'][];
+  skinTypes: SkinType[];
+  priceRanges: Product['priceRangeName'][];
+};

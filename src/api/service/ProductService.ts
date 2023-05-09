@@ -1,5 +1,13 @@
+import { SkinType } from '@/types/baumann';
 import HTTPInterface from './core';
-import type { Product, ProductFilter, ProductInList, ResponseProductList } from '@/types/product';
+import type {
+  Category,
+  FilterList,
+  Product,
+  ProductFilter,
+  ProductInList,
+  ResponseProductList,
+} from '@/types/product';
 
 class ProductService extends HTTPInterface {
   public constructor() {
@@ -38,6 +46,13 @@ class ProductService extends HTTPInterface {
           ',',
         )}&skinTypes=${skinTypes.join(',')}&priceRanges=${priceRanges.join(',')}`,
       )
+      .then(HTTPInterface._handleResponse)
+      .catch(HTTPInterface._handleError);
+  }
+
+  public getAllFilters(): Promise<FilterList> {
+    return this.baseHTTP
+      .get('filter')
       .then(HTTPInterface._handleResponse)
       .catch(HTTPInterface._handleError);
   }
