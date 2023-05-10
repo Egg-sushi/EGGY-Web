@@ -27,3 +27,9 @@ export interface ProductFilter {
   categories: string[];
   search: string;
 }
+
+export interface RequestProduct {
+  id: number;
+  userId?: number;
+  name: string;
+}
