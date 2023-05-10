@@ -3,10 +3,9 @@ import ReactModal from 'react-modal';
 import styled from '@emotion/styled';
 import { useTheme } from '@emotion/react';
 
-import { Flex } from '../styled';
 import { Icon, Text } from '../common';
-import ProductSearchFilter from './ProductSearchFilter';
 import HeaderModal from './HeaderModal';
+import ProductSearchFilter from './ProductSearchFilter';
 
 interface Props extends ReactModal.Props {
   type: 'filter' | 'header';
@@ -18,6 +17,10 @@ interface Props extends ReactModal.Props {
 const ModalContentByType: Record<Props['type'], React.ReactElement> = {
   filter: (
     <ProductSearchFilter
+      data={{
+        filters: { search: '', categories: [], skinTypes: [], priceRanges: [], size: 20 },
+        list: { categories: [], skinTypes: [], priceRanges: [] },
+      }}
       onSaveClose={() => {
         alert('No Props');
       }}

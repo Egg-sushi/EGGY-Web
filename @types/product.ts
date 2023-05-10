@@ -24,8 +24,11 @@ export interface Product {
 }
 
 export interface ProductFilter {
-  categories: string[];
   search: string;
+  categories: string[];
+  size: number;
+  skinTypes: SkinType[];
+  priceRanges: Product['priceRangeName'][];
 }
 
 export interface RequestProduct {
@@ -33,3 +36,14 @@ export interface RequestProduct {
   userId?: number;
   name: string;
 }
+export type ProductInList = Pick<Product, 'id' | 'title' | 'brand' | 'category' | 'imageUrl'>;
+export type ResponseProductList = {
+  totalCount: number;
+  data: ProductInList[];
+};
+
+export type UserFilterList = {
+  categories: Pick<Category, 'id' | 'title'>[];
+  skinTypes: { id: number; title: SkinType }[];
+  priceRanges: { title: Product['priceRangeName']; id: number; min: number; max: number }[];
+};

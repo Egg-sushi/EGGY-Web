@@ -120,7 +120,7 @@ export default function SkinTypeTestResultPage() {
             </ProductCard>
             <Button
               variant="filled"
-              hierarchy="teritiary"
+              hierarchy="beige300"
               style={{ marginTop: 32, paddingBlock: 12 }}
               onClick={() => link.to('products')}
             >
