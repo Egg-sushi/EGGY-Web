@@ -6,6 +6,7 @@ export type NavigationKey =
   | 'skinTypeTestResult'
   | 'products'
   | 'productItem'
+  | 'request'
   | 'login';
 
 export type DynamicNavigationKey = Extract<NavigationKey, 'productItem'>;
@@ -60,6 +61,11 @@ export const NAVIGATION: NavigationEntries = {
   login: {
     title: 'LOGIN',
     href: '/login',
+    header: false,
+  },
+  request: {
+    title: 'Request',
+    href: '/products/request',
     header: false,
   },
 } as const;

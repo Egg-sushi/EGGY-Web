@@ -6,10 +6,13 @@ import styled from '@emotion/styled';
 
 import { theme } from '@/theme';
 import { CircleCheckBox, Flex, Header, Text, Title } from '@/components';
+import { ProductService } from '@/api/service';
+import { useLink } from '@/hooks';
 
 const OCR_FEATURES = ['Find your cosmetic', 'Is good for your skin?'];
 
 export default function OCRPage() {
+  const link = useLink();
   const [imageUrl, setImageUrl] = React.useState<string>('');
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
@@ -26,7 +29,13 @@ export default function OCRPage() {
         if (imageData) {
           try {
             const response = await axios.post<{ text: string }>('/api/ocr', { imageData });
-            console.log(response.data.text);
+            const product = await ProductService.getSearchProductByTitle(response.data.text);
+            if (product.data.length > 0) {
+              link.to('productItem', `${product.data[4].id}`);
+            } else {
+              alert('Cannot Find Cosmetic');
+              link.to('request');
+            }
             // TODO: text를 가지고 백엔드에 검색해봐야 함
           } catch (error) {
             console.error(error);
@@ -56,8 +65,6 @@ export default function OCRPage() {
           description={'Do you want to check your cosmetics?'}
           color={theme.colors.black}
         />
-        {/* FIXME: spinner, 아래 이미지는 테스트용. 삭제해야 함 */}
-        {imageUrl && <Image src={imageUrl} alt="i" width={80} height={80} />}
         <Flex flexDirection="column" gap={16}>
           <Text variant="h4" fontColor={theme.colors.blue800}>
             Upload Image
