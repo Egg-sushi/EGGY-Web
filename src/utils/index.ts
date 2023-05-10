@@ -1,3 +1,4 @@
+export * from './hierarchy';
 export * from './baumann';
 export * from './helperTypes';
 export * from './copyToClipboard';

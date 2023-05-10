@@ -4,13 +4,13 @@ import type { ElementType } from 'react';
 import Text from './Text';
 import Icon from './Icon';
 import { Flex } from '../styled';
-import { ColorValueType, colors } from '@/theme';
 import { fonts } from '@/theme/fonts';
+import { HierarchyTagColor, HierarchyType } from '@/utils';
 
 interface Props extends React.ComponentPropsWithoutRef<ElementType> {
   size: 'sm' | 'md';
   text: string;
-  hierarchy: 'primary' | 'skyblue' | 'gray' | 'secondary' | 'teritiary';
+  hierarchy: HierarchyType;
   icons?: Parameters<typeof Icon>[0] & { position: 'start' | 'end' };
 }
 
@@ -27,17 +27,6 @@ const SizeVariable: Record<Props['size'], { y: string; x: string; fontSize: keyo
       fontSize: 'h7',
     },
   };
-
-const HierarchyColor: Record<
-  Props['hierarchy'],
-  { background: ColorValueType; color: ColorValueType }
-> = {
-  skyblue: { background: colors.blue300, color: colors.white },
-  primary: { background: colors.primary, color: colors.white },
-  teritiary: { background: colors.teritiary, color: colors.white },
-  gray: { background: colors.gray200, color: colors.white },
-  secondary: { background: colors.secondary, color: colors.white },
-};
 
 function Tag(props: Props) {
   const { size, text, hierarchy, icons, onClick, ...restProps } = props;
@@ -81,8 +70,8 @@ const Wrapper = styled(Text)<StyleProps>`
   text-align: center;
   padding: ${({ size }) => `${SizeVariable[size].y} ${SizeVariable[size].x}`};
   border-radius: 4px;
-  background-color: ${({ hierarchy }) => HierarchyColor[hierarchy].background};
-  color: ${({ hierarchy }) => HierarchyColor[hierarchy].color};
+  background-color: ${({ hierarchy }) => HierarchyTagColor[hierarchy].background};
+  color: ${({ hierarchy }) => HierarchyTagColor[hierarchy].color};
   cursor: ${({ onClick }) => (onClick ? 'pointer' : 'default')}};
 `;
 

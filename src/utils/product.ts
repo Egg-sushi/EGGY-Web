@@ -1,15 +1,5 @@
-import { Tag } from '@/components';
 import { SkinType } from '@/types/baumann';
 import { Product } from '@/types/product';
-
-export const ProductPriceHierarchy: Record<
-  Product['priceRangeName'],
-  Parameters<typeof Tag>[0]['hierarchy']
-> = {
-  LOW: 'gray',
-  MIDDLE: 'secondary',
-  HIGH: 'primary',
-};
 
 export function isPriceRangeKey(str: string): str is Product['priceRangeName'] {
   return str === 'LOW' || str === 'MIDDLE' || str === 'HIGH';

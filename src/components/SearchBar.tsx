@@ -4,6 +4,7 @@ import { useTheme } from '@emotion/react';
 
 import { Flex } from './styled';
 import { Icon, Tag } from './common';
+import { FilterHierarchy } from '@/utils';
 import type { Product } from '@/types/product';
 import type { SkinType } from '@/types/baumann';
 
@@ -18,12 +19,6 @@ interface Props {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onClickFilter: VoidFunction;
 }
-
-const FilterHierarchy: Record<keyof Props['filters'], Parameters<typeof Tag>[0]['hierarchy']> = {
-  categories: 'skyblue',
-  skinTypes: 'secondary',
-  priceRanges: 'skyblue',
-};
 
 function toTypeFilters(
   filter: Props['filters'],
