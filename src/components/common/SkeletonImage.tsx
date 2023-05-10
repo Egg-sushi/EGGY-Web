@@ -24,6 +24,7 @@ type WidthProps = {
   style?: React.CSSProperties;
   priority?: boolean;
   placeholder?: 'blur' | 'empty';
+  unoptimized?: boolean;
 };
 
 type FillProps = {

@@ -4,17 +4,44 @@ import { useTheme } from '@emotion/react';
 
 import { Flex } from './styled';
 import { Icon, Tag } from './common';
+import { FilterHierarchy } from '@/utils';
+import type { Product } from '@/types/product';
+import type { SkinType } from '@/types/baumann';
 
 interface Props {
   value: string;
-  filters: string[];
+  filters: {
+    categories: string[];
+    skinTypes: SkinType[];
+    priceRanges: Product['priceRangeName'][];
+  };
   onSearch: VoidFunction;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onClickFilter: VoidFunction;
 }
 
+function toTypeFilters(
+  filter: Props['filters'],
+): { type: keyof Props['filters']; title: string | SkinType | Product['priceRangeName'] }[] {
+  return [
+    ...filter.categories.map((category) => ({
+      type: 'categories' as keyof Props['filters'],
+      title: category,
+    })),
+    ...filter.skinTypes.map((skinType) => ({
+      type: 'skinTypes' as keyof Props['filters'],
+      title: skinType,
+    })),
+    ...filter.priceRanges.map((priceRange) => ({
+      type: 'priceRanges' as keyof Props['filters'],
+      title: priceRange,
+    })),
+  ];
+}
+
 function SearchBar({ value, filters, onSearch, onChange, onClickFilter }: Props) {
   const theme = useTheme();
+  const typeFilters = toTypeFilters(filters);
 
   return (
     <Flex flexDirection="column" gap={8}>
@@ -43,8 +70,13 @@ function SearchBar({ value, filters, onSearch, onChange, onClickFilter }: Props)
       </LabelInput>
       <Flex justifyContent="space-between" alignItems="start">
         <Flex gap={4} flexWrap="wrap">
-          {filters.map((filter) => (
-            <Tag text={filter} hierarchy="skyblue" size="sm" key={filter} />
+          {typeFilters.map((filter) => (
+            <Tag
+              key={filter.title}
+              text={filter.title}
+              hierarchy={FilterHierarchy[filter.type]}
+              size="sm"
+            />
           ))}
         </Flex>
         <Tag

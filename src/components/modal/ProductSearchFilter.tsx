@@ -2,52 +2,90 @@ import React from 'react';
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 
-import { Button, Tag, Text } from '../common';
 import { Flex } from '../styled';
-import type { ProductFilter } from '@/types/product';
+import { FilterHierarchy, inArray } from '@/utils';
+import { Button, Tag, Text } from '../common';
+import type { UserFilterList, ProductFilter } from '@/types/product';
 
 interface Props {
-  data?: ProductFilter;
-  onSaveClose: (data: ProductFilter['categories']) => void;
+  data: {
+    filters: ProductFilter;
+    list: UserFilterList;
+  };
+  onSaveClose: (data: ProductFilter) => void;
 }
 
-function CosmeticSearchFilter({ data, onSaveClose }: Props) {
-  const [categories, setCategories] = React.useState<string[]>(data?.categories ?? []);
+function toTypeFilterList(list: Props['data']['list']) {
+  return [
+    {
+      type: 'categories',
+      title: 'Category',
+      items: list.categories,
+    },
+    {
+      type: 'skinTypes',
+      title: 'SkinType',
+      items: list.skinTypes,
+    },
+    {
+      type: 'priceRanges',
+      title: 'Price',
+      items: list.priceRanges,
+    },
+  ] as const;
+}
+
+function CosmeticSearchFilter({ data: { filters, list }, onSaveClose }: Props) {
+  const [selectedFilters, setSelectedFilters] = React.useState<ProductFilter>(filters);
+  const typeList = toTypeFilterList(list);
   const theme = useTheme();
 
-  const handleClickCategoryTag = React.useCallback(
-    (category: string) => {
-      if (categories.includes(category)) {
-        setCategories((prev) => prev.filter((_category) => _category !== category));
+  const handleClickFilterItem = React.useCallback(
+    <K extends keyof UserFilterList, T extends UserFilterList[K][number]>(type: K, value: T) => {
+      const nextSelectedFilterList = { ...selectedFilters };
+      if (nextSelectedFilterList[type].find((item) => item === value.title)) {
+        setSelectedFilters((prev) => ({
+          ...prev,
+          [type]: nextSelectedFilterList[type].filter((item) => item !== value.title),
+        }));
       } else {
-        setCategories((prev) => [...prev, category]);
+        setSelectedFilters((prev) => ({
+          ...prev,
+          [type]: [...nextSelectedFilterList[type], value.title],
+        }));
       }
     },
-    [categories],
+    [selectedFilters],
   );
 
   return (
     <Wrapper flexDirection="column" gap={24}>
-      <Flex flexDirection="column" gap={8}>
-        <Text variant="h5" color={theme.colors.blue800}>
-          Category
-        </Text>
-        <Flex gap={4} flexWrap="wrap">
-          {['SERUM', 'SKIN', 'TONER', 'CLEANSING', 'MASK', 'LOTION'].map((category) => (
-            <TransitionTag
-              size="md"
-              text={category}
-              key={category}
-              hierarchy={categories.includes(category) ? 'skyblue' : 'gray'}
-              onClick={() => handleClickCategoryTag(category)}
-            />
-          ))}
+      {typeList.map((list) => (
+        <Flex flexDirection="column" gap={8} key={list.type}>
+          <Text variant="h5" fontColor={theme.colors.blue800}>
+            {list.title}
+          </Text>
+          <Flex gap={4} flexWrap="wrap">
+            {list.items.map((item) => (
+              <TransitionTag
+                size="md"
+                key={item.id}
+                text={item.title}
+                hierarchy={
+                  inArray(selectedFilters[list.type], item.title)
+                    ? FilterHierarchy[list.type]
+                    : 'gray'
+                }
+                onClick={() => handleClickFilterItem(list.type, item)}
+              />
+            ))}
+          </Flex>
         </Flex>
-      </Flex>
+      ))}
       <Button
         variant="filled"
         hierarchy="primary"
-        onClick={() => onSaveClose(categories)}
+        onClick={() => onSaveClose({ ...filters, ...selectedFilters })}
         width={80}
         style={{ marginLeft: 'auto' }}
       >
