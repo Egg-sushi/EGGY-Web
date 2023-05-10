@@ -2,28 +2,38 @@ import React from 'react';
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 
-import { Button, Tag, Text } from '../common';
 import { Flex } from '../styled';
-import type { ProductFilter } from '@/types/product';
+import { Button, Tag, Text } from '../common';
+import type { UserFilterList, ProductFilter } from '@/types/product';
 
 interface Props {
-  data?: ProductFilter;
-  onSaveClose: (data: ProductFilter['categories']) => void;
+  data: {
+    filters: ProductFilter;
+    list: UserFilterList;
+  };
+  onSaveClose: (data: ProductFilter) => void;
 }
 
-function CosmeticSearchFilter({ data, onSaveClose }: Props) {
-  const [categories, setCategories] = React.useState<string[]>(data?.categories ?? []);
+function CosmeticSearchFilter({ data: { filters, list }, onSaveClose }: Props) {
+  const [selectedFilters, setSelectedFilters] = React.useState<ProductFilter>(filters);
   const theme = useTheme();
 
-  const handleClickCategoryTag = React.useCallback(
-    (category: string) => {
-      if (categories.includes(category)) {
-        setCategories((prev) => prev.filter((_category) => _category !== category));
+  const handleClickFilterItem = React.useCallback(
+    <K extends keyof UserFilterList, T extends UserFilterList[K][number]>(type: K, value: T) => {
+      const nextSelectedFilterList = { ...selectedFilters };
+      if (nextSelectedFilterList[type].find((item) => item === value.title)) {
+        setSelectedFilters((prev) => ({
+          ...prev,
+          [type]: nextSelectedFilterList[type].filter((item) => item !== value.title),
+        }));
       } else {
-        setCategories((prev) => [...prev, category]);
+        setSelectedFilters((prev) => ({
+          ...prev,
+          [type]: [...nextSelectedFilterList[type], value.title],
+        }));
       }
     },
-    [categories],
+    [selectedFilters],
   );
 
   return (
@@ -33,13 +43,47 @@ function CosmeticSearchFilter({ data, onSaveClose }: Props) {
           Category
         </Text>
         <Flex gap={4} flexWrap="wrap">
-          {['SERUM', 'SKIN', 'TONER', 'CLEANSING', 'MASK', 'LOTION'].map((category) => (
+          {list.categories.map((category) => (
             <TransitionTag
               size="md"
-              text={category}
-              key={category}
-              hierarchy={categories.includes(category) ? 'skyblue' : 'gray'}
-              onClick={() => handleClickCategoryTag(category)}
+              key={category.id}
+              text={category.title}
+              hierarchy={selectedFilters.categories.includes(category.title) ? 'skyblue' : 'gray'}
+              onClick={() => handleClickFilterItem('categories', category)}
+            />
+          ))}
+        </Flex>
+      </Flex>
+      <Flex flexDirection="column" gap={8}>
+        <Text variant="h5" color={theme.colors.blue800}>
+          SkinTypes
+        </Text>
+        <Flex gap={4} flexWrap="wrap">
+          {list.skinTypes.map((skinType) => (
+            <TransitionTag
+              size="md"
+              key={skinType.id}
+              text={skinType.title}
+              hierarchy={selectedFilters.skinTypes.includes(skinType.title) ? 'skyblue' : 'gray'}
+              onClick={() => handleClickFilterItem('skinTypes', skinType)}
+            />
+          ))}
+        </Flex>
+      </Flex>
+      <Flex flexDirection="column" gap={8}>
+        <Text variant="h5" color={theme.colors.blue800}>
+          PriceRanges
+        </Text>
+        <Flex gap={4} flexWrap="wrap">
+          {list.priceRanges.map((priceRange) => (
+            <TransitionTag
+              size="md"
+              key={priceRange.id}
+              text={priceRange.title}
+              hierarchy={
+                selectedFilters.priceRanges.includes(priceRange.title) ? 'skyblue' : 'gray'
+              }
+              onClick={() => handleClickFilterItem('priceRanges', priceRange)}
             />
           ))}
         </Flex>
@@ -47,7 +91,7 @@ function CosmeticSearchFilter({ data, onSaveClose }: Props) {
       <Button
         variant="filled"
         hierarchy="primary"
-        onClick={() => onSaveClose(categories)}
+        onClick={() => onSaveClose({ ...filters, ...selectedFilters })}
         width={80}
         style={{ marginLeft: 'auto' }}
       >

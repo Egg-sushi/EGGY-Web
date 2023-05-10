@@ -37,8 +37,8 @@ export type ResponseProductList = {
   data: ProductInList[];
 };
 
-export type FilterList = {
-  categories: Category['title'][];
-  skinTypes: SkinType[];
-  priceRanges: Product['priceRangeName'][];
+export type UserFilterList = {
+  categories: Pick<Category, 'id' | 'title'>[];
+  skinTypes: { id: number; title: SkinType }[];
+  priceRanges: { title: Product['priceRangeName']; id: number; min: number; max: number }[];
 };

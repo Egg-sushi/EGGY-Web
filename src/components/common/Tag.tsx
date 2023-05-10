@@ -7,6 +7,13 @@ import { Flex } from '../styled';
 import { ColorValueType, colors } from '@/theme';
 import { fonts } from '@/theme/fonts';
 
+interface Props extends React.ComponentPropsWithoutRef<ElementType> {
+  size: 'sm' | 'md';
+  text: string;
+  hierarchy: 'primary' | 'skyblue' | 'gray' | 'secondary' | 'teritiary';
+  icons?: Parameters<typeof Icon>[0] & { position: 'start' | 'end' };
+}
+
 const SizeVariable: Record<Props['size'], { y: string; x: string; fontSize: keyof typeof fonts }> =
   {
     sm: {
@@ -27,16 +34,10 @@ const HierarchyColor: Record<
 > = {
   skyblue: { background: colors.blue300, color: colors.white },
   primary: { background: colors.primary, color: colors.white },
+  teritiary: { background: colors.teritiary, color: colors.white },
   gray: { background: colors.gray200, color: colors.white },
   secondary: { background: colors.secondary, color: colors.white },
 };
-
-interface Props extends React.ComponentPropsWithoutRef<ElementType> {
-  size: 'sm' | 'md';
-  text: string;
-  hierarchy: 'primary' | 'skyblue' | 'gray' | 'secondary';
-  icons?: Parameters<typeof Icon>[0] & { position: 'start' | 'end' };
-}
 
 function Tag(props: Props) {
   const { size, text, hierarchy, icons, onClick, ...restProps } = props;

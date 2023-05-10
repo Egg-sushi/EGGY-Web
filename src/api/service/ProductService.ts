@@ -1,13 +1,5 @@
-import { SkinType } from '@/types/baumann';
 import HTTPInterface from './core';
-import type {
-  Category,
-  FilterList,
-  Product,
-  ProductFilter,
-  ProductInList,
-  ResponseProductList,
-} from '@/types/product';
+import type { Product, ProductFilter, ResponseProductList, UserFilterList } from '@/types/product';
 
 class ProductService extends HTTPInterface {
   public constructor() {
@@ -37,12 +29,11 @@ class ProductService extends HTTPInterface {
     pageParam: any;
   }): Promise<ResponseProductList> {
     const { categories, search, size, skinTypes, priceRanges } = filter;
+    const cursor = isNaN(pageParam.cursor) ? 0 : pageParam.cursor;
 
     return this.baseHTTP
       .get(
-        `all?cursor=${
-          pageParam.cursor ?? 0
-        }&take=${size}&search=${search}&categories=${categories.join(
+        `all?cursor=${cursor}&take=${size}&search=${search}&categories=${categories.join(
           ',',
         )}&skinTypes=${skinTypes.join(',')}&priceRanges=${priceRanges.join(',')}`,
       )
@@ -50,7 +41,7 @@ class ProductService extends HTTPInterface {
       .catch(HTTPInterface._handleError);
   }
 
-  public getAllFilters(): Promise<FilterList> {
+  public getAllFilters(): Promise<UserFilterList> {
     return this.baseHTTP
       .get('filter')
       .then(HTTPInterface._handleResponse)

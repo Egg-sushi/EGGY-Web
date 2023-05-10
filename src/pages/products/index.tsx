@@ -4,22 +4,23 @@ import styled from '@emotion/styled';
 import { useInView } from 'react-intersection-observer';
 import { ReadonlyURLSearchParams } from 'next/navigation';
 
-import type { ProductFilter } from '@/types/product';
+import type { UserFilterList, ProductFilter } from '@/types/product';
 import { useDisclosure, useLink, useSearchParamsState } from '@/hooks';
 import { Flex, Header, Modal, SearchBar, ProductListItem } from '@/components';
 import { useInfiniteProductScroll } from '@/api/query';
+import { isPriceRangeKey, isSkinType } from '@/utils';
 
 const DEFAULT_SIZE = 20;
 
 const initialFilters = (searchParams: ReadonlyURLSearchParams): ProductFilter => ({
   search: searchParams.get('search') ?? '',
   size: DEFAULT_SIZE,
-  skinTypes: [],
-  priceRanges: [],
-  categories: searchParams.get('categories')?.split(',') ?? ['SERUM'],
+  skinTypes: searchParams.get('skinTypes')?.split(',').filter(isSkinType) ?? [],
+  priceRanges: searchParams.get('priceRanges')?.split(',').filter(isPriceRangeKey) ?? [],
+  categories: searchParams.get('categories')?.split(',') ?? [],
 });
 
-export default function ProductList() {
+export default function ProductList({ filters: filterList }: { filters: UserFilterList }) {
   const link = useLink();
   const { ref, inView } = useInView();
   const { isOpen, onClose, onOpen } = useDisclosure();
@@ -28,7 +29,7 @@ export default function ProductList() {
   const { data, fetchNextPage, hasNextPage } = useInfiniteProductScroll(filters);
 
   const handleFilterModalClose = React.useCallback(
-    (filter: Partial<ProductFilter>) => {
+    (filter: ProductFilter) => {
       setFilters((prev) => ({ ...prev, ...filter }));
       // 새로고침 시 page와 size는 기본값으로 설정되기 위해 param으로 추가하지 않는다.
       setSearchParams({
@@ -68,7 +69,11 @@ export default function ProductList() {
       <main style={{ paddingInline: 34, paddingBlock: 80 }}>
         <SearchBar
           value={filters.search}
-          filters={filters.categories}
+          filters={{
+            categories: filters.categories,
+            skinTypes: filters.skinTypes,
+            priceRanges: filters.priceRanges,
+          }}
           onChange={(e) => setFilters((prev) => ({ ...prev, search: e.target.value }))}
           onClickFilter={onOpen}
           onSearch={handleClickSearch}
@@ -95,7 +100,7 @@ export default function ProductList() {
         isOpen={isOpen}
         onClose={onClose}
         onSaveClose={handleFilterModalClose}
-        data={filters}
+        data={{ filters, list: filterList }}
       />
     </>
   );
