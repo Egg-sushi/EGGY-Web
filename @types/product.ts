@@ -31,6 +31,11 @@ export interface ProductFilter {
   priceRanges: Product['priceRangeName'][];
 }
 
+export interface RequestProduct {
+  id: number;
+  userId?: number;
+  name: string;
+}
 export type ProductInList = Pick<Product, 'id' | 'title' | 'brand' | 'category' | 'imageUrl'>;
 export type ResponseProductList = {
   totalCount: number;

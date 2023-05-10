@@ -20,7 +20,6 @@ class ProductService extends HTTPInterface {
       .catch(HTTPInterface._handleError);
   }
 
-  /** currentPage는 기존에 받은 product의 마지막 id이다 */
   public getFilterProducts({
     filter,
     pageParam,
@@ -37,6 +36,13 @@ class ProductService extends HTTPInterface {
           ',',
         )}&skinTypes=${skinTypes.join(',')}&priceRanges=${priceRanges.join(',')}`,
       )
+      .then(HTTPInterface._handleResponse)
+      .catch(HTTPInterface._handleError);
+  }
+
+  public getSearchProductByTitle(search: string): Promise<ResponseProductList> {
+    return this.baseHTTP
+      .get(`all?cursor=${0}&take=${10}&search=${search}`)
       .then(HTTPInterface._handleResponse)
       .catch(HTTPInterface._handleError);
   }
