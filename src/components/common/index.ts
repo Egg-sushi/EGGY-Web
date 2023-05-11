@@ -1,9 +1,10 @@
+export { default as Text } from './Text';
 export { default as Tag } from './Tag';
 export { default as Icon } from './Icon';
-export { default as Text } from './Text';
 export { default as Button } from './Button';
 export { default as Header } from './Header';
 export { default as SelectOption } from './SelectOption';
 export { default as SkeletonImage } from './SkeletonImage';
+export { default as ProgressBar } from './ProgressBar';
 export { default as CircleCheckBox } from './CircleCheckBox';
 export { default as GenderInputBox } from './GenderInputBox';
