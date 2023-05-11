@@ -37,7 +37,11 @@ export const useIsLogin = () => {
 };
 
 export const useUserSkinType = () => {
-  return useQuery([USER_KEY, 'skinType'], () => UserService.getUserSkinType());
+  const { data } = useIsLogin();
+
+  return useQuery([USER_KEY, 'skinType'], () => UserService.getUserSkinType(), {
+    enabled: data?.isLogin,
+  });
 };
 
 export const useSaveUserSkinType = (skinType: SkinType) => {
