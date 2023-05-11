@@ -1,9 +1,8 @@
-import type { ColorValueType } from '@/theme';
-import { colors } from '@/theme';
-import styled from '@emotion/styled';
 import React from 'react';
+import styled from '@emotion/styled';
 
-type HierarchyType = 'primary' | 'secondary' | 'teritiary';
+import { HierarchyButtonColor, HierarchyType } from '@/utils';
+
 interface Props extends React.ComponentPropsWithoutRef<'button'> {
   variant: 'filled' | 'outlined';
   hierarchy?: HierarchyType;
@@ -45,27 +44,6 @@ function Button(props: React.PropsWithChildren<Props>) {
   );
 }
 
-const Hierarchy: Record<
-  HierarchyType,
-  { color: ColorValueType; backgroundColor: ColorValueType; border: ColorValueType }
-> = {
-  primary: {
-    color: colors.primary,
-    border: colors.primary,
-    backgroundColor: colors.primary,
-  },
-  secondary: {
-    color: colors.secondary,
-    border: colors.secondary,
-    backgroundColor: colors.secondary,
-  },
-  teritiary: {
-    color: colors.teritiary,
-    border: colors.teritiary,
-    backgroundColor: colors.beige300,
-  },
-};
-
 type StyleProps = Pick<
   Props,
   'width' | 'borderRadius' | 'hierarchy' | 'variant' | 'disabled' | 'iconPosition'
@@ -82,13 +60,13 @@ const Wrapper = styled.button<StyleProps>`
   outline: none;
   color: ${({ variant, theme, hierarchy }) => {
     if (variant === 'outlined' && typeof hierarchy !== 'undefined') {
-      return Hierarchy[hierarchy];
+      return HierarchyButtonColor[hierarchy].color;
     }
     return theme.colors.white;
   }};
   border: ${({ variant, hierarchy }) => {
     if (variant === 'outlined' && typeof hierarchy !== 'undefined') {
-      return `1px solid ${Hierarchy[hierarchy].border}`;
+      return `1px solid ${HierarchyButtonColor[hierarchy].border}`;
     }
     return 'none';
   }};
@@ -96,7 +74,7 @@ const Wrapper = styled.button<StyleProps>`
     typeof borderRadius === 'number' ? `${borderRadius}px` : borderRadius};
   background-color: ${({ variant, theme, hierarchy }) => {
     if (variant === 'filled' && typeof hierarchy !== 'undefined') {
-      return Hierarchy[hierarchy].backgroundColor;
+      return HierarchyButtonColor[hierarchy].backgroundColor;
     }
     return theme.colors.white;
   }};

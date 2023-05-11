@@ -1,13 +1,15 @@
+import React from 'react';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useTheme } from '@emotion/react';
 
 import { Flex } from '../styled';
-import { Text, Icon } from '@/components';
+import { Text, Icon, Modal } from '@/components';
 
 function Header() {
   const theme = useTheme();
   const router = useRouter();
+  const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
   return (
     <Wrapper as={'header'} justifyContent="space-between" alignItems="center">
@@ -20,7 +22,15 @@ function Header() {
       >
         EGGY
       </Text>
-      <Icon type="menu" width={26} height={26} stroke={theme.colors.gray400} role="button" />
+      <Icon
+        type="menu"
+        width={26}
+        height={26}
+        stroke={theme.colors.gray400}
+        role="button"
+        onClick={() => setIsOpen(true)}
+      />
+      <Modal type="header" isOpen={isOpen} onClose={() => setIsOpen(false)} />
     </Wrapper>
   );
 }
@@ -33,6 +43,11 @@ const Wrapper = styled(Flex)`
   z-index: 995;
   -webkit-backdrop-filter: saturate(50%) blur(4px);
   backdrop-filter: blur(4px);
+
+  & > div,
+  svg {
+    cursor: pointer;
+  }
 `;
 
 export default Header;

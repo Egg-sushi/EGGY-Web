@@ -1,52 +1,61 @@
 import React from 'react';
 import Head from 'next/head';
 import styled from '@emotion/styled';
-import { useRouter } from 'next/router';
-import { ReadonlyURLSearchParams, useSearchParams } from 'next/navigation';
+import { useInView } from 'react-intersection-observer';
+import { ReadonlyURLSearchParams } from 'next/navigation';
 
-import { useDisclosure } from '@/hooks';
-import { DUMMY_PRODUCT } from '@/dummy/cosmetic';
-import type { ProductFilter } from '@/types/product';
-import { ProductListWithTitle, Flex, Header, Modal, SearchBar } from '@/components';
+import type { UserFilterList, ProductFilter } from '@/types/product';
+import { useDisclosure, useLink, useSearchParamsState } from '@/hooks';
+import { Flex, Header, Modal, SearchBar, ProductListItem } from '@/components';
+import { useInfiniteProductScroll } from '@/api/query';
+import { isPriceRangeKey, isSkinType } from '@/utils';
 
-const initialFilters = (searchParams: ReadonlyURLSearchParams) => ({
-  categories: searchParams.get('categories')?.split(',') ?? [],
+const DEFAULT_SIZE = 20;
+
+const initialFilters = (searchParams: ReadonlyURLSearchParams): ProductFilter => ({
   search: searchParams.get('search') ?? '',
+  size: DEFAULT_SIZE,
+  skinTypes: searchParams.get('skinTypes')?.split(',').filter(isSkinType) ?? [],
+  priceRanges: searchParams.get('priceRanges')?.split(',').filter(isPriceRangeKey) ?? [],
+  categories: searchParams.get('categories')?.split(',') ?? [],
 });
 
-export default function ProductList() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
+export default function ProductList({ filters: filterList }: { filters: UserFilterList }) {
+  const link = useLink();
+  const { ref, inView } = useInView();
   const { isOpen, onClose, onOpen } = useDisclosure();
+  const { searchParams, setSearchParams } = useSearchParamsState({ type: 'products' });
   const [filters, setFilters] = React.useState<ProductFilter>(initialFilters(searchParams));
-
-  const saveOnParams = React.useCallback(
-    (name: string, value: string) => {
-      const params = new URLSearchParams(searchParams);
-
-      params.set(name, value);
-      return params.toString();
-    },
-    [searchParams],
-  );
+  const { data, fetchNextPage, hasNextPage } = useInfiniteProductScroll(filters);
 
   const handleFilterModalClose = React.useCallback(
-    (categories: ProductFilter['categories']) => {
-      setFilters((prev) => ({ ...prev, categories }));
-      router.push(`/products?${saveOnParams('categories', categories.map((v) => v).join(','))}`);
+    (filter: ProductFilter) => {
+      setFilters((prev) => ({ ...prev, ...filter }));
+      // 새로고침 시 page와 size는 기본값으로 설정되기 위해 param으로 추가하지 않는다.
+      setSearchParams({
+        skinTypes: filter.skinTypes?.map((v) => v).join(',') ?? [],
+        categories: filter.categories?.map((v) => v).join(',') ?? [],
+        priceRanges: filter.priceRanges?.map((v) => v).join(',') ?? [],
+      });
       onClose();
     },
-    [onClose, router, saveOnParams],
+    [onClose, setSearchParams],
   );
 
   const handleClickSearch = React.useCallback(() => {
-    router.push(`/products?${saveOnParams('search', filters.search)}`);
-  }, [filters.search, router, saveOnParams]);
+    setSearchParams({ search: filters.search });
+  }, [filters.search, setSearchParams]);
 
   React.useEffect(() => {
     const initFilters = initialFilters(searchParams);
-    setFilters({ ...initFilters, categories: initFilters.categories.filter((v) => v !== '') });
+    setFilters(initFilters);
   }, [searchParams]);
+
+  React.useEffect(() => {
+    if (inView && hasNextPage) {
+      fetchNextPage();
+    }
+  }, [fetchNextPage, inView, hasNextPage]);
 
   return (
     <>
@@ -60,21 +69,30 @@ export default function ProductList() {
       <main style={{ paddingInline: 34, paddingBlock: 80 }}>
         <SearchBar
           value={filters.search}
-          filters={filters.categories}
+          filters={{
+            categories: filters.categories,
+            skinTypes: filters.skinTypes,
+            priceRanges: filters.priceRanges,
+          }}
           onChange={(e) => setFilters((prev) => ({ ...prev, search: e.target.value }))}
           onClickFilter={onOpen}
           onSearch={handleClickSearch}
         />
         <FlexWithLine flexDirection="column" gap={32} style={{ marginTop: 28 }}>
-          <ProductListWithTitle title={'SERUM'} products={[...Array(3)].map(() => DUMMY_PRODUCT)} />
-          <ProductListWithTitle
-            title={'Cleansing'}
-            products={[...Array(3)].map(() => DUMMY_PRODUCT)}
-          />
-          <ProductListWithTitle
-            title={'LOTION'}
-            products={[...Array(3)].map(() => DUMMY_PRODUCT)}
-          />
+          <Flex flexDirection="column" gap={16} style={{ width: '100%' }}>
+            {data?.pages.map((page, idx) => (
+              <React.Fragment key={idx}>
+                {page.data.map((product) => (
+                  <ProductListItem
+                    key={product.id}
+                    product={product}
+                    onClick={() => link.to('productItem', `${product.id}`)}
+                  />
+                ))}
+              </React.Fragment>
+            ))}
+          </Flex>
+          <div style={{ visibility: 'hidden' }} ref={ref} />
         </FlexWithLine>
       </main>
       <Modal
@@ -82,7 +100,7 @@ export default function ProductList() {
         isOpen={isOpen}
         onClose={onClose}
         onSaveClose={handleFilterModalClose}
-        data={filters}
+        data={{ filters, list: filterList }}
       />
     </>
   );

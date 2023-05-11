@@ -4,8 +4,15 @@ import type { ElementType } from 'react';
 import Text from './Text';
 import Icon from './Icon';
 import { Flex } from '../styled';
-import { ColorValueType, colors } from '@/theme';
 import { fonts } from '@/theme/fonts';
+import { HierarchyTagColor, HierarchyType } from '@/utils';
+
+interface Props extends React.ComponentPropsWithoutRef<ElementType> {
+  size: 'sm' | 'md';
+  text: string;
+  hierarchy: HierarchyType;
+  icons?: Parameters<typeof Icon>[0] & { position: 'start' | 'end' };
+}
 
 const SizeVariable: Record<Props['size'], { y: string; x: string; fontSize: keyof typeof fonts }> =
   {
@@ -21,37 +28,20 @@ const SizeVariable: Record<Props['size'], { y: string; x: string; fontSize: keyo
     },
   };
 
-const HierarchyColor: Record<
-  Props['hierarchy'],
-  { background: ColorValueType; color: ColorValueType }
-> = {
-  skyblue: { background: colors.blue300, color: colors.white },
-  primary: { background: colors.primary, color: colors.white },
-  gray: { background: colors.gray200, color: colors.white },
-};
-
-interface Props extends React.ComponentPropsWithoutRef<ElementType> {
-  size: 'sm' | 'md';
-  text: string;
-  hierarchy: 'primary' | 'skyblue' | 'gray';
-  icons?: Parameters<typeof Icon>[0] & { position: 'start' | 'end' };
-}
-
 function Tag(props: Props) {
   const { size, text, hierarchy, icons, onClick, ...restProps } = props;
 
   return icons ? (
     <Wrapper
+      as={'span'}
       variant={SizeVariable[size].fontSize}
       size={size}
       hierarchy={hierarchy}
-      {...restProps}
       onClick={onClick}
       role={onClick ? 'button' : 'none'}
-      style={{ cursor: onClick ? 'pointer' : 'default' }}
+      {...restProps}
     >
       <Flex
-        as={'span'}
         flexDirection={icons.position === 'start' ? 'row' : 'row-reverse'}
         gap={6}
         alignItems="center"
@@ -62,11 +52,11 @@ function Tag(props: Props) {
     </Wrapper>
   ) : (
     <Wrapper
+      as={'span'}
       variant={SizeVariable[size].fontSize}
       size={size}
       hierarchy={hierarchy}
       onClick={onClick}
-      style={{ cursor: onClick ? 'pointer' : 'default' }}
       {...restProps}
     >
       {text}
@@ -74,12 +64,15 @@ function Tag(props: Props) {
   );
 }
 
-type StyleProps = Pick<Props, 'size' | 'hierarchy'>;
+type StyleProps = Pick<Props, 'size' | 'hierarchy' | 'onClick'>;
 const Wrapper = styled(Text)<StyleProps>`
+  width: fit-content;
+  text-align: center;
   padding: ${({ size }) => `${SizeVariable[size].y} ${SizeVariable[size].x}`};
   border-radius: 4px;
-  background-color: ${({ hierarchy }) => HierarchyColor[hierarchy].background};
-  color: ${({ hierarchy }) => HierarchyColor[hierarchy].color};
+  background-color: ${({ hierarchy }) => HierarchyTagColor[hierarchy].background};
+  color: ${({ hierarchy }) => HierarchyTagColor[hierarchy].color};
+  cursor: ${({ onClick }) => (onClick ? 'pointer' : 'default')}};
 `;
 
 export default Tag;

@@ -1,18 +1,19 @@
 import React from 'react';
 import Head from 'next/head';
 import styled from '@emotion/styled';
-import { useRouter } from 'next/router';
 import { useTheme } from '@emotion/react';
 
+import useLink from '@/hooks/useLink';
 import { ColorValueType } from '@/theme';
 import { getAnswers, share } from '@/utils';
 import { BASE_FRONT_URL } from '@/constants';
 import { useCalculateSkinTypes } from '@/api/query';
 import { BaumannPercentResult, Button, Flex, Header, SkeletonImage, Text } from '@/components';
 
-export default function BaumannResultPage() {
+export default function SkinTypeTestResultPage() {
   const theme = useTheme();
-  const router = useRouter();
+  const link = useLink();
+
   const calculatedSkinTypeData = useCalculateSkinTypes(
     Object.entries(getAnswers()).map((answer) => ({
       questionId: Number(answer[0]),
@@ -21,14 +22,14 @@ export default function BaumannResultPage() {
   );
 
   const handleClickResetButton = React.useCallback(() => {
-    router.push('/baumann');
-  }, [router]);
+    link.to('skinTypeTestIntro');
+  }, [link]);
 
   const handleClickShareButton = React.useCallback(async () => {
     const result = await share({
       title: 'Find your SkinType',
       text: 'Do you want to know your skinType?',
-      url: `${BASE_FRONT_URL}/baumann/shared/${calculatedSkinTypeData.data?.type}`,
+      url: `${BASE_FRONT_URL}/skintype/shared/${calculatedSkinTypeData.data?.type}`,
     });
     if (result === 'copiedToClipboard') {
       alert('Copy completed.');
@@ -119,9 +120,9 @@ export default function BaumannResultPage() {
             </ProductCard>
             <Button
               variant="filled"
-              hierarchy="teritiary"
+              hierarchy="beige300"
               style={{ marginTop: 32, paddingBlock: 12 }}
-              onClick={() => router.push('/products')}
+              onClick={() => link.to('products')}
             >
               Find more your Cosmetic !
             </Button>

@@ -5,14 +5,9 @@ export const DUMMY_PRODUCT: Product = {
   title: 'Saturn Sulfur',
   description: 'description',
   imageUrl: '/product.jpeg',
-  price: 300,
-  Brand: {
-    id: 1,
-    title: 'Sunday Riley',
-  },
-  category: {
-    id: 1,
-    title: 'SERUM',
-    description: '',
-  },
+  priceRangeName: 'LOW',
+  brand: 'Sunday Riley',
+  category: 'SERUM',
+  goods: [],
+  bads: [],
 };

@@ -1,7 +1,5 @@
 import styled from '@emotion/styled';
 import Head from 'next/head';
-import Image from 'next/image';
-import { useRouter } from 'next/router';
 
 import {
   Button,
@@ -14,6 +12,7 @@ import {
   Title,
 } from '@/components';
 import { theme } from '@/theme';
+import useLink from '@/hooks/useLink';
 
 const BAUMANN_FEATURES = [
   'Improved your skin health 1',
@@ -21,8 +20,8 @@ const BAUMANN_FEATURES = [
   'Improved your skin health 3',
 ];
 
-export default function BaumannIntroPage() {
-  const router = useRouter();
+export default function SkinTypeTestIntroPage() {
+  const link = useLink();
 
   return (
     <>
@@ -36,7 +35,7 @@ export default function BaumannIntroPage() {
       <Wrapper as={'section'} flexDirection="column" justifyContent="space-evenly">
         <Title
           size="lg"
-          title={'Baumann Test'}
+          title={'Skin Type Test'}
           description={'Do you wanna know Your Skin Type?'}
           color={theme.colors.primary}
         />
@@ -61,7 +60,7 @@ export default function BaumannIntroPage() {
           Icon={<Icon type="rightArrow" width={14} height={14} />}
           iconPosition="end"
           style={{ paddingBlock: 14 }}
-          onClick={() => router.push('/baumann/question')}
+          onClick={() => link.to('skinTypeTest')}
         >
           Let`s Start
         </Button>

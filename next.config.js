@@ -8,6 +8,22 @@ const nextConfig = {
     });
     return config;
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: process.env.NEXT_PUBLIC_S3_BUCKET,
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.sephora.ae',
+        port: '',
+        pathname: '/**'
+      },
+    ],
+  },
 };
 
 module.exports = nextConfig

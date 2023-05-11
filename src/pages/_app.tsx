@@ -1,11 +1,12 @@
 import React from 'react';
 import Modal from 'react-modal';
-import type { AppProps } from 'next/app';
+import type { AppContext, AppProps } from 'next/app';
 import { Global, ThemeProvider } from '@emotion/react';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { Hydrate, QueryClient, QueryClientProvider, dehydrate } from 'react-query';
 
 import { globalStyles, theme } from '@/theme';
+import { CountryService, ProductService } from '@/api/service';
 
 export default function App({ Component, pageProps }: AppProps) {
   const [queryClient] = React.useState(() => new QueryClient());
@@ -39,3 +40,21 @@ export default function App({ Component, pageProps }: AppProps) {
 }
 
 Modal.setAppElement('#__next');
+
+App.getInitialProps = async ({ Component, ctx }: AppContext) => {
+  let pageProps = {};
+
+  if (Component.getInitialProps) {
+    pageProps = await Component.getInitialProps(ctx);
+  }
+
+  try {
+    const filters = await ProductService.getAllFilters();
+    const countries = await CountryService.getAllCountries();
+
+    pageProps = { ...pageProps, filters, countries };
+    return { pageProps };
+  } catch (err) {
+    return { pageProps };
+  }
+};

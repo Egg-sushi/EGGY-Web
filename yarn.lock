@@ -3005,9 +3005,11 @@ __metadata:
     husky: ^8.0.3
     lint-staged: ^13.2.2
     next: 13.2.3
+    node-tesseract-ocr: ^2.2.1
     prettier: ^2.8.4
     react: 18.2.0
     react-dom: 18.2.0
+    react-intersection-observer: ^9.4.3
     react-modal: ^3.16.1
     react-query: ^3.39.3
     typescript: 4.9.5
@@ -4727,6 +4729,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"node-tesseract-ocr@npm:^2.2.1":
+  version: 2.2.1
+  resolution: "node-tesseract-ocr@npm:2.2.1"
+  checksum: 641a43d02ee2a357c9b3d301737bfc50dd7923d052a2938d807a3778abb0e2a03ff0ccb0911291347822bec620b51e21f986903762e35977247cbef0dc60b860
+  languageName: node
+  linkType: hard
+
 "normalize-path@npm:^3.0.0":
   version: 3.0.0
   resolution: "normalize-path@npm:3.0.0"
@@ -5078,6 +5087,15 @@ __metadata:
   peerDependencies:
     react: ^18.2.0
   checksum: 7d323310bea3a91be2965f9468d552f201b1c27891e45ddc2d6b8f717680c95a75ae0bc1e3f5cf41472446a2589a75aed4483aee8169287909fcd59ad149e8cc
+  languageName: node
+  linkType: hard
+
+"react-intersection-observer@npm:^9.4.3":
+  version: 9.4.3
+  resolution: "react-intersection-observer@npm:9.4.3"
+  peerDependencies:
+    react: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+  checksum: ac31c6c76ce72019a1fb50fe6b53ef6429d98b9e9b937f92d16635ef8586392c7058bb61526a8fe6bea6ce36c006015fe2d8893bac43eda6157b9e6b17ad9b68
   languageName: node
   linkType: hard
 

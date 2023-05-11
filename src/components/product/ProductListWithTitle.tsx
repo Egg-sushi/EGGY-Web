@@ -1,10 +1,10 @@
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { useTheme } from '@emotion/react';
 
 import { Flex } from '@/components/styled';
 import type { Product } from '@/types/product';
 import { ProductListItem, Text } from '@/components';
+import useLink from '@/hooks/useLink';
 
 interface Props {
   title: string;
@@ -13,7 +13,7 @@ interface Props {
 
 function ProductListWithTitle({ title, products }: Props) {
   const theme = useTheme();
-  const router = useRouter();
+  const link = useLink();
 
   return (
     <Flex flexDirection="column" gap={16} justifyContent="space-between" alignItems="center">
@@ -36,7 +36,7 @@ function ProductListWithTitle({ title, products }: Props) {
           <ProductListItem
             product={product}
             key={idx}
-            onClick={() => router.push(`/products/${product.id}`)}
+            onClick={() => link.to('productItem', `${product.id}`)}
           />
         ))}
       </Flex>
