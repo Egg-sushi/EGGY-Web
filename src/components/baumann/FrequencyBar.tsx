@@ -30,6 +30,7 @@ function FrequencyBar({ answers, activeAnswer, onClickItem }: Props) {
                 variant="body2"
                 fontColor={isActive ? theme.colors.primary : theme.colors.gray500}
                 weight={isActive ? 800 : 400}
+                align="center"
               >
                 {answer.answer}
               </CircleLabel>
