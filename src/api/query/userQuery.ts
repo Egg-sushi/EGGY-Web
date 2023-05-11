@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { UserService } from '../service';
 import { useLink } from '@/hooks';
+import { SkinType } from '@/types/baumann';
 
 const USER_KEY = 'user';
 
@@ -37,4 +38,13 @@ export const useIsLogin = () => {
 
 export const useUserSkinType = () => {
   return useQuery([USER_KEY, 'skinType'], () => UserService.getUserSkinType());
+};
+
+export const useSaveUserSkinType = (skinType: SkinType) => {
+  const queryClient = useQueryClient();
+  return useMutation([USER_KEY, 'skinType', 'save'], () => UserService.saveUserSkinType(skinType), {
+    onSuccess: () => {
+      queryClient.invalidateQueries([USER_KEY, 'skinType']);
+    },
+  });
 };

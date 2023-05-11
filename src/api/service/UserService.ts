@@ -36,6 +36,15 @@ class UserService extends HTTPInterface {
       .then(HTTPInterface._handleResponse)
       .catch(HTTPInterface._handleError);
   }
+
+  public saveUserSkinType(skinType: SkinType): Promise<{ skinType?: SkinType }> {
+    return this.baseHTTP
+      .post('user/skintype', {
+        skinType,
+      })
+      .then(HTTPInterface._handleResponse)
+      .catch(HTTPInterface._handleError);
+  }
 }
 
 const userService = new UserService();
