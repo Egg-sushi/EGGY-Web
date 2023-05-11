@@ -1,7 +1,14 @@
-import { Header } from '@/components';
+import { Header, SkeletonImage } from '@/components';
+import useLink from '@/hooks/useLink';
+import styled from '@emotion/styled';
 import Head from 'next/head';
+import React from 'react';
 
 export default function LoginPage() {
+  const link = useLink();
+  const handleClickGoogleLogin = React.useCallback(() => {
+    link.url(`${process.env.NEXT_PUBLIC_SERVER_API}/api/user/login/google`);
+  }, [link]);
   return (
     <>
       <Head>
@@ -11,12 +18,26 @@ export default function LoginPage() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <div>hihi</div>
-      <div>hihi</div>
-      <div>hihi</div>
-      <div>hihi</div>
-      <div>hihi</div>
-      <div>Login Detail</div>
+      <Content>
+        <GoogleLoginButton onClick={handleClickGoogleLogin}>
+          <SkeletonImage src="/GoogleLogin.png" fill height={(92 / 5) * 3} alt="google-login" />
+        </GoogleLoginButton>
+      </Content>
     </>
   );
 }
+
+const GoogleLoginButton = styled.button`
+  width: calc((382px / 5) * 3);
+  height: calc((92px / 5) * 3);
+  padding: 0;
+  border: none;
+`;
+
+const Content = styled.main`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
