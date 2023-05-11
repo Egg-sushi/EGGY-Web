@@ -4,10 +4,15 @@ import { useTheme } from '@emotion/react';
 
 import useLink from '@/hooks/useLink';
 import { Button, Flex, Header, LandingScrollText, Text } from '@/components';
+import { getRedirectFlag } from '@/utils';
 
 export default function Home() {
   const theme = useTheme();
   const link = useLink();
+
+  if (getRedirectFlag()) {
+    link.to('skinTypeTestResult');
+  }
 
   return (
     <>
@@ -106,7 +111,6 @@ const Circle = styled.span<StyleCircleProps>`
   bottom: 0;
   transform: translateX(-50%);
   box-sizing: border-box;
-  border: 1px solid $#2b63da;
   border: ${({ theme, isActive }) => isActive && `1px solid ${theme.colors.primary}`};
   box-shadow: ${({ theme, isActive }) => isActive && `inset 0 0 0 2px ${theme.colors.white}`};
 `;
