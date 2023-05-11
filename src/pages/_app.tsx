@@ -6,7 +6,7 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import { Hydrate, QueryClient, QueryClientProvider, dehydrate } from 'react-query';
 
 import { globalStyles, theme } from '@/theme';
-import { ProductService } from '@/api/service';
+import { CountryService, ProductService } from '@/api/service';
 
 export default function App({ Component, pageProps }: AppProps) {
   const [queryClient] = React.useState(() => new QueryClient());
@@ -50,8 +50,9 @@ App.getInitialProps = async ({ Component, ctx }: AppContext) => {
 
   try {
     const filters = await ProductService.getAllFilters();
+    const countries = await CountryService.getAllCountries();
 
-    pageProps = { ...pageProps, filters };
+    pageProps = { ...pageProps, filters, countries };
     return { pageProps };
   } catch (err) {
     return { pageProps };
