@@ -34,6 +34,9 @@ export default function useLink() {
         const queryString = query !== '' ? `?${query}` : '';
         router.push(path + queryString);
       },
+      url: (path: string) => {
+        location.href = path;
+      },
     };
   }, [router]);
 }

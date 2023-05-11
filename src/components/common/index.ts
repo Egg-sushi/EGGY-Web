@@ -6,3 +6,4 @@ export { default as Header } from './Header';
 export { default as SelectOption } from './SelectOption';
 export { default as SkeletonImage } from './SkeletonImage';
 export { default as CircleCheckBox } from './CircleCheckBox';
+export { default as GenderInputBox } from './GenderInputBox';

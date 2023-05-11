@@ -24,11 +24,11 @@ function BaumannPLAINType({ baumann, activeAnswer, onClickItem }: Props) {
     <StyledFlex as={'section'} flexDirection="column">
       <Text variant="body1">{baumann.question}</Text>
       <SkeletonImage
-        width={180}
         height={180}
         src={baumann.imageUrl || '/Diamond.png'}
         alt="quiz-thumbnail"
         style={{ margin: '30px auto 50px auto' }}
+        fill
       />
       <FrequencyBar
         answers={baumann.answers}
