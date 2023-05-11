@@ -31,9 +31,8 @@ function FrequencyBar({ answers, activeAnswer, onClickItem }: Props) {
                 fontColor={isActive ? theme.colors.primary : theme.colors.gray500}
                 weight={isActive ? 800 : 400}
                 align="center"
-              >
-                {answer.answer}
-              </CircleLabel>
+                dangerouslySetInnerHTML={{ __html: answer.answer }}
+              />
             </Item>
           );
         })}
