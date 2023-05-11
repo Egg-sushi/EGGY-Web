@@ -22,7 +22,7 @@ export const useLogOut = () => {
   const queryClient = useQueryClient();
   return useMutation([USER_KEY], () => UserService.logOut(), {
     onSuccess: () => {
-      queryClient.invalidateQueries();
+      queryClient.invalidateQueries([USER_KEY]);
       alert('Success');
     },
     onError: () => {
