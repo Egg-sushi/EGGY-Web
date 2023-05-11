@@ -35,7 +35,7 @@ export default function SkinTypeTestIntroPage() {
       <Wrapper as={'section'} flexDirection="column" justifyContent="space-evenly">
         <Title
           size="lg"
-          title={'Baumann Test'}
+          title={'Skin Type Test'}
           description={'Do you wanna know Your Skin Type?'}
           color={theme.colors.primary}
         />
