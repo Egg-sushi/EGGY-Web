@@ -31,6 +31,6 @@ export const useLogOut = () => {
   });
 };
 
-export const useIsLogined = () => {
-  return useQuery([USER_KEY], () => UserService.isLogined());
+export const useIsLogin = () => {
+  return useQuery([USER_KEY], () => UserService.isLogin());
 };

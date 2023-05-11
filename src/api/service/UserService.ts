@@ -22,7 +22,7 @@ class UserService extends HTTPInterface {
       .catch(HTTPInterface._handleError);
   }
 
-  public isLogined(): Promise<{ isLogined: boolean }> {
+  public isLogin(): Promise<{ isLogin: boolean }> {
     return this.baseHTTP
       .get('islogined')
       .then(HTTPInterface._handleResponse)
