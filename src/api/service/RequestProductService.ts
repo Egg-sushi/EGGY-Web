@@ -1,6 +1,5 @@
-import { UserProductId } from '@/types/api';
 import HTTPInterface from './core';
-import { Product, RequestProduct } from '@/types/product';
+import { RequestProduct } from '@/types/product';
 
 class RequestProductService extends HTTPInterface {
   public constructor() {
