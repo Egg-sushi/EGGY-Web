@@ -1,4 +1,4 @@
-import { useMutation } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { UserService } from '../service';
 import { useLink } from '@/hooks';
 
@@ -16,4 +16,21 @@ export const useSignUp = (name: string, gender: string, birthday: string, countr
       link.to('home');
     },
   });
+};
+
+export const useLogOut = () => {
+  const queryClient = useQueryClient();
+  return useMutation([USER_KEY], () => UserService.logOut(), {
+    onSuccess: () => {
+      queryClient.invalidateQueries([USER_KEY]);
+      alert('Success');
+    },
+    onError: () => {
+      alert('Error');
+    },
+  });
+};
+
+export const useIsLogin = () => {
+  return useQuery([USER_KEY], () => UserService.isLogin());
 };

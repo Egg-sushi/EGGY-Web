@@ -4,9 +4,21 @@ import { Flex } from '../styled';
 import { Button, Text } from '../common';
 import useLink from '@/hooks/useLink';
 import { STATIC_NAVIGATION } from '@/constants';
+import { useIsLogin, useLogOut } from '@/api/query/userQuery';
+import React from 'react';
 
 function HeaderModal() {
   const link = useLink();
+  const { data } = useIsLogin();
+  const logOut = useLogOut();
+
+  const handleClickBottomButton = React.useCallback(() => {
+    if (data?.isLogin) {
+      logOut.mutate();
+    } else {
+      link.to('login');
+    }
+  }, [data, link, logOut]);
 
   return (
     <Wrapper flexDirection="column" justifyContent="space-between">
@@ -22,8 +34,8 @@ function HeaderModal() {
           </Text>
         ))}
       </FlexWithLine>
-      <Button variant="filled" hierarchy="primary" onClick={() => link.to('login')}>
-        LOGIN
+      <Button variant="filled" hierarchy="primary" onClick={handleClickBottomButton}>
+        {data?.isLogin ? 'LOGOUT' : 'LOGIN'}
       </Button>
     </Wrapper>
   );

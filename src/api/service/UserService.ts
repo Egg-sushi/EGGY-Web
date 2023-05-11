@@ -14,6 +14,20 @@ class UserService extends HTTPInterface {
       .then(HTTPInterface._handleResponse)
       .catch(HTTPInterface._handleError);
   }
+
+  public logOut(): Promise<{ message: string }[]> {
+    return this.baseHTTP
+      .post('logout')
+      .then(HTTPInterface._handleResponse)
+      .catch(HTTPInterface._handleError);
+  }
+
+  public isLogin(): Promise<{ isLogin: boolean }> {
+    return this.baseHTTP
+      .get('islogined')
+      .then(HTTPInterface._handleResponse)
+      .catch(HTTPInterface._handleError);
+  }
 }
 
 const userService = new UserService();

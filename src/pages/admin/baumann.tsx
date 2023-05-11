@@ -219,6 +219,9 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
     };
   } catch (error) {
     return {
+      props: {
+        baumanns: [],
+      },
       redirect: {
         permanent: false,
         destination: '/',

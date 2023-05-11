@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
+import Text from '../common/Text';
+import { CircleCheckBox, Flex } from '..';
 import type { BaumannQNA, BaumannQuestion } from '@/types/baumann';
-import { CircleCheckBox, Flex, Text } from '@/components';
 
 interface Props {
   baumann: {

@@ -1,9 +1,11 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
-import type { BaumannQNA, BaumannQuestion } from '@/types/baumann';
-import { Flex, SkeletonImage, Text } from '@/components';
+import { Flex } from '../styled';
+import Text from '../common/Text';
+import { SkeletonImage } from '../common';
 import FrequencyBar from './FrequencyBar';
+import type { BaumannQNA, BaumannQuestion } from '@/types/baumann';
 
 interface Props {
   baumann: {
