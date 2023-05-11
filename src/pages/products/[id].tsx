@@ -16,17 +16,12 @@ interface Props {
 // 1. 상품 조회 api
 // 2. 찜하기 기능 api
 const ProductDetailPage: NextPage<Props> = ({ product }) => {
-  const userId = undefined;
-  const isUserLike = useIsUserLikeProduct({ userId, productId: product?.id });
-  const toggleLike = useToggleUserLike({ userId, productId: product?.id });
+  const isUserLike = useIsUserLikeProduct({ productId: product?.id });
+  const toggleLike = useToggleUserLike({ productId: product?.id });
 
   const handleClickToggleLike = React.useCallback(() => {
-    if (userId) {
-      toggleLike.mutate();
-    } else {
-      alert('You have to log in to add the product to the wishlist.');
-    }
-  }, [toggleLike, userId]);
+    toggleLike.mutate();
+  }, [toggleLike]);
 
   return (
     <>

@@ -1,4 +1,3 @@
-export interface UserProductId {
-  userId?: number;
+export interface ProductId {
   productId: number;
 }
