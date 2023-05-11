@@ -20,7 +20,7 @@ interface Props {
 function BaumannLONGSTRINGType({ baumann, activeAnswer, onClickItem }: Props) {
   return (
     <Flex as={'section'} flexDirection="column" gap={50}>
-      <Text variant="body1">{baumann.question}</Text>
+      <StyledText variant="body1" dangerouslySetInnerHTML={{ __html: baumann.question }} />
       <Flex as={'ul'} flexDirection="column" gap={16}>
         {baumann.answers.map((answer) => (
           <AnswerItem
@@ -64,6 +64,8 @@ const AnswerItem = styled(Flex)<StyleAnswerProps>`
 `;
 
 const StyledText = styled(Text)`
+  white-space: pre-line;
+
   span {
     display: inline-block;
     width: 100%;
