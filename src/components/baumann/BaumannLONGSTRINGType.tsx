@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
+import { CircleCheckBox, Flex, Text } from '..';
 import type { BaumannQNA, BaumannQuestion } from '@/types/baumann';
-import { CircleCheckBox, Flex, Text } from '@/components';
 
 interface Props {
   baumann: {
@@ -63,7 +63,7 @@ const AnswerItem = styled(Flex)<StyleAnswerProps>`
   }
 `;
 
-const StyledText = styled(Text)`
+const StyledText = styled(Text ?? 'div')`
   white-space: pre-line;
 
   span {

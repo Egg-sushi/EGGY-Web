@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 
 import type { BaumannQNA, BaumannQuestion } from '@/types/baumann';
-import { Flex, SkeletonImage, Text } from '@/components';
+import { Flex, SkeletonImage, Text } from '..';
 import FrequencyBar from './FrequencyBar';
 
 interface Props {
@@ -45,7 +45,7 @@ const StyledFlex = styled(Flex)`
   padding-bottom: 60px;
 `;
 
-const StyledText = styled(Text)`
+const StyledText = styled(Text ?? 'div')`
   white-space: pre-line;
 
   span {

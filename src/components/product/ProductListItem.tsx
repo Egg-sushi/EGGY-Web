@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
 import { useTheme } from '@emotion/react';
 
-import { Flex } from '@/components/styled';
+import { Flex } from '../styled';
+import { Icon, SkeletonImage, Text } from '../common';
 import type { ProductInList } from '@/types/product';
-import { Icon, SkeletonImage, Text } from '@/components';
 
 interface Props {
   product: ProductInList;
