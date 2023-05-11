@@ -8,11 +8,12 @@ interface Props {
   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
-function SelectOption({ value, label, optionList, onChange }: Props) {
+function SelectOption(props: Props) {
+  const { value, label, optionList, onChange, ...restProps } = props;
   return (
     <Wrapper>
       {label && <Text variant="body5">{label}</Text>}
-      <SelectList value={value} onChange={onChange}>
+      <SelectList value={value} onChange={onChange} {...restProps}>
         {optionList.map((filter) => (
           <Item key={filter} value={filter}>
             {filter}
