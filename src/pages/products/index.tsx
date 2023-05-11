@@ -9,6 +9,7 @@ import { useDisclosure, useLink, useSearchParamsState } from '@/hooks';
 import { Flex, Header, Modal, SearchBar, ProductListItem } from '@/components';
 import { useInfiniteProductScroll } from '@/api/query';
 import { isPriceRangeKey, isSkinType } from '@/utils';
+import { useUserSkinType } from '@/api/query/userQuery';
 
 const DEFAULT_SIZE = 20;
 
@@ -21,6 +22,7 @@ const initialFilters = (searchParams: ReadonlyURLSearchParams): ProductFilter =>
 });
 
 export default function ProductList({ filters: filterList }: { filters: UserFilterList }) {
+  const { data: userSkinTypeData } = useUserSkinType();
   const link = useLink();
   const { ref, inView } = useInView();
   const { isOpen, onClose, onOpen } = useDisclosure();
@@ -56,6 +58,13 @@ export default function ProductList({ filters: filterList }: { filters: UserFilt
       fetchNextPage();
     }
   }, [fetchNextPage, inView, hasNextPage]);
+
+  React.useEffect(() => {
+    if (userSkinTypeData?.skinType && isSkinType(userSkinTypeData.skinType)) {
+      const { skinType } = userSkinTypeData;
+      setFilters((prev) => ({ ...prev, skinTypes: [skinType] }));
+    }
+  }, [userSkinTypeData]);
 
   return (
     <>
