@@ -60,21 +60,27 @@ const Wrapper = styled.button<StyleProps>`
   outline: none;
   color: ${({ variant, theme, hierarchy }) => {
     if (variant === 'outlined' && typeof hierarchy !== 'undefined') {
-      return HierarchyButtonColor[hierarchy].color;
+      return HierarchyButtonColor.outlined[hierarchy].color;
     }
-    return theme.colors.white;
+    if (variant === 'filled' && typeof hierarchy !== 'undefined') {
+      return HierarchyButtonColor.filled[hierarchy].color;
+    }
+    return theme.colors.black;
   }};
   border: ${({ variant, hierarchy }) => {
     if (variant === 'outlined' && typeof hierarchy !== 'undefined') {
-      return `1px solid ${HierarchyButtonColor[hierarchy].border}`;
+      return `1px solid ${HierarchyButtonColor.outlined[hierarchy].border}`;
     }
     return 'none';
   }};
   border-radius: ${({ borderRadius }) =>
     typeof borderRadius === 'number' ? `${borderRadius}px` : borderRadius};
   background-color: ${({ variant, theme, hierarchy }) => {
+    if (variant === 'outlined' && typeof hierarchy !== 'undefined') {
+      return HierarchyButtonColor.outlined[hierarchy].backgroundColor;
+    }
     if (variant === 'filled' && typeof hierarchy !== 'undefined') {
-      return HierarchyButtonColor[hierarchy].backgroundColor;
+      return HierarchyButtonColor.filled[hierarchy].backgroundColor;
     }
     return theme.colors.white;
   }};

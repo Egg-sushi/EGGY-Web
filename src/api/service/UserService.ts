@@ -1,5 +1,6 @@
 import { SignUpInfo } from '@/types/api';
 import HTTPInterface from './core';
+import { SkinType } from '@/types/baumann';
 
 class UserService extends HTTPInterface {
   public constructor() {
@@ -24,7 +25,23 @@ class UserService extends HTTPInterface {
 
   public isLogin(): Promise<{ isLogin: boolean }> {
     return this.baseHTTP
-      .get('islogined')
+      .get('login/check')
+      .then(HTTPInterface._handleResponse)
+      .catch(HTTPInterface._handleError);
+  }
+
+  public getUserSkinType(): Promise<{ skinType?: SkinType }> {
+    return this.baseHTTP
+      .get('user/skintype')
+      .then(HTTPInterface._handleResponse)
+      .catch(HTTPInterface._handleError);
+  }
+
+  public saveUserSkinType(skinType: SkinType): Promise<{ skinType?: SkinType }> {
+    return this.baseHTTP
+      .post('user/skintype', {
+        skinType,
+      })
       .then(HTTPInterface._handleResponse)
       .catch(HTTPInterface._handleError);
   }
