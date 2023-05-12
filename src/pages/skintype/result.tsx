@@ -73,7 +73,6 @@ export default function SkinTypeTestResultPage() {
             <Button
               variant="outlined"
               hierarchy="primary"
-              color={theme.colors.primary}
               onClick={handleClickResetButton}
               borderRadius={24}
             >
