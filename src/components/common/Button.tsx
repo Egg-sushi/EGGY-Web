@@ -58,7 +58,10 @@ const Wrapper = styled.button<StyleProps>`
   box-sizing: border-box;
   width: ${({ width }) => (typeof width === 'number' ? `${width}px` : width)};
   outline: none;
-  color: ${({ variant, theme, hierarchy }) => {
+  color: ${({ variant, theme, hierarchy, color }) => {
+    if (color) {
+      return color;
+    }
     if (variant === 'outlined' && typeof hierarchy !== 'undefined') {
       return HierarchyButtonColor[hierarchy].color;
     }

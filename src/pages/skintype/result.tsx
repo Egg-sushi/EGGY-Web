@@ -5,14 +5,16 @@ import { useTheme } from '@emotion/react';
 
 import useLink from '@/hooks/useLink';
 import { ColorValueType } from '@/theme';
-import { getAnswers, share } from '@/utils';
+import { getAnswers, redirectFlagOn, share } from '@/utils';
 import { BASE_FRONT_URL } from '@/constants';
 import { useCalculateSkinTypes } from '@/api/query';
 import { BaumannPercentResult, Button, Flex, Header, SkeletonImage, Text } from '@/components';
+import { useIsLogin } from '@/api/query/userQuery';
 
 export default function SkinTypeTestResultPage() {
   const theme = useTheme();
   const link = useLink();
+  const isLogin = useIsLogin();
 
   const calculatedSkinTypeData = useCalculateSkinTypes(
     Object.entries(getAnswers()).map((answer) => ({
@@ -35,6 +37,11 @@ export default function SkinTypeTestResultPage() {
       alert('Copy completed.');
     }
   }, [calculatedSkinTypeData.data?.type]);
+
+  const handleClickLoginButton = React.useCallback(async () => {
+    redirectFlagOn();
+    link.to('login');
+  }, [link]);
 
   if (calculatedSkinTypeData.isSuccess) {
     return (
@@ -63,7 +70,13 @@ export default function SkinTypeTestResultPage() {
             />
           </ImageWrapper>
           <Flex justifyContent="space-between" gap={48}>
-            <Button variant="outlined" onClick={handleClickResetButton} borderRadius={24}>
+            <Button
+              variant="outlined"
+              hierarchy="primary"
+              color={theme.colors.primary}
+              onClick={handleClickResetButton}
+              borderRadius={24}
+            >
               Retry
             </Button>
             <Button variant="filled" onClick={handleClickShareButton} borderRadius={24}>
@@ -128,6 +141,16 @@ export default function SkinTypeTestResultPage() {
             </Button>
           </Flex>
         </Wrapper>
+        {!isLogin.data?.isLogin ? (
+          <Wrapper flexDirection="column" paddingTop={56} color={theme.colors.white} gap={28}>
+            <Text variant="h6" fontColor={theme.colors.blue800}>
+              Save Your Skin Type
+            </Text>
+            <Button variant="filled" hierarchy="primary" onClick={handleClickLoginButton}>
+              Sign Up & Login
+            </Button>
+          </Wrapper>
+        ) : null}
       </>
     );
   }
