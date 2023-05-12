@@ -7,6 +7,7 @@ import type { Product } from '@/types/product';
 import { useIsUserLikeProduct, useToggleUserLike } from '@/api/query';
 import React from 'react';
 import { DUMMY_PRODUCT } from '@/dummy/cosmetic';
+import { useViewProduct } from '@/api/query/viewHistoryQuery';
 
 interface Props {
   product: Product;
@@ -18,10 +19,17 @@ interface Props {
 const ProductDetailPage: NextPage<Props> = ({ product }) => {
   const isUserLike = useIsUserLikeProduct({ productId: product?.id });
   const toggleLike = useToggleUserLike({ productId: product?.id });
+  const view = useViewProduct(product?.id);
 
   const handleClickToggleLike = React.useCallback(() => {
     toggleLike.mutate();
   }, [toggleLike]);
+
+  React.useEffect(() => {
+    if (product?.id) {
+      view.mutate();
+    }
+  }, [product?.id]);
 
   return (
     <>
