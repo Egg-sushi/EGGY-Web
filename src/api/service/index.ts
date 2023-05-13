@@ -4,3 +4,4 @@ export { default as WishService } from './WishService';
 export { default as RequestProductService } from './RequestProductService';
 export { default as CountryService } from './CountryService';
 export { default as UserService } from './UserService';
+export { default as ViewHistoryService } from './ViewHistoryService';
