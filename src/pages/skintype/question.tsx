@@ -5,7 +5,7 @@ import { useTheme } from '@emotion/react';
 
 import useLink from '@/hooks/useLink';
 import useBaumann from '@/hooks/useBaumann';
-import { Button, Flex, Icon, Text, ProgressBar } from '@/components';
+import { Button, Flex, Icon, ProgressBar, Text } from '@/components';
 import type { BaumannQNA, BaumannQuestion } from '@/types/baumann';
 import { getAnswers, saveAnswer, resetAnswers } from '@/utils/baumann';
 
@@ -108,7 +108,6 @@ export default function SkinTypeTest() {
         title={currentQna.type}
         currentSubStepIndex={currentSubStepIndex}
         totalSubStepNum={totalSubStepNum}
-        stepNames={['Step 1', 'Step 2', 'Step 3', 'Step 4']}
       />
       <Content questionType={qnaType}>
         <BaumannQNAComponent

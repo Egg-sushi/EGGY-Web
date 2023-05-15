@@ -1,6 +1,19 @@
 import React from 'react';
 
-import { Filter, Heart, LeftArrow, Menu, RightArrow, Search, X } from '../icons';
+import {
+  CircleProgress,
+  Filter,
+  Heart,
+  LeftArrow,
+  Menu,
+  Pigmentation,
+  RightArrow,
+  Search,
+  Sebum,
+  Sensitivity,
+  Wrinkle,
+  X,
+} from '../icons';
 import styled from '@emotion/styled';
 
 const ICONS = {
@@ -11,6 +24,11 @@ const ICONS = {
   leftArrow: <LeftArrow />,
   rightArrow: <RightArrow />,
   heart: <Heart />,
+  sebum: <Sebum />,
+  sensitivity: <Sensitivity />,
+  pigmentation: <Pigmentation />,
+  wrinkle: <Wrinkle />,
+  circleProgress: <CircleProgress />,
 };
 
 interface Props extends React.ComponentPropsWithoutRef<'svg'> {
