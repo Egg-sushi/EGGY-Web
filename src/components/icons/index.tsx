@@ -5,3 +5,8 @@ export { default as Filter } from './Filter.svg';
 export { default as Search } from './Search.svg';
 export { default as LeftArrow } from './LeftArrow.svg';
 export { default as RightArrow } from './RightArrow.svg';
+export { default as Sebum } from './Sebum.svg';
+export { default as Sensitivity } from './Sensitivity.svg';
+export { default as Pigmentation } from './Pigmentation.svg';
+export { default as Wrinkle } from './Wrinkle.svg';
+export { default as CircleProgress } from './CircleProgress.svg';
