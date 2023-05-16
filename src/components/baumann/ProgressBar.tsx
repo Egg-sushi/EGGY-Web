@@ -5,6 +5,7 @@ import { useTheme } from '@emotion/react';
 import { Flex } from '../styled';
 import { Icon, Text } from '../common';
 import { GetComponentProps } from '@/utils';
+import { Lottie } from '@toss/lottie';
 
 const RADIUS = 54;
 const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
@@ -18,7 +19,7 @@ interface Props {
 function ProgressBar(props: React.PropsWithChildren<Props>) {
   const { title, currentStepIndex, currentSubStepIndex, totalSubStepNum, ...restProps } = props;
   const stepNum = 4;
-  const progressSubStep = CIRCUMFERENCE * (1 - (currentSubStepIndex - 1) / totalSubStepNum);
+  const progressSubStep = (currentSubStepIndex - 1) / totalSubStepNum;
 
   return (
     <Flex width="100%" flexDirection="column" alignItems="center" {...restProps}>
@@ -70,27 +71,33 @@ type StepProps = Pick<Props, 'currentStepIndex'> & {
 };
 const Step = ({ currentStepIndex, progressSubStep, stepIndex, title, iconType }: StepProps) => {
   const theme = useTheme();
+  const fillCircumference = CIRCUMFERENCE * progressSubStep;
+  const isCurrent = currentStepIndex === stepIndex;
+  const isPassed = currentStepIndex > stepIndex;
   return (
     <StepWrapper>
-      <StepCircle
-        type="circleProgress"
-        width={62}
-        height={62}
-        strokeDashoffset={
-          currentStepIndex === stepIndex
-            ? progressSubStep
-            : currentStepIndex > stepIndex
-            ? 0
-            : CIRCUMFERENCE
-        }
-        strokeDasharray={CIRCUMFERENCE}
-      />
-      <StepIcon
-        type={iconType}
-        width={36}
-        height={36}
-        fill={currentStepIndex >= stepIndex ? theme.colors.primary : theme.colors.gray200}
-      />
+      {isPassed ? (
+        <LottieWrapper>
+          <Lottie src="/lotties/check.json" width={45} height={45} speed={1.5} />
+        </LottieWrapper>
+      ) : (
+        <>
+          <StepCircle
+            type="circleProgress"
+            width={62}
+            height={62}
+            strokeDashoffset={isCurrent ? fillCircumference : 0}
+            strokeDasharray={CIRCUMFERENCE}
+          />
+          <StepIcon
+            type={iconType}
+            width={36}
+            height={36}
+            fill={currentStepIndex >= stepIndex ? theme.colors.primary : theme.colors.gray200}
+          />
+        </>
+      )}
+
       <StepTitle
         variant={currentStepIndex >= stepIndex ? 'h8' : 'body4'}
         fontColor={currentStepIndex >= stepIndex ? theme.colors.primary : theme.colors.gray300}
@@ -173,6 +180,22 @@ const StepTitle = styled(Text)`
   line-height: 1.4;
 
   transition: all 0.3s ease-in-out 0.7s;
+`;
+
+const LottieWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 62px;
+  height: 62px;
+
+  ::before {
+    position: absolute;
+    content: '';
+    width: 25.67px;
+    height: 25.67px;
+    background-color: ${({ theme }) => theme.colors.white};
+  }
 `;
 
 export default ProgressBar;
