@@ -4,11 +4,11 @@ import { useTheme } from '@emotion/react';
 
 import { Flex } from '../styled';
 import { Icon, Text } from '../common';
-import { GetComponentProps } from '@/utils';
 import { Lottie } from '@toss/lottie';
 
 const RADIUS = 54;
 const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
+const STEP_SIZE = 4;
 
 interface Props {
   title: string;
@@ -18,14 +18,13 @@ interface Props {
 }
 function ProgressBar(props: React.PropsWithChildren<Props>) {
   const { title, currentStepIndex, currentSubStepIndex, totalSubStepNum, ...restProps } = props;
-  const stepNum = 4;
   const progressSubStep = (currentSubStepIndex - 1) / totalSubStepNum;
 
   return (
     <Flex width="100%" flexDirection="column" alignItems="center" {...restProps}>
       <Wrapper>
         <StatusBar>
-          <CurrentStatusBar width={`${(100 / (stepNum - 1)) * currentStepIndex}%`} />
+          <CurrentStatusBar width={`${(100 / (STEP_SIZE - 1)) * currentStepIndex}%`} />
         </StatusBar>
 
         <StepStack>
@@ -67,7 +66,7 @@ type StepProps = Pick<Props, 'currentStepIndex'> & {
   progressSubStep: number;
   stepIndex: number;
   title: string;
-  iconType: GetComponentProps<typeof Icon>['type'];
+  iconType: Parameters<typeof Icon>[0]['type'];
 };
 const Step = ({ currentStepIndex, progressSubStep, stepIndex, title, iconType }: StepProps) => {
   const theme = useTheme();
@@ -78,7 +77,7 @@ const Step = ({ currentStepIndex, progressSubStep, stepIndex, title, iconType }:
     <StepWrapper>
       {isPassed ? (
         <LottieWrapper>
-          <Lottie src="/lotties/check.json" width={45} height={45} speed={1.5} />
+          <Lottie src="/lotties/check.json" width={45} height={45} speed={1.25} />
         </LottieWrapper>
       ) : (
         <>
@@ -121,7 +120,7 @@ interface StyleProps {
 }
 const StatusBar = styled.div`
   height: 2px;
-  width: calc(100% - (0.75rem * 3));
+  width: calc(100% - (31px * 2));
   background: ${({ theme }) => theme.colors.gray200};
   position: relative;
   top: 20px;
@@ -135,7 +134,7 @@ const CurrentStatusBar = styled.div<StyleProps>`
   border-radius: 1px;
   background: ${({ theme }) => theme.colors.primary};
 
-  transition: width 1s linear 0s;
+  transition: width 1s linear 0.1s;
 `;
 
 const StepStack = styled.ul`
@@ -156,7 +155,6 @@ const StepWrapper = styled.li`
 
 const StepCircle = styled(Icon)`
   transform: rotate(-90deg);
-
   transition: all 0.2s ease-in-out;
 `;
 
@@ -173,10 +171,9 @@ const StepIcon = styled(Icon)`
 
 const StepTitle = styled(Text)`
   position: absolute;
-  left: 50%;
   top: calc(100% + 11px);
+  left: 50%;
   transform: translateX(-50%);
-
   line-height: 1.4;
 
   transition: all 0.3s ease-in-out 0.7s;
@@ -192,8 +189,8 @@ const LottieWrapper = styled.div`
   ::before {
     position: absolute;
     content: '';
-    width: 25.67px;
-    height: 25.67px;
+    width: 26px;
+    height: 26px;
     background-color: ${({ theme }) => theme.colors.white};
   }
 `;
