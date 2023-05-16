@@ -78,9 +78,9 @@ const Step = ({ currentStepIndex, progressSubStep, stepIndex, title, iconType }:
   return (
     <StepWrapper>
       {isPassed ? (
-        <LottieWrapper>
+        <LottieFlex alignItems="center" justifyContent="center" width={62} height={62}>
           <Lottie src="/lotties/check.json" width={45} height={45} speed={1.25} />
-        </LottieWrapper>
+        </LottieFlex>
       ) : (
         <>
           <StepCircle
@@ -181,13 +181,7 @@ const StepTitle = styled(Text)`
   transition: all 0.3s ease-in-out 0.7s;
 `;
 
-const LottieWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 62px;
-  height: 62px;
-
+const LottieFlex = styled(Flex)`
   ::before {
     position: absolute;
     content: '';
