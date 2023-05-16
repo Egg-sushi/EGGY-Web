@@ -73,6 +73,8 @@ const Step = ({ currentStepIndex, progressSubStep, stepIndex, title, iconType }:
   const fillCircumference = CIRCUMFERENCE * progressSubStep;
   const isCurrent = currentStepIndex === stepIndex;
   const isPassed = currentStepIndex > stepIndex;
+  const hasPassed = isCurrent || isPassed;
+
   return (
     <StepWrapper>
       {isPassed ? (
@@ -92,14 +94,14 @@ const Step = ({ currentStepIndex, progressSubStep, stepIndex, title, iconType }:
             type={iconType}
             width={36}
             height={36}
-            fill={currentStepIndex >= stepIndex ? theme.colors.primary : theme.colors.gray200}
+            fill={isCurrent ? theme.colors.primary : theme.colors.gray200}
           />
         </>
       )}
 
       <StepTitle
-        variant={currentStepIndex >= stepIndex ? 'h8' : 'body4'}
-        fontColor={currentStepIndex >= stepIndex ? theme.colors.primary : theme.colors.gray300}
+        variant={hasPassed ? 'h8' : 'body4'}
+        fontColor={hasPassed ? theme.colors.primary : theme.colors.gray300}
       >
         {title}
       </StepTitle>
