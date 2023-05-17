@@ -29,7 +29,7 @@ const ProductDetailPage: NextPage<Props> = ({ product }) => {
     if (product?.id) {
       view.mutate();
     }
-  }, [product?.id]);
+  }, [product?.id, view]);
 
   return (
     <>
@@ -61,11 +61,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
     };
   } catch (err) {
     console.error(err);
+    return {
+      paths: [{ params: { id: '1' } }],
+      fallback: false,
+    };
   }
-  return {
-    paths: [{ params: { id: '1' } }],
-    fallback: false,
-  };
 };
 
 export const getStaticProps: GetStaticProps<Props, { id: string }> = async ({ params }) => {
@@ -79,12 +79,12 @@ export const getStaticProps: GetStaticProps<Props, { id: string }> = async ({ pa
     };
   } catch (err) {
     console.error(err);
+    return {
+      props: {
+        product: DUMMY_PRODUCT,
+      },
+    };
   }
-  return {
-    props: {
-      product: DUMMY_PRODUCT,
-    },
-  };
 };
 
 export default ProductDetailPage;
