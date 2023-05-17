@@ -29,7 +29,9 @@ const ProductDetailPage: NextPage<Props> = ({ product }) => {
     if (product?.id) {
       view.mutate();
     }
-  }, [product?.id, view]);
+    //view를 추가하는 경우 호출이 계속된다
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [product?.id]);
 
   return (
     <>
@@ -54,10 +56,9 @@ const ProductDetailPage: NextPage<Props> = ({ product }) => {
 export const getStaticPaths: GetStaticPaths = async () => {
   try {
     const productIds = await ProductService.getAllIds();
-
     return {
-      paths: productIds.map((id) => ({ params: { id: String(id) } })),
-      fallback: true,
+      paths: productIds.map((id) => ({ params: { id: String(id?.id) } })),
+      fallback: false,
     };
   } catch (err) {
     console.error(err);
