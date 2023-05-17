@@ -8,6 +8,7 @@ const nextConfig = {
     });
     return config;
   },
+  staticPageGenerationTimeout: 50000,
   images: {
     remotePatterns: [
       {

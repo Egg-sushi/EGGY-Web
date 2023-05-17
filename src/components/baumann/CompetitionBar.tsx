@@ -23,7 +23,7 @@ function CompetitionBar({
   const isLeftActive = firstItemRate >= secondItemRate;
 
   return (
-    <Flex flexDirection="column" gap={16} textAlign="center">
+    <Flex flexDirection="column" gap={16}>
       <Text variant="body4" color={theme.colors.black} align="center">
         {title}
       </Text>
