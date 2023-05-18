@@ -113,6 +113,7 @@ export default function SkinTypeTest() {
         <BaumannQNAComponent
           baumann={{
             id: currentQna.id,
+            subStepIndex: currentSubStepIndex,
             question: currentQna.question,
             answers: currentQna.Baumann_Answer,
             imageUrl: currentQna?.imageUrl,
@@ -155,13 +156,12 @@ const StyledProgressBar = styled(ProgressBar)`
 `;
 
 const Content = styled.div<{ questionType: BaumannQuestion['questionType'] }>`
-  padding-top: 40px;
+  padding-top: 20px;
   padding-inline: 20px;
   height: calc(100% - 160px);
   background-color: ${({ theme, questionType }) => questionType === 'PLAIN' && theme.colors.blue50};
 `;
 
 const BottomPosition = styled.div`
-  padding: 50px 0;
-  bottom: 50px;
+  bottom: 80px;
 `;
