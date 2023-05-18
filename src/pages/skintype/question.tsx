@@ -159,7 +159,8 @@ const Content = styled.div<{ questionType: BaumannQuestion['questionType'] }>`
   padding-top: 20px;
   padding-inline: 20px;
   height: calc(100% - 160px);
-  background-color: ${({ theme, questionType }) => questionType === 'PLAIN' && theme.colors.blue50};
+  background-color: ${({ theme, questionType }) =>
+    questionType === 'PLAIN' ? theme.colors.blue50 : theme.colors.gray50};
 `;
 
 const BottomPosition = styled.div`
