@@ -31,9 +31,11 @@ function BaumannGRIDPICTUREType({ baumann, activeAnswer, onClickItem }: Props) {
         <Text variant="h3" fontColor={theme.colors.gray400}>
           Q4
         </Text>
-        <Question variant="h4" fontColor={theme.colors.gray600}>
-          {baumann.question}
-        </Question>
+        <Question
+          variant="h4"
+          fontColor={theme.colors.gray600}
+          dangerouslySetInnerHTML={{ __html: baumann.question }}
+        />
       </Flex>
       <GridWrapper>
         {baumann.answers.slice(0, 4).map((answer, index) => (
@@ -49,9 +51,13 @@ function BaumannGRIDPICTUREType({ baumann, activeAnswer, onClickItem }: Props) {
             </Text>
           </Card>
         ))}
-        <IDK isActive={activeAnswer === idkAnswer} onClick={(e) => onClickItem(idkAnswer, e)}>
-          {idkAnswer.answer}
-        </IDK>
+        {idkAnswer && (
+          <IDK
+            isActive={activeAnswer === idkAnswer}
+            onClick={(e) => onClickItem(idkAnswer, e)}
+            dangerouslySetInnerHTML={{ __html: idkAnswer.answer }}
+          />
+        )}
       </GridWrapper>
     </Wrapper>
   );
