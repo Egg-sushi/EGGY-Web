@@ -26,7 +26,7 @@ interface Props {
 function BaumannPLAINType({ baumann, activeAnswer, onClickItem }: Props) {
   const theme = useTheme();
   return (
-    <StyledFlex as={'section'} flexDirection="column">
+    <Flex as={'section'} flexDirection="column" paddingBottom={60} marginBottom={60}>
       <QuestionIndexText variant="h3" fontColor={theme.colors.gray400}>
         Q{baumann.subStepIndex}
       </QuestionIndexText>
@@ -48,14 +48,9 @@ function BaumannPLAINType({ baumann, activeAnswer, onClickItem }: Props) {
         activeAnswer={activeAnswer}
         onClickItem={onClickItem}
       />
-    </StyledFlex>
+    </Flex>
   );
 }
-
-const StyledFlex = styled(Flex)`
-  padding-bottom: 60px;
-  margin-bottom: 80px;
-`;
 
 const QuestionIndexText = styled(Text)`
   margin-bottom: 0.5rem;
