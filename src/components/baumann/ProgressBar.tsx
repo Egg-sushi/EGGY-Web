@@ -111,7 +111,7 @@ const Step = ({ currentStepIndex, progressSubStep, stepIndex, title, iconType }:
 
 const Wrapper = styled.div`
   width: 100%;
-  padding: 8px 20px;
+  padding: 16px 20px;
   box-sizing: border-box;
 `;
 
