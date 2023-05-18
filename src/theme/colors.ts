@@ -2,6 +2,7 @@ export const colors = {
   // gray scale
   black: '#000000',
   white: '#ffffff',
+  gray50: '#fcfcfc',
   gray100: '#edf0f3',
   gray200: '#c5c8cb',
   gray300: '#9da0a3',
