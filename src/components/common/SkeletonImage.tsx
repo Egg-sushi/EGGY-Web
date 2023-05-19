@@ -98,6 +98,10 @@ const Wrapper = styled.div<StyleProps>`
   position: relative;
   width: ${({ fill, width }) => (fill ? '100%' : typeof width === 'number' ? `${width}px` : width)};
   height: ${({ height }) => (typeof height === 'number' ? `${height}px` : height)};
+
+  img {
+    object-fit: contain;
+  }
 `;
 
 const LeftToRight = keyframes`
