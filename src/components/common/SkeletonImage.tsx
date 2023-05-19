@@ -31,12 +31,13 @@ type FillProps = {
   src: string;
   alt: string;
   height: number;
-  fill: boolean;
+  objectFit: React.CSSProperties['objectFit'];
   style?: React.CSSProperties;
   priority?: boolean;
   placeholder?: 'blur' | 'empty';
   unoptimized?: boolean;
 };
+
 type Props = XOR<WidthProps, FillProps>;
 
 function SkeletonImage(props: Props) {
@@ -47,7 +48,7 @@ function SkeletonImage(props: Props) {
     src,
     alt,
     style,
-    fill = false,
+    objectFit = 'none',
     width,
     height,
     priority,
@@ -76,15 +77,15 @@ function SkeletonImage(props: Props) {
   }, [imageRef]);
 
   return (
-    <Wrapper width={width} height={height} style={style} {...restProps}>
+    <Wrapper width={width} height={height} style={style} objectFit={objectFit} {...restProps}>
       <Image
         ref={imageRef}
         priority={priority}
         src={src}
         alt={alt}
-        fill={fill}
+        fill={Boolean(objectFit)}
         width={width}
-        height={fill ? undefined : height}
+        height={Boolean(objectFit) ? undefined : height}
         placeholder={placeholder}
         unoptimized={unoptimized}
       />
@@ -93,14 +94,15 @@ function SkeletonImage(props: Props) {
   );
 }
 
-type StyleProps = Pick<Props, 'width' | 'height' | 'fill'>;
+type StyleProps = Pick<Props, 'width' | 'height' | 'objectFit'>;
 const Wrapper = styled.div<StyleProps>`
   position: relative;
-  width: ${({ fill, width }) => (fill ? '100%' : typeof width === 'number' ? `${width}px` : width)};
+  width: ${({ objectFit, width }) =>
+    objectFit === 'fill' ? '100%' : typeof width === 'number' ? `${width}px` : width};
   height: ${({ height }) => (typeof height === 'number' ? `${height}px` : height)};
 
   img {
-    object-fit: contain;
+    object-fit: ${({ objectFit }) => objectFit};
   }
 `;
 

@@ -39,7 +39,7 @@ function BaumannPLAINType({ baumann, activeAnswer, onClickItem }: Props) {
           height={180}
           src={baumann.imageUrl}
           alt="quiz-thumbnail"
-          fill
+          objectFit="contain"
           style={{ margin: '0 auto 70px auto' }}
         />
       </div>
