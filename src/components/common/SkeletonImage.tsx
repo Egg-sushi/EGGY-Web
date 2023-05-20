@@ -31,7 +31,7 @@ type FillProps = {
   src: string;
   alt: string;
   height: number;
-  objectFit: React.CSSProperties['objectFit'];
+  objectFit?: React.CSSProperties['objectFit'];
   style?: React.CSSProperties;
   priority?: boolean;
   placeholder?: 'blur' | 'empty';
@@ -83,9 +83,9 @@ function SkeletonImage(props: Props) {
         priority={priority}
         src={src}
         alt={alt}
-        fill={Boolean(objectFit)}
+        fill={objectFit !== 'none'}
         width={width}
-        height={Boolean(objectFit) ? undefined : height}
+        height={objectFit !== 'none' ? undefined : height}
         placeholder={placeholder}
         unoptimized={unoptimized}
       />
