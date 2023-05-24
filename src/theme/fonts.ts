@@ -85,4 +85,9 @@ export const fonts = {
     letter-spacing: -0.018em;
     line-height: 1.6;
   `,
+  /** font-size: 20px */
+  'test-question': css`
+    font-size: 1.25rem;
+    line-height: 1.35;
+  `,
 };

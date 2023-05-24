@@ -2,7 +2,6 @@ import React from 'react';
 import Image from 'next/image';
 import styled from '@emotion/styled';
 import { keyframes } from '@emotion/react';
-import { XOR } from '@/utils';
 
 const EVENT_IMAGE_LOAD = 'event_image_load';
 const THRESHOLD = 0.5;
@@ -16,28 +15,17 @@ const onIntersection = (entries: IntersectionObserverEntry[], io: IntersectionOb
   });
 };
 
-type WidthProps = {
+type Props = {
   src: string;
   alt: string;
-  width: number;
-  height: number;
+  width?: number;
+  height?: number;
+  objectFit?: React.CSSProperties['objectFit'];
   style?: React.CSSProperties;
   priority?: boolean;
   placeholder?: 'blur' | 'empty';
   unoptimized?: boolean;
 };
-
-type FillProps = {
-  src: string;
-  alt: string;
-  height: number;
-  fill: boolean;
-  style?: React.CSSProperties;
-  priority?: boolean;
-  placeholder?: 'blur' | 'empty';
-  unoptimized?: boolean;
-};
-type Props = XOR<WidthProps, FillProps>;
 
 function SkeletonImage(props: Props) {
   const imageRef = React.useRef<HTMLImageElement | null>(null);
@@ -47,7 +35,7 @@ function SkeletonImage(props: Props) {
     src,
     alt,
     style,
-    fill = false,
+    objectFit = 'fill',
     width,
     height,
     priority,
@@ -55,6 +43,8 @@ function SkeletonImage(props: Props) {
     unoptimized = false,
     ...restProps
   } = props;
+
+  const fill = !Boolean(width) || !Boolean(height);
 
   React.useEffect(() => {
     const handleLoadImage = () => setIsLoaded(true);
@@ -76,28 +66,40 @@ function SkeletonImage(props: Props) {
   }, [imageRef]);
 
   return (
-    <Wrapper width={width} height={height} style={style} {...restProps}>
+    <Wrapper width={width} height={height} style={style} objectFit={objectFit} {...restProps}>
       <Image
         ref={imageRef}
-        priority={priority}
         src={src}
         alt={alt}
         fill={fill}
-        width={width}
+        width={fill ? undefined : width}
         height={fill ? undefined : height}
+        className={fill ? 'fill' : 'non-fill'}
+        priority={priority}
         placeholder={placeholder}
         unoptimized={unoptimized}
       />
-      {!isLoaded && <SkeletonBox width={width} height={height} />}
+
+      {!isLoaded && <SkeletonBox />}
     </Wrapper>
   );
 }
 
-type StyleProps = Pick<Props, 'width' | 'height' | 'fill'>;
+type StyleProps = Pick<Props, 'width' | 'height' | 'objectFit'>;
 const Wrapper = styled.div<StyleProps>`
   position: relative;
-  width: ${({ fill, width }) => (fill ? '100%' : typeof width === 'number' ? `${width}px` : width)};
+  width: ${({ width }) => (typeof width === 'number' ? `${width}px` : width)};
   height: ${({ height }) => (typeof height === 'number' ? `${height}px` : height)};
+
+  img {
+    object-fit: ${({ objectFit }) => objectFit};
+  }
+
+  img.fill {
+    position: relative !important;
+    width: 100% !important;
+    height: ${({ height }) => (height ? '100%' : 'auto')} !important;
+  }
 `;
 
 const LeftToRight = keyframes`
@@ -109,7 +111,7 @@ const LeftToRight = keyframes`
   }
 `;
 
-const SkeletonBox = styled.div<StyleProps>`
+const SkeletonBox = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;

@@ -36,7 +36,7 @@ function ProductItem({ product, like = false, onClickLike }: Props) {
         <SkeletonImage
           src={product.imageUrl}
           alt="product-thumbnail"
-          fill
+          objectFit="contain"
           height={324}
           unoptimized
           style={{

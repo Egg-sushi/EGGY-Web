@@ -27,10 +27,10 @@ function FrequencyBar({ answers, activeAnswer, onClickItem }: Props) {
             <Item key={answer.id} onClick={(e) => onClickItem(answer, e)}>
               <Circle key={answer.id} isActive={isActive} />
               <CircleLabel
-                variant="body2"
+                variant="body3"
                 fontColor={isActive ? theme.colors.primary : theme.colors.gray500}
-                weight={isActive ? 800 : 400}
                 align="center"
+                weight={isActive ? 700 : 400}
                 dangerouslySetInnerHTML={{ __html: answer.answer }}
               />
             </Item>
@@ -42,14 +42,14 @@ function FrequencyBar({ answers, activeAnswer, onClickItem }: Props) {
 }
 
 const Wrapper = styled.div`
-  width: calc(100% - 30px);
-  padding-left: 15px;
+  width: calc(100% - 72px);
+  padding-left: 36px;
   position: relative;
 `;
 
 const GrayBar = styled.span`
   content: '';
-  width: 100%;
+  width: calc(100% - 42px);
   height: 1px;
   position: absolute;
   background-color: ${({ theme }) => theme.colors.gray300};
@@ -64,25 +64,28 @@ const Item = styled.li`
 type IsActive = { isActive: boolean };
 const Circle = styled.span<IsActive>`
   position: absolute;
-  top: -15px;
+  top: -20px;
   transform: translateX(-50%);
   content: '';
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   box-sizing: border-box;
   background-color: ${({ theme }) => theme.colors.white};
   border: ${({ isActive }) => !isActive && '1px solid'};
   border-color: ${({ theme }) => theme.colors.gray300};
-  box-shadow: ${({ isActive, theme }) => isActive && `inset 0 0 0 8px ${theme.colors.primary}`};
+  box-shadow: ${({ isActive, theme }) => isActive && `inset 0 0 0 10px ${theme.colors.primary}`};
   transition: all 0.1s ease-in;
 `;
 
 const CircleLabel = styled(Text)`
   position: absolute;
-  top: 20px;
+  top: 28px;
   transform: translateX(-50%);
   transition: all 0.1s ease-in;
+
+  width: max-content;
+  max-width: 4.5rem;
 `;
 
 export default FrequencyBar;

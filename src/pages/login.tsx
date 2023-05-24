@@ -20,7 +20,12 @@ export default function LoginPage() {
       <Header />
       <Content>
         <GoogleLoginButton onClick={handleClickGoogleLogin}>
-          <SkeletonImage src="/GoogleLogin.png" fill height={(92 / 5) * 3} alt="google-login" />
+          <SkeletonImage
+            src="/GoogleLogin.png"
+            objectFit="contain"
+            height={(92 / 5) * 3}
+            alt="google-login"
+          />
         </GoogleLoginButton>
       </Content>
     </>
