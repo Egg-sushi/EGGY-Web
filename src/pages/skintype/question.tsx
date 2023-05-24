@@ -102,7 +102,6 @@ export default function SkinTypeTest() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <TopRef ref={topRef} />
       <StyledProgressBar
         currentStepIndex={currentStepIndex}
         title={currentQna.type}
@@ -110,6 +109,7 @@ export default function SkinTypeTest() {
         totalSubStepNum={totalSubStepNum}
       />
       <Content questionType={qnaType}>
+        <TopRef ref={topRef} />
         <BaumannQNAComponent
           baumann={{
             id: currentQna.id,
@@ -121,30 +121,31 @@ export default function SkinTypeTest() {
           activeAnswer={activeAnswer}
           onClickItem={handleClickAnswerItem}
         />
-        <BottomPosition>
-          <Flex justifyContent="space-between" gap="16px">
-            <Button
-              variant="outlined"
-              Icon={<Icon fill={theme.colors.primary} type="leftArrow" width={14} height={14} />}
-              onClick={handleClickPrev}
-            >
-              <Text variant="body2" fontColor={theme.colors.primary}>
-                Prev
-              </Text>
-            </Button>
-            <Button
-              variant="filled"
-              Icon={<Icon type="rightArrow" fill={theme.colors.white} width={14} height={14} />}
-              onClick={handleClickNext}
-              iconPosition="end"
-            >
-              <Text variant="body2" fontColor={theme.colors.white}>
-                {isLastQna ? 'End' : 'Next'}
-              </Text>
-            </Button>
-          </Flex>
-        </BottomPosition>
       </Content>
+
+      <BottomPosition>
+        <Flex justifyContent="space-between" gap="16px">
+          <Button
+            variant="outlined"
+            Icon={<Icon fill={theme.colors.primary} type="leftArrow" width={14} height={14} />}
+            onClick={handleClickPrev}
+          >
+            <Text variant="body2" fontColor={theme.colors.primary}>
+              Prev
+            </Text>
+          </Button>
+          <Button
+            variant="filled"
+            Icon={<Icon type="rightArrow" fill={theme.colors.white} width={14} height={14} />}
+            onClick={handleClickNext}
+            iconPosition="end"
+          >
+            <Text variant="body2" fontColor={theme.colors.white}>
+              {isLastQna ? 'End' : 'Next'}
+            </Text>
+          </Button>
+        </Flex>
+      </BottomPosition>
     </>
   );
 }
@@ -152,17 +153,28 @@ export default function SkinTypeTest() {
 const TopRef = styled.div``;
 
 const StyledProgressBar = styled(ProgressBar)`
+  position: fixed;
+  top: 0;
   padding: 1rem 0;
+  background-color: ${({ theme }) => theme.colors.white};
 `;
 
 const Content = styled.div<{ questionType: BaumannQuestion['questionType'] }>`
-  padding-top: 20px;
+  padding: 140px 20px 90px;
   padding-inline: 20px;
-  height: calc(100% - 160px);
+  overflow-y: scroll;
+  box-sizing: border-box;
+  height: 100%;
   background-color: ${({ theme, questionType }) =>
     questionType === 'PLAIN' ? theme.colors.blue50 : theme.colors.gray50};
 `;
 
 const BottomPosition = styled.div`
-  bottom: 80px;
+  position: fixed;
+  width: 100%;
+  box-sizing: border-box;
+  bottom: 0;
+  padding: 25px 20px;
+  height: 140px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #ffffff 44.29%);
 `;
