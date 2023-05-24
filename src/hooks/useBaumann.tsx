@@ -1,12 +1,12 @@
 import { useGetBaumannQuestions } from '@/api/query';
 import type { BaumannQuestion } from '@/types/baumann';
-import { BaumannLONGSTRINGType, BaumannPLAINType } from '@/components';
+import { BaumannGRIDPICTUREType, BaumannLONGSTRINGType, BaumannPLAINType } from '@/components';
 import { DUMMY_BAUMANN_LONG_STRING, DUMMY_BAUMANN_PLAIN } from '@/dummy/baumann';
 
 const QNAComponentsByType = {
   LONG_STRING: BaumannLONGSTRINGType,
   PLAIN: BaumannPLAINType,
-  GRID_PICTURE: BaumannLONGSTRINGType,
+  GRID_PICTURE: BaumannGRIDPICTUREType,
 } as const;
 
 type BaumannQNASubSteps = Record<
