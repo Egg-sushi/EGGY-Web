@@ -61,11 +61,11 @@ function Text(props: React.PropsWithChildren<Props>) {
           className={fontClassName}
           {...restProps}
         >
-          {text.map((str) => (
-            <>
+          {text.map((str, idx) => (
+            <span key={idx}>
               {str}
               <br />
-            </>
+            </span>
           ))}
         </Wrapper>
       );
