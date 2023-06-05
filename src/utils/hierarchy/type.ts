@@ -1,1 +1,8 @@
-export type HierarchyType = 'primary' | 'skyblue' | 'gray' | 'secondary' | 'teritiary' | 'beige300';
+export type HierarchyType =
+  | 'primary'
+  | 'skyblue'
+  | 'gray'
+  | 'secondary'
+  | 'teritiary'
+  | 'beige300'
+  | 'shadow';

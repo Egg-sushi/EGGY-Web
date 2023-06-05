@@ -29,6 +29,10 @@ export const HierarchyFilledButtonColor: Record<
     color: colors.white,
     backgroundColor: colors.gray200,
   },
+  shadow: {
+    color: colors.blue500,
+    backgroundColor: colors.white,
+  },
 } as const;
 
 export const HierarchyOutlinedButtonColor: Record<
@@ -63,6 +67,11 @@ export const HierarchyOutlinedButtonColor: Record<
   gray: {
     color: colors.gray200,
     border: colors.gray200,
+    backgroundColor: colors.white,
+  },
+  shadow: {
+    color: colors.blue500,
+    border: colors.blue100,
     backgroundColor: colors.white,
   },
 } as const;
