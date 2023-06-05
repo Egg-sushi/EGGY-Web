@@ -84,6 +84,8 @@ const Wrapper = styled.button<StyleProps>`
     }
     return theme.colors.white;
   }};
+  box-shadow: ${({ hierarchy }) =>
+    hierarchy === 'shadow' ? '0px 4px 4px rgba(0, 0, 0, 0.15)' : 'none'};
   cursor: pointer;
 `;
 

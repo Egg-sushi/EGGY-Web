@@ -88,7 +88,7 @@ function SkeletonImage(props: Props) {
 type StyleProps = Pick<Props, 'width' | 'height' | 'objectFit'>;
 const Wrapper = styled.div<StyleProps>`
   position: relative;
-  width: ${({ width }) => (typeof width === 'number' ? `${width}px` : width)};
+  width: ${({ width }) => (typeof width === 'number' ? `${width}px` : width ?? '100%')};
   height: ${({ height }) => (typeof height === 'number' ? `${height}px` : height)};
 
   img {

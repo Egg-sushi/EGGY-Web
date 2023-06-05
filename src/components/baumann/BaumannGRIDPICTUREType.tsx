@@ -45,7 +45,7 @@ function BaumannGRIDPICTUREType({ baumann, activeAnswer, onClickItem }: Props) {
             isActive={activeAnswer === answer}
             onClick={(e) => onClickItem(answer, e)}
           >
-            <SkeletonImage fill src={answer.imageUrl} alt={answer.answer} height={94} />
+            <SkeletonImage src={answer.imageUrl} alt={answer.answer} height={94} />
             <Text variant="body4" fontColor={theme.colors.black} align="center">
               {answer.answer}
             </Text>

@@ -11,4 +11,5 @@ export const HierarchyTagColor: Record<
   teritiary: { background: colors.teritiary, color: colors.white },
   beige300: { background: colors.beige300, color: colors.white },
   secondary: { background: colors.secondary, color: colors.white },
+  shadow: { background: colors.white, color: colors.blue500 },
 };

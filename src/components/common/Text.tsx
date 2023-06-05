@@ -47,6 +47,31 @@ function Text(props: React.PropsWithChildren<Props>) {
   } = props;
   const fontClassName = fontFamily === 'pretendard' ? '' : fontFamilys[fontFamily].className;
 
+  if (typeof children === 'string') {
+    const text = children.split('\n');
+
+    if (text.length > 1) {
+      return (
+        <Wrapper
+          as={as}
+          variant={variant}
+          fontColor={fontColor}
+          align={align}
+          weight={weight}
+          className={fontClassName}
+          {...restProps}
+        >
+          {text.map((str, idx) => (
+            <span key={idx}>
+              {str}
+              <br />
+            </span>
+          ))}
+        </Wrapper>
+      );
+    }
+  }
+
   return (
     <Wrapper
       as={as}
