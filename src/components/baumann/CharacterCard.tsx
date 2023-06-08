@@ -29,10 +29,10 @@ const BAUMANN_TEXT = [
 ] as const;
 
 interface Props {
-  skinType: SkinType;
-  characterName: string;
   tags: string[];
+  skinType: SkinType;
   isFrontShow: boolean;
+  characterName: string;
   percents: BaumannResultResponse['percents'];
   onClick: VoidFunction;
 }
@@ -40,6 +40,7 @@ interface Props {
 function CharacterCard({ skinType, characterName, tags, isFrontShow, percents, onClick }: Props) {
   return (
     <FlipCard
+      height={476}
       isFrontShow={isFrontShow}
       front={
         <FrontWrapper flexDirection="column">

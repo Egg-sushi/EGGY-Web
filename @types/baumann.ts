@@ -6,6 +6,13 @@ export interface BaumannQuestion {
   imageUrl: string;
 }
 
+export interface Tip {
+  id: number;
+  title: string;
+  description: string;
+  imageUrl: string;
+}
+
 export interface BaumannAnswer {
   id: number;
   answer: string;
