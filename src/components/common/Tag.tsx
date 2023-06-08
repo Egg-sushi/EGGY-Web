@@ -11,25 +11,30 @@ interface Props extends React.ComponentPropsWithoutRef<ElementType> {
   size: 'sm' | 'md';
   text: string;
   hierarchy: HierarchyType;
+  type?: 'fill' | 'outline';
   icons?: Parameters<typeof Icon>[0] & { position: 'start' | 'end' };
 }
 
-const SizeVariable: Record<Props['size'], { y: string; x: string; fontSize: keyof typeof fonts }> =
-  {
-    sm: {
-      x: '8px',
-      y: '2px',
-      fontSize: 'h9',
-    },
-    md: {
-      x: '16px',
-      y: '4px',
-      fontSize: 'h7',
-    },
-  };
+const SizeVariable: Record<
+  Props['size'],
+  { y: string; x: string; fontSize: keyof typeof fonts; borderRadius: number }
+> = {
+  sm: {
+    x: '16px',
+    y: '3px',
+    fontSize: 'body3',
+    borderRadius: 67,
+  },
+  md: {
+    x: '16px',
+    y: '4px',
+    fontSize: 'h7',
+    borderRadius: 67,
+  },
+};
 
 function Tag(props: Props) {
-  const { size, text, hierarchy, icons, onClick, ...restProps } = props;
+  const { size, text, hierarchy, icons, type = 'fill', onClick, ...restProps } = props;
 
   return icons ? (
     <Wrapper
@@ -37,8 +42,9 @@ function Tag(props: Props) {
       variant={SizeVariable[size].fontSize}
       size={size}
       hierarchy={hierarchy}
-      onClick={onClick}
+      type={type}
       role={onClick ? 'button' : 'none'}
+      onClick={onClick}
       {...restProps}
     >
       <Flex
@@ -64,14 +70,18 @@ function Tag(props: Props) {
   );
 }
 
-type StyleProps = Pick<Props, 'size' | 'hierarchy' | 'onClick'>;
+type StyleProps = Pick<Props, 'size' | 'hierarchy' | 'onClick' | 'type'>;
 const Wrapper = styled(Text)<StyleProps>`
-  width: fit-content;
-  text-align: center;
   padding: ${({ size }) => `${SizeVariable[size].y} ${SizeVariable[size].x}`};
-  border-radius: 4px;
-  background-color: ${({ hierarchy }) => HierarchyTagColor[hierarchy].background};
-  color: ${({ hierarchy }) => HierarchyTagColor[hierarchy].color};
+  background-color: ${({ type, hierarchy }) =>
+    type === 'fill' ? HierarchyTagColor[hierarchy].background : 'transparent'};
+  color: ${({ type, hierarchy }) =>
+    type === 'fill'
+      ? HierarchyTagColor[hierarchy].fillColor
+      : HierarchyTagColor[hierarchy].outlineColor};
+  border: ${({ type, hierarchy }) =>
+    type === 'fill' ? 'none' : `1px solid ${HierarchyTagColor[hierarchy].outlineColor}`};
+  border-radius: ${({ size }) => SizeVariable[size].borderRadius}px;
   cursor: ${({ onClick }) => (onClick ? 'pointer' : 'default')}};
 `;
 
