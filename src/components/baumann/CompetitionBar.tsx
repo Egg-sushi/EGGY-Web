@@ -34,7 +34,7 @@ function CompetitionBar({ firstItemText, firstItemValue, secondItemText, secondI
         variant="body3"
         fontColor={theme.colors.white}
         align={isLeftWin ? 'start' : 'end'}
-        style={{ zIndex: 100 }}
+        isLeft={isLeftWin}
       >
         {isLeftWin ? firstItemValue : secondItemValue}%
       </RateWrapper>
@@ -86,10 +86,12 @@ const RightBar = styled.div<{ isActive: boolean; rate: number }>`
   border-radius: 126px;
 `;
 
-const RateWrapper = styled(Text)`
-  z-index: 100;
+const RateWrapper = styled(Text)<{ isLeft?: boolean }>`
+  width: 100%;
   position: absolute;
   top: 6%;
+  z-index: 100;
+  left: ${({ isLeft }) => (isLeft ? 'none' : '-16px')};
 `;
 
 export default CompetitionBar;

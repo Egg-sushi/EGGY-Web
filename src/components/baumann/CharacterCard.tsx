@@ -2,7 +2,7 @@ import { SkinType } from '@/types/baumann';
 import { Flex } from '../styled';
 import styled from '@emotion/styled';
 import Image from 'next/image';
-import { Tag } from '../common';
+import { FlipCard, Tag } from '../common';
 import { BaumannResultResponse } from '@/types/api';
 import CompetitionBar from './CompetitionBar';
 
@@ -39,9 +39,10 @@ interface Props {
 
 function CharacterCard({ skinType, characterName, tags, isFrontShow, percents, onClick }: Props) {
   return (
-    <CardWrapper>
-      <Wrapper isFrontShow={isFrontShow} onClick={onClick} role="button">
-        <FrontWrapper flexDirection="column" isFrontShow={isFrontShow}>
+    <FlipCard
+      isFrontShow={isFrontShow}
+      front={
+        <FrontWrapper flexDirection="column">
           <CharacterHead flexDirection="column" gap={16}>
             <strong>{skinType}</strong>
             <span>{characterName}</span>
@@ -60,9 +61,11 @@ function CharacterCard({ skinType, characterName, tags, isFrontShow, percents, o
             ))}
           </TagsWrapper>
         </FrontWrapper>
-        <BackWrapper isFrontShow={isFrontShow} flexDirection="column">
+      }
+      back={
+        <BackWrapper flexDirection="column">
           <strong>{skinType}</strong>
-          <Flex flexDirection="column" gap={54} marginTop={36}>
+          <Flex flexDirection="column" gap={54} marginTop={36} style={{ paddingInline: 24 }}>
             {BAUMANN_TEXT.map((skinType) => (
               <CompetitionBar
                 key={skinType.firstItemText}
@@ -74,36 +77,19 @@ function CharacterCard({ skinType, characterName, tags, isFrontShow, percents, o
             ))}
           </Flex>
         </BackWrapper>
-      </Wrapper>
-    </CardWrapper>
+      }
+      onClick={onClick}
+    />
   );
 }
 
-type StyleProps = Pick<Props, 'isFrontShow'>;
-const Wrapper = styled.div<StyleProps>`
-  position: relative;
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
-  transition: all 1s;
-  transform-style: preserve-3d;
-  transform: ${({ isFrontShow }) => (isFrontShow ? 'rotateY(180deg)' : 'rotateY(0)')};
-`;
-
-const CardWrapper = styled.div`
-  perspective: 600px;
-`;
-
-const FrontWrapper = styled(Flex)<StyleProps>`
-  position: absolute;
+const FrontWrapper = styled(Flex)`
   padding: 36px 24px;
   border-radius: 20px;
   background-color: ${({ theme }) => theme.colors.white};
   box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.1);
   border-radius: 20px;
   text-align: center;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
 `;
 
 const CharacterHead = styled(Flex)`
@@ -127,23 +113,16 @@ const TagsWrapper = styled(Flex)`
   margin-top: 44px;
 `;
 
-const BackWrapper = styled(Flex)<StyleProps>`
-  position: absolute;
-  padding-inline: 24px;
+const BackWrapper = styled(Flex)`
   padding-top: 44px;
   padding-bottom: 90px;
-  text-align: center;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-
   background: rgba(255, 255, 255, 0.4);
   box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(5px);
   border-radius: 20px;
-  transform: rotateY(180deg);
-  width: 300px;
 
   & > strong {
+    text-align: center;
     font-size: 30px;
     font-weight: 700;
   }
