@@ -20,4 +20,9 @@ export const HierarchyTagColor: Record<
     outlineColor: colors.secondary,
   },
   shadow: { background: colors.white, fillColor: colors.blue500, outlineColor: colors.white },
+  darkBlue: {
+    background: colors.blue800,
+    fillColor: colors.white,
+    outlineColor: colors.blue800,
+  },
 };
