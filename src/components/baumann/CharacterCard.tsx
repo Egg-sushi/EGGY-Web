@@ -44,14 +44,13 @@ function CharacterCard({ skinType, characterName, tags, isFrontShow, percents, o
       isFrontShow={isFrontShow}
       front={
         <FrontWrapper flexDirection="column">
-          <CharacterHead flexDirection="column" gap={16}>
+          <CharacterHead flexDirection="column" gap={16} marginBottom={16}>
             <strong>{skinType}</strong>
             <span>{characterName}</span>
           </CharacterHead>
           <CharacterImage>
             <Image
-              // src={`/${skinType}.png`}
-              src={'/DRPT.png'}
+              src={`/${skinType}.png`}
               alt={`skinType-character-image(${characterName})`}
               width={220}
               height={224}
