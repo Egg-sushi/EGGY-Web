@@ -1,7 +1,7 @@
-import type { BaumannAnswer, BaumannQuestion } from '../baumann';
+import type { BaumannAnswer, BaumannQuestion, SkinType, Tip } from '../baumann';
 
 export interface BaumannResultResponse {
-  type: string;
+  type: SkinType;
   percents: {
     D: number;
     O: number;
@@ -11,6 +11,14 @@ export interface BaumannResultResponse {
     P: number;
     W: number;
     T: number;
+  };
+  tips: Tip[];
+  info: {
+    id: number;
+    title: SkinType;
+    description: string;
+    characterName: string;
+    hashTags: string;
   };
 }
 

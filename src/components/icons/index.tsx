@@ -10,3 +10,15 @@ export { default as Sensitivity } from './Sensitivity.svg';
 export { default as Pigmentation } from './Pigmentation.svg';
 export { default as Wrinkle } from './Wrinkle.svg';
 export { default as CircleProgress } from './CircleProgress.svg';
+
+export { default as Down } from './Down.svg';
+export { default as Dry } from './Dry.svg';
+export { default as NonPigmented } from './NonPigmented.svg';
+export { default as Oily } from './Oily.svg';
+export { default as Pigmented } from './Pigmented.svg';
+export { default as Refresh } from './Refresh.svg';
+export { default as Resistant } from './Resistant.svg';
+export { default as Review } from './Review.svg';
+export { default as Sensitive } from './Sensitive.svg';
+export { default as Share } from './Share.svg';
+export { default as Tight } from './Tight.svg';

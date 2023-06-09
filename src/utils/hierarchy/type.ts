@@ -5,4 +5,5 @@ export type HierarchyType =
   | 'secondary'
   | 'teritiary'
   | 'beige300'
-  | 'shadow';
+  | 'shadow'
+  | 'darkBlue';

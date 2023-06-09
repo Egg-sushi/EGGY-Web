@@ -1,122 +1,130 @@
 import styled from '@emotion/styled';
-
-import { Text } from '../common';
+import { Icon, Text } from '../common';
 import { Flex } from '../styled';
 import { useTheme } from '@emotion/react';
+import type { SkinTypeTag } from '@/types/baumann';
 
-interface CompetitionBarProps {
-  title: string;
-  firstItemText: string;
-  firstItemRate: number;
-  secondItemText: string;
-  secondItemRate: number;
+interface Props {
+  firstItemText: SkinTypeTag;
+  firstItemValue: number;
+  secondItemText: SkinTypeTag;
+  secondItemValue: number;
 }
 
-function CompetitionBar({
-  title,
-  firstItemText,
-  firstItemRate,
-  secondItemText,
-  secondItemRate,
-}: CompetitionBarProps) {
-  const theme = useTheme();
-  const isLeftActive = firstItemRate >= secondItemRate;
+const SkinTypeToIconType: Record<SkinTypeTag, Parameters<typeof Icon>[0]['type']> = {
+  Dry: 'Dry',
+  Oily: 'Oily',
+  Sensitive: 'Sensitive',
+  Resistant: 'Resistant',
+  Pigmented: 'Pigmented',
+  'Non-pigmented': 'NonPigmented',
+  Wrinkle: 'Tight',
+  Tight: 'Tight',
+};
 
+function CompetitionBar({ firstItemText, firstItemValue, secondItemText, secondItemValue }: Props) {
+  const theme = useTheme();
+  const firstRate =
+    firstItemValue === 0 ? 0 : (firstItemValue / (firstItemValue + secondItemValue)) * 100;
+  const secondRate =
+    secondItemValue === 0 ? 0 : (secondItemValue / (firstItemValue + secondItemValue)) * 100;
+  const isLeftWin = firstItemValue >= secondItemValue;
+
+  console.log(firstItemText, secondItemText);
   return (
-    <Flex flexDirection="column" gap={16}>
-      <Text variant="body4" color={theme.colors.black} align="center">
-        {title}
-      </Text>
-      <Wrapper justifyContent="space-between" alignContent="center">
-        <ItemWrapper isLeft>
-          <Text
-            variant="body5"
-            fontColor={isLeftActive ? theme.colors.primary : theme.colors.gray400}
-          >
-            {firstItemRate}%
-          </Text>
-          <Text
-            variant="body5"
-            fontColor={isLeftActive ? theme.colors.primary : theme.colors.gray400}
-          >
-            {firstItemText}
-          </Text>
-        </ItemWrapper>
-        <Bar>
-          <LeftBar isActive={isLeftActive} rate={firstItemRate} />
-          <RightBar isActive={!isLeftActive} rate={secondItemRate} />
-        </Bar>
-        <ItemWrapper>
-          <Text
-            variant="body5"
-            fontColor={!isLeftActive ? theme.colors.primary : theme.colors.gray400}
-            align="end"
-          >
-            {secondItemRate}%
-          </Text>
-          <Text
-            variant="body5"
-            fontColor={!isLeftActive ? theme.colors.primary : theme.colors.gray400}
-            align="end"
-          >
-            {secondItemText}
-          </Text>
-        </ItemWrapper>
-      </Wrapper>
-    </Flex>
+    <Wrapper flexDirection="column">
+      <Description justifyContent="space-between">
+        <SkinTypeTag
+          variant="body3"
+          fontColor={isLeftWin ? theme.colors.primary : theme.colors.gray500}
+        >
+          <Icon
+            type={SkinTypeToIconType[firstItemText]}
+            fill={isLeftWin ? theme.colors.blue700 : theme.colors.gray500}
+          />
+          {firstItemText}
+        </SkinTypeTag>
+        <SkinTypeTag
+          variant="body3"
+          fontColor={!isLeftWin ? theme.colors.primary : theme.colors.gray500}
+        >
+          {secondItemText}
+          <Icon
+            type={SkinTypeToIconType[secondItemText]}
+            fill={!isLeftWin ? theme.colors.blue700 : theme.colors.gray500}
+          />
+        </SkinTypeTag>
+      </Description>
+      <LeftBar isActive={isLeftWin} rate={firstRate} />
+      <RightBar isActive={!isLeftWin} rate={secondRate} />
+      <RateWrapper
+        variant="body3"
+        fontColor={theme.colors.white}
+        align={isLeftWin ? 'start' : 'end'}
+        isLeft={isLeftWin}
+      >
+        {isLeftWin ? firstItemValue : secondItemValue}%
+      </RateWrapper>
+    </Wrapper>
   );
 }
 
 const Wrapper = styled(Flex)`
+  width: 100%;
+  height: 24px;
+  padding: 8px 16px;
   box-sizing: border-box;
-  height: 12px;
-  background: ${({ theme }) => theme.colors.blue50};
-  border-radius: 12px;
+  position: relative;
+
+  background-color: ${({ theme }) => theme.colors.gray50};
+  outline: ${({ theme }) => `1px solid ${theme.colors.gray100}`};
+  border-radius: 126px;
 `;
 
-const BaseActiveBar = styled.div<{ isActive: boolean; rate: number }>`
+const Description = styled(Flex)`
+  width: 100%;
   position: absolute;
-  top: 1px;
-  height: 12px;
-  background: ${({ isActive, theme }) => (isActive ? theme.colors.primary : 'none')};
-  border: ${({ rate, theme }) => (rate !== 0 ? `1px solid ${theme.colors.primary}` : 'none')};
+  top: -100%;
+  left: 0;
+  transform: translateY(-20%);
 `;
 
-const LeftBar = styled(BaseActiveBar)`
-  left: 32px;
-  width: ${({ rate, isActive }) => `calc(${rate}% ${isActive ? '-' : '+'} 32px)`};
-  border-radius: ${({ rate }) => `${rate === 100 ? '12px' : '12px 0 0 12px'}`};
+const LeftBar = styled.div<{ isActive: boolean; rate: number }>`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: ${({ rate }) => rate}%;
+  height: 24px;
+
+  background-color: ${({ theme, isActive }) =>
+    isActive ? theme.colors.blue400 : theme.colors.gray50};
+  border-radius: 126px;
 `;
 
-const RightBar = styled(BaseActiveBar)`
-  right: 32px;
-  width: ${({ rate, isActive }) => `calc(${rate}% ${isActive ? '-' : '+'} 32px)`};
-  border-radius: ${({ rate }) => `${rate === 100 ? '12px' : '0 12px 12px 0px'}`};
+const RightBar = styled.div<{ isActive: boolean; rate: number }>`
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: ${({ rate }) => rate}%;
+  height: 24px;
+
+  background-color: ${({ theme, isActive }) =>
+    isActive ? theme.colors.blue400 : theme.colors.gray50};
+  border-radius: 126px;
 `;
 
-const Bar = styled.div`
-  position: relative;
-  flex-grow: 1;
+const RateWrapper = styled(Text)<{ isLeft?: boolean }>`
+  width: 100%;
+  position: absolute;
+  top: 6%;
+  z-index: 100;
+  left: ${({ isLeft }) => (isLeft ? 'none' : '-16px')};
 `;
 
-type IsLeft = { isLeft?: boolean };
-const ItemWrapper = styled.div<IsLeft>`
-  position: relative;
-  left: ${({ isLeft }) => (isLeft ? '0px' : 'none')};
-  right: ${({ isLeft }) => (isLeft ? '0px' : '20px')};
-  flex-shrink: 0;
-  max-width: 32px;
-
-  & > div {
-    position: absolute;
-  }
-
-  & > div + div {
-    top: 20px;
-    white-space: nowrap;
-    left: ${({ isLeft }) => (isLeft ? '0px' : 'none')};
-    right: ${({ isLeft }) => (isLeft ? '0px' : '-20px')};
-  }
+const SkinTypeTag = styled(Text)`
+  display: flex;
+  align-items: center;
+  gap: 6px;
 `;
 
 export default CompetitionBar;

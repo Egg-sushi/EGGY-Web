@@ -3,13 +3,26 @@ import { HierarchyType } from './type';
 
 export const HierarchyTagColor: Record<
   HierarchyType,
-  { background: ColorValueType; color: ColorValueType }
+  { background: ColorValueType; fillColor: ColorValueType; outlineColor: ColorValueType }
 > = {
-  skyblue: { background: colors.blue300, color: colors.white },
-  primary: { background: colors.primary, color: colors.white },
-  gray: { background: colors.gray200, color: colors.white },
-  teritiary: { background: colors.teritiary, color: colors.white },
-  beige300: { background: colors.beige300, color: colors.white },
-  secondary: { background: colors.secondary, color: colors.white },
-  shadow: { background: colors.white, color: colors.blue500 },
+  skyblue: { background: colors.blue300, fillColor: colors.white, outlineColor: colors.blue300 },
+  primary: { background: colors.primary, fillColor: colors.white, outlineColor: colors.primary },
+  gray: { background: colors.gray200, fillColor: colors.white, outlineColor: colors.gray200 },
+  teritiary: {
+    background: colors.teritiary,
+    fillColor: colors.white,
+    outlineColor: colors.teritiary,
+  },
+  beige300: { background: colors.beige300, fillColor: colors.white, outlineColor: colors.beige300 },
+  secondary: {
+    background: colors.secondary,
+    fillColor: colors.white,
+    outlineColor: colors.secondary,
+  },
+  shadow: { background: colors.white, fillColor: colors.blue500, outlineColor: colors.white },
+  darkBlue: {
+    background: colors.blue800,
+    fillColor: colors.white,
+    outlineColor: colors.blue800,
+  },
 };

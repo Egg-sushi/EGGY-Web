@@ -6,6 +6,13 @@ export interface BaumannQuestion {
   imageUrl: string;
 }
 
+export interface Tip {
+  id: number;
+  title: string;
+  description: string;
+  imageUrl: string;
+}
+
 export interface BaumannAnswer {
   id: number;
   answer: string;
@@ -44,3 +51,13 @@ export type SkinType =
   | 'ORPT'
   | 'ORNW'
   | 'ORNT';
+
+export type SkinTypeTag =
+  | 'Dry'
+  | 'Oily'
+  | 'Sensitive'
+  | 'Resistant'
+  | 'Pigmented'
+  | 'Non-pigmented'
+  | 'Wrinkle'
+  | 'Tight';

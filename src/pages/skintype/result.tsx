@@ -4,17 +4,16 @@ import styled from '@emotion/styled';
 import { useTheme } from '@emotion/react';
 
 import useLink from '@/hooks/useLink';
-import { ColorValueType } from '@/theme';
-import { getAnswers, redirectFlagOn, share } from '@/utils';
+import { getAnswers, share } from '@/utils';
 import { BASE_FRONT_URL } from '@/constants';
 import { useCalculateSkinTypes } from '@/api/query';
-import { BaumannPercentResult, Button, Flex, Header, SkeletonImage, Text } from '@/components';
-import { useIsLogin } from '@/api/query/userQuery';
+import { Button, CharacterCard, Flex, Header, Icon, SkinTypeDescription, Text } from '@/components';
+import Image from 'next/image';
 
 export default function SkinTypeTestResultPage() {
   const theme = useTheme();
   const link = useLink();
-  const isLogin = useIsLogin();
+  const [isFrontShow, setIsFrontShow] = React.useState<boolean>(true);
 
   const calculatedSkinTypeData = useCalculateSkinTypes(
     Object.entries(getAnswers()).map((answer) => ({
@@ -38,11 +37,6 @@ export default function SkinTypeTestResultPage() {
     }
   }, [calculatedSkinTypeData.data?.type]);
 
-  const handleClickLoginButton = React.useCallback(async () => {
-    redirectFlagOn();
-    link.to('login');
-  }, [link]);
-
   if (calculatedSkinTypeData.isSuccess) {
     return (
       <>
@@ -53,143 +47,183 @@ export default function SkinTypeTestResultPage() {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <Header />
-        <Wrapper flexDirection="column" paddingTop={136} gap={32} color={theme.colors.blue50}>
-          <Text variant="body2" fontColor={theme.colors.gray400}>
-            Your Skin Type is :
-          </Text>
-          <ImageWrapper>
-            <Text variant="h3" fontColor={theme.colors.primary} align="center">
-              {calculatedSkinTypeData.data.type}
-            </Text>
-            <SkeletonImage
-              priority
-              width={140}
-              height={120}
-              src="/Diamond2.png"
-              alt="baumman-thumbnail"
+        <Wrapper flexDirection="column" paddingTop={36} color={theme.colors.blue50}>
+          {(['green', 'blue', 'white'] as const).map((color) => (
+            <BackgroundCircle key={color} color={color} />
+          ))}
+          {isFrontShow ? (
+            <TopDescription justifyContent="center" alignItems="center" gap={8}>
+              <Icon type="Down" fill={theme.colors.gray500} />
+              <Text variant="body2">Tap the card to turn it over</Text>
+            </TopDescription>
+          ) : (
+            <TopDescription
+              justifyContent="center"
+              alignItems="center"
+              gap={8}
+              onClick={() => link.to('skinTypeTestIntro')}
+            >
+              <Icon type="Refresh" fill={theme.colors.primary} />
+              <Text variant="body2" fontColor={theme.colors.primary}>
+                Try agin
+              </Text>
+            </TopDescription>
+          )}
+          <CardWrapper>
+            <CharacterCard
+              isFrontShow={isFrontShow}
+              tags={calculatedSkinTypeData.data.info.hashTags.split(' ')}
+              skinType={calculatedSkinTypeData.data.type}
+              characterName={calculatedSkinTypeData.data.info.characterName}
+              percents={calculatedSkinTypeData.data.percents}
+              onClick={() => setIsFrontShow((prev) => !prev)}
             />
-          </ImageWrapper>
-          <Flex justifyContent="space-between" gap={48}>
+          </CardWrapper>
+          <Flex
+            justifyContent="space-between"
+            gap={48}
+            style={{ paddingInline: 50, marginTop: 40 }}
+          >
             <Button
-              variant="outlined"
-              hierarchy="primary"
+              variant="filled"
+              hierarchy="gray"
               onClick={handleClickResetButton}
               borderRadius={24}
+              style={{ gap: 10 }}
             >
+              <Icon type="Review" fill={theme.colors.white} />
               Retry
             </Button>
-            <Button variant="filled" onClick={handleClickShareButton} borderRadius={24}>
+            <Button
+              variant="filled"
+              onClick={handleClickShareButton}
+              borderRadius={24}
+              style={{ gap: 10 }}
+            >
+              <Icon type="Share" fill={theme.colors.white} />
               Share
             </Button>
           </Flex>
-          <BaumannPercentResult
-            type={calculatedSkinTypeData.data.type}
-            percents={calculatedSkinTypeData.data.percents}
+          <Description
+            userName={'userName'}
+            tips={calculatedSkinTypeData.data.tips}
+            skinType={calculatedSkinTypeData.data.type}
+            description={calculatedSkinTypeData.data.info.description}
+            onClickShare={handleClickShareButton}
           />
-        </Wrapper>
-        <Wrapper flexDirection="column" paddingTop={56} color={theme.colors.white} gap={28}>
-          <Text variant="h6" fontColor={theme.colors.blue800}>
-            What’s {calculatedSkinTypeData.data.type} ?
-          </Text>
-          <Flex flexDirection="column" gap={16}>
-            <Card variant="body4" fontColor={theme.colors.primary} align="center">
-              I sunburn and blister, but my skin does not change color.
-            </Card>
-            <Card variant="body4" fontColor={theme.colors.primary} align="center">
-              I sunburn and blister, but my skin does not change color.
-            </Card>
-            <Card variant="body4" fontColor={theme.colors.primary} align="center">
-              I sunburn and blister, but my skin does not change color.
-            </Card>
-            <Card variant="body4" fontColor={theme.colors.primary} align="center">
-              I sunburn and blister, but my skin does not change color.
-            </Card>
-          </Flex>
-        </Wrapper>
-        <Wrapper flexDirection="column" paddingTop={56} color={theme.colors.teritiary} gap={28}>
-          <Text variant="h6" fontColor={theme.colors.blue800}>
-            Discover Your Cosmetic
-          </Text>
-          <Flex flexDirection="column" gap={16}>
-            <ProductCard gap={24}>
-              <ProductCardBackground />
-              <SkeletonImage
-                priority
-                width={74}
-                height={68}
-                src="/Diamond2.png"
-                alt="baumman-thumbnail"
-                style={{ zIndex: 999 }}
-              />
-              <Flex flexDirection="column" gap={12} alignContent="center" style={{ zIndex: 999 }}>
-                <Text variant="body2" fontColor={theme.colors.blue800}>
-                  Cosmetic
-                </Text>
-                <Text variant="body4" fontColor={theme.colors.blue800}>
-                  This cosmetic suits you well!
-                </Text>
-              </Flex>
-            </ProductCard>
-            <Button
-              variant="filled"
-              hierarchy="beige300"
-              style={{ marginTop: 32, paddingBlock: 12 }}
-              onClick={() => link.to('products')}
-            >
-              Find more your Cosmetic !
-            </Button>
-          </Flex>
-        </Wrapper>
-        {!isLogin.data?.isLogin ? (
-          <Wrapper flexDirection="column" paddingTop={56} color={theme.colors.white} gap={28}>
-            <Text variant="h6" fontColor={theme.colors.blue800}>
-              Save Your Skin Type
+          <Image
+            src="/find_cosmetic.png"
+            alt="find-more-cosmetic-for-you"
+            width={320}
+            height={320}
+            style={{ marginInline: 'auto' }}
+          />
+          <FindText variant="h3" weight={400}>
+            UserName,
+          </FindText>
+          <FindText variant="h3" weight={400}>
+            would you like to get a recommendation for a product that suits your skin type?
+          </FindText>
+          <TryButton
+            hierarchy="darkBlue"
+            variant="filled"
+            width={140}
+            borderRadius={15}
+            onClick={() => link.to('products')}
+          >
+            <Text variant="body1" fontColor={theme.colors.white}>
+              Try it now
             </Text>
-            <Button variant="filled" hierarchy="primary" onClick={handleClickLoginButton}>
-              Sign Up & Login
-            </Button>
-          </Wrapper>
-        ) : null}
+          </TryButton>
+          <Bottom>
+            <Text variant="h6" fontColor={theme.colors.gray500}>
+              If tou like our test can you give us some feedback?
+            </Text>
+            <Text variant="body3" fontColor={theme.colors.gray500}>
+              If you give us feedback and share, we can give you the right cosmetics through a
+              lottery.
+            </Text>
+          </Bottom>
+        </Wrapper>
       </>
     );
   }
-  return null;
 }
 
-type StyleProps = { paddingTop: number; color: ColorValueType };
-const Wrapper = styled(Flex)<StyleProps>`
-  padding: ${({ paddingTop }) => `${paddingTop}px 34px 56px 34px`};
-  background-color: ${({ color }) => color};
+const Wrapper = styled(Flex)`
+  position: relative;
+  overflow: hidden;
 `;
 
-const ImageWrapper = styled.div`
-  position: relative;
+const TopDescription = styled(Flex)`
+  padding-top: 46px;
+  z-index: 95;
+`;
+
+const ColorStyle = {
+  green: {
+    top: '9px',
+    left: '118px',
+    size: '443px',
+    color: '#DFF2D3',
+  },
+  blue: {
+    top: '163px',
+    left: '-171px',
+    size: '453px',
+    color: '#EBF1FF',
+  },
+  white: {
+    top: '334px',
+    left: '85px',
+    size: '433px',
+    color: '#FFFDF7',
+  },
+} as const;
+
+const BackgroundCircle = styled.div<{ color: 'green' | 'blue' | 'white' }>`
+  border-radius: 50%;
+  filter: blur(50px);
+  position: absolute;
+  content: '';
+  z-index: 0;
+  background-color: ${({ color }) => ColorStyle[color].color};
+  width: ${({ color }) => ColorStyle[color].size};
+  height: ${({ color }) => ColorStyle[color].size};
+  top: ${({ color }) => ColorStyle[color].top};
+  left: ${({ color }) => ColorStyle[color].left};
+`;
+
+const CardWrapper = styled.div`
+  padding: 36px 32px;
+`;
+
+const Description = styled(SkinTypeDescription)`
+  margin-top: 60px;
+  margin-bottom: 100px;
+`;
+
+const FindText = styled(Text)`
+  padding-inline: 40px;
+
+  :not(& + div) {
+    margin-top: 35px;
+  }
+`;
+
+const TryButton = styled(Button)`
+  padding: 13px 28px;
+  box-sizing: border-box;
+  margin-top: 50px;
+  margin-bottom: 100px;
   margin-inline: auto;
 `;
 
-const Card = styled(Text)`
-  padding: 16px 36px;
-  border-radius: 4px;
-  background-color: ${({ theme }) => theme.colors.blue50};
-  filter: drop-shadow(2px 4px 4px rgba(0, 0, 0, 0.1));
-`;
+const Bottom = styled.footer`
+  background-color: ${({ theme }) => theme.colors.gray100};
+  padding: 44px 40px 76px 40px;
 
-const ProductCard = styled(Flex)`
-  position: relative;
-  margin-top: 16px;
-  padding-left: 24px;
-`;
-
-const ProductCardBackground = styled.div`
-  width: 100%;
-  height: calc(100% + 48px);
-  padding: 32px 24px;
-  box-sizing: border-box;
-  position: absolute;
-  top: -24px;
-  left: 0px;
-  background-color: ${({ theme }) => theme.colors.gray200};
-  opacity: 0.5;
-  border-radius: 8px;
-  z-index: 992;
+  div + div {
+    margin-top: 20px;
+  }
 `;
