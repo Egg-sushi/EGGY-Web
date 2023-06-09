@@ -79,7 +79,11 @@ export default function SkinTypeTestResultPage() {
               onClick={() => setIsFrontShow((prev) => !prev)}
             />
           </CardWrapper>
-          <Flex justifyContent="space-between" gap={48} style={{ paddingInline: 50 }}>
+          <Flex
+            justifyContent="space-between"
+            gap={48}
+            style={{ paddingInline: 50, marginTop: 40 }}
+          >
             <Button
               variant="filled"
               hierarchy="gray"

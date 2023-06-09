@@ -24,16 +24,6 @@ function SkinTypeDescription({
   onClickShare,
 }: Props) {
   const theme = useTheme();
-  const [isFrontShow, setIsFrontShow] = React.useState<boolean[]>([...tips].map(() => true));
-
-  const handleClickCard = React.useCallback(
-    (idx: number) => {
-      const nextIsFrontShow = [...isFrontShow];
-      nextIsFrontShow[idx] = !nextIsFrontShow[idx];
-      setIsFrontShow(nextIsFrontShow);
-    },
-    [isFrontShow],
-  );
 
   return (
     <Wrapper className={className}>
@@ -44,33 +34,20 @@ function SkinTypeDescription({
       </Text>
       <Flex flexDirection="column" gap={24}>
         {tips.map((tip, idx) => (
-          <FlipCard
-            key={tip.id}
-            height={350}
-            isFrontShow={isFrontShow[idx]}
-            front={
-              <Card isFirst={idx === 0} padding="15px 36px 50px 36px">
-                <FrontImageWrapper>
-                  <FrontImage src={'/peach.png'} width={350} height={200} alt="tip-image" />
-                </FrontImageWrapper>
-                <Flex flexDirection="column" gap={40} marginTop={18}>
-                  <strong style={{ whiteSpace: 'nowrap' }}>{tip.title}</strong>
-                  <span>Read More ≫</span>
-                </Flex>
-              </Card>
-            }
-            back={
-              <Card isFirst={idx === 0} padding="36px">
-                <Text
-                  variant="body1"
-                  fontColor={idx === 0 ? theme.colors.white : theme.colors.black}
-                >
-                  {tip.description}
-                </Text>
-              </Card>
-            }
-            onClick={() => handleClickCard(idx)}
-          />
+          <Card key={idx}>
+            <TipHeader variant="h6" fontColor={theme.colors.primary}>
+              Tip. 0{idx + 1}
+            </TipHeader>
+            <ImageWrapper>
+              <Image src={'/peach.png'} width={316} height={188} alt="tip-image" />
+            </ImageWrapper>
+            <Flex flexDirection="column" gap={30} marginTop={26}>
+              <Text variant="h3" style={{ fontSize: 30 }}>
+                {tip.title}
+              </Text>
+              <Text variant="body1">{tip.description}</Text>
+            </Flex>
+          </Card>
         ))}
       </Flex>
       <ShareButton
@@ -101,38 +78,33 @@ const Wrapper = styled.div`
   }
 `;
 
-const Card = styled.div<{ isFirst: boolean; padding: React.CSSProperties['padding'] }>`
+const Card = styled.div`
   box-sizing: border-box;
-  height: 350px;
   text-align: center;
-  padding: ${({ padding }) => padding};
-  color: ${({ isFirst, theme }) => (isFirst ? theme.colors.white : theme.colors.black)};
-  background-color: ${({ isFirst, theme }) =>
-    isFirst ? theme.colors.blue700 : theme.colors.white};
-  box-shadow: 1px 2px 4px 1px rgba(0, 0, 0, 0.08);
+  padding: 30px 35px 50px 35px;
+  background-color: ${({ theme }) => theme.colors.white};
+  border: ${({ theme }) => `1px solid ${theme.colors.white}`};
   border-radius: 20px;
 
-  // FIXME: TEXT 폰트 재설정
-  strong {
-    font-size: 30px;
-  }
-
-  span {
-    font-size: 20px;
+  img {
+    max-width: 100%;
+    filter: drop-shadow(1px 3px 6px rgba(0, 0, 0, 0.2));
   }
 `;
 
-const FrontImageWrapper = styled.div`
+const TipHeader = styled(Text)`
+  width: fit-content;
+  padding: 4px 12px;
+  margin-inline: auto;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+  border: ${({ theme }) => `1px solid ${theme.colors.blue200}`};
+  border-radius: 10px;
+  background-color: ${({ theme }) => theme.colors.blue50};
+`;
+
+const ImageWrapper = styled.div`
   position: relative;
-
-  &,
-  & > img {
-    filter: drop-shadow(2px 4px 25px rgba(0, 0, 0, 0.24));
-  }
-`;
-
-const FrontImage = styled(Image)`
-  max-width: 100%;
 `;
 
 const ShareButton = styled(Button)`
