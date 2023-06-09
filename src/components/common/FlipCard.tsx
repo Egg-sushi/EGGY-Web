@@ -28,6 +28,7 @@ const CardWrapper = styled.div<Height>`
   width: 100%;
   height: ${({ height }) => (typeof height === 'number' ? `${height}px` : height)};
 `;
+
 type StyleProps = Pick<Props, 'isFrontShow'>;
 const Wrapper = styled.div<StyleProps>`
   width: 100%;
@@ -41,6 +42,7 @@ const Wrapper = styled.div<StyleProps>`
 
 const Card = styled.div<{ isBack?: boolean }>`
   width: 100%;
+  height: 100%;
   position: absolute;
   left: 0;
   -webkit-backface-visibility: hidden;

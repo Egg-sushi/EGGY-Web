@@ -50,7 +50,8 @@ function CharacterCard({ skinType, characterName, tags, isFrontShow, percents, o
           </CharacterHead>
           <CharacterImage>
             <Image
-              src={`/${skinType}.png`}
+              // src={`/${skinType}.png`}
+              src={'/DRPT.png'}
               alt={`skinType-character-image(${characterName})`}
               width={220}
               height={224}
