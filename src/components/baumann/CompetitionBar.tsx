@@ -1,14 +1,26 @@
 import styled from '@emotion/styled';
-import { Text } from '../common';
+import { Icon, Text } from '../common';
 import { Flex } from '../styled';
 import { useTheme } from '@emotion/react';
+import type { SkinTypeTag } from '@/types/baumann';
 
 interface Props {
-  firstItemText: string;
+  firstItemText: SkinTypeTag;
   firstItemValue: number;
-  secondItemText: string;
+  secondItemText: SkinTypeTag;
   secondItemValue: number;
 }
+
+const SkinTypeToIconType: Record<SkinTypeTag, Parameters<typeof Icon>[0]['type']> = {
+  Dry: 'Dry',
+  Oily: 'Oily',
+  Sensitive: 'Sensitive',
+  Resistant: 'Resistant',
+  Pigmented: 'Pigmented',
+  'Non-pigmented': 'NonPigmented',
+  Wrinkle: 'Tight',
+  Tight: 'Tight',
+};
 
 function CompetitionBar({ firstItemText, firstItemValue, secondItemText, secondItemValue }: Props) {
   const theme = useTheme();
@@ -18,15 +30,30 @@ function CompetitionBar({ firstItemText, firstItemValue, secondItemText, secondI
     secondItemValue === 0 ? 0 : (secondItemValue / (firstItemValue + secondItemValue)) * 100;
   const isLeftWin = firstItemValue >= secondItemValue;
 
+  console.log(firstItemText, secondItemText);
   return (
     <Wrapper flexDirection="column">
       <Description justifyContent="space-between">
-        <Text variant="body3" fontColor={isLeftWin ? theme.colors.primary : theme.colors.gray500}>
+        <SkinTypeTag
+          variant="body3"
+          fontColor={isLeftWin ? theme.colors.primary : theme.colors.gray500}
+        >
+          <Icon
+            type={SkinTypeToIconType[firstItemText]}
+            fill={isLeftWin ? theme.colors.blue700 : theme.colors.gray500}
+          />
           {firstItemText}
-        </Text>
-        <Text variant="body3" fontColor={!isLeftWin ? theme.colors.primary : theme.colors.gray500}>
+        </SkinTypeTag>
+        <SkinTypeTag
+          variant="body3"
+          fontColor={!isLeftWin ? theme.colors.primary : theme.colors.gray500}
+        >
           {secondItemText}
-        </Text>
+          <Icon
+            type={SkinTypeToIconType[secondItemText]}
+            fill={!isLeftWin ? theme.colors.blue700 : theme.colors.gray500}
+          />
+        </SkinTypeTag>
       </Description>
       <LeftBar isActive={isLeftWin} rate={firstRate} />
       <RightBar isActive={!isLeftWin} rate={secondRate} />
@@ -92,6 +119,12 @@ const RateWrapper = styled(Text)<{ isLeft?: boolean }>`
   top: 6%;
   z-index: 100;
   left: ${({ isLeft }) => (isLeft ? 'none' : '-16px')};
+`;
+
+const SkinTypeTag = styled(Text)`
+  display: flex;
+  align-items: center;
+  gap: 6px;
 `;
 
 export default CompetitionBar;

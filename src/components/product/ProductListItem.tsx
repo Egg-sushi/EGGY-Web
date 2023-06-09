@@ -45,7 +45,7 @@ function ProductListItem({ product, onClick }: Props) {
 const ProductImage = styled(SkeletonImage)`
   flex-shrink: 0;
   border-radius: 4px;
-  border: ${({ theme }) => `1px solid ${theme.colors.blue150}`};
+  border: ${({ theme }) => `1px solid ${theme.colors.blue200}`};
 `;
 
 const Box = styled(Flex)`

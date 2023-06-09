@@ -51,3 +51,13 @@ export type SkinType =
   | 'ORPT'
   | 'ORNW'
   | 'ORNT';
+
+export type SkinTypeTag =
+  | 'Dry'
+  | 'Oily'
+  | 'Sensitive'
+  | 'Resistant'
+  | 'Pigmented'
+  | 'Non-pigmented'
+  | 'Wrinkle'
+  | 'Tight';

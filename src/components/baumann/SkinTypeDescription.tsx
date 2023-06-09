@@ -1,6 +1,6 @@
 import { SkinType, Tip } from '@/types/baumann';
 import styled from '@emotion/styled';
-import { Button, FlipCard, Text } from '../common';
+import { Button, FlipCard, Icon, Text } from '../common';
 import React from 'react';
 import { useTheme } from '@emotion/react';
 import { Flex } from '../styled';
@@ -73,7 +73,14 @@ function SkinTypeDescription({
           />
         ))}
       </Flex>
-      <ShareButton hierarchy="primary" variant="filled" width={140} onClick={onClickShare}>
+      <ShareButton
+        variant="filled"
+        width={140}
+        onClick={onClickShare}
+        borderRadius={115}
+        style={{ gap: 10 }}
+      >
+        <Icon type="Share" fill={theme.colors.white} />
         Share
       </ShareButton>
     </Wrapper>

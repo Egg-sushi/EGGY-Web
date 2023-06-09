@@ -7,7 +7,7 @@ import useLink from '@/hooks/useLink';
 import { getAnswers, share } from '@/utils';
 import { BASE_FRONT_URL } from '@/constants';
 import { useCalculateSkinTypes } from '@/api/query';
-import { Button, CharacterCard, Flex, Header, SkinTypeDescription, Text } from '@/components';
+import { Button, CharacterCard, Flex, Header, Icon, SkinTypeDescription, Text } from '@/components';
 import Image from 'next/image';
 
 export default function SkinTypeTestResultPage() {
@@ -51,9 +51,24 @@ export default function SkinTypeTestResultPage() {
           {(['green', 'blue', 'white'] as const).map((color) => (
             <BackgroundCircle key={color} color={color} />
           ))}
-          <Text variant="body2" align="center" style={{ paddingTop: 46, zIndex: 95 }}>
-            Tap the card to turn it over
-          </Text>
+          {isFrontShow ? (
+            <TopDescription justifyContent="center" alignItems="center" gap={8}>
+              <Icon type="Down" fill={theme.colors.gray500} />
+              <Text variant="body2">Tap the card to turn it over</Text>
+            </TopDescription>
+          ) : (
+            <TopDescription
+              justifyContent="center"
+              alignItems="center"
+              gap={8}
+              onClick={() => link.to('skinTypeTestIntro')}
+            >
+              <Icon type="Refresh" fill={theme.colors.primary} />
+              <Text variant="body2" fontColor={theme.colors.primary}>
+                Try agin
+              </Text>
+            </TopDescription>
+          )}
           <CardWrapper>
             <CharacterCard
               isFrontShow={isFrontShow}
@@ -66,14 +81,22 @@ export default function SkinTypeTestResultPage() {
           </CardWrapper>
           <Flex justifyContent="space-between" gap={48} style={{ paddingInline: 50 }}>
             <Button
-              variant="outlined"
-              hierarchy="primary"
+              variant="filled"
+              hierarchy="gray"
               onClick={handleClickResetButton}
               borderRadius={24}
+              style={{ gap: 10 }}
             >
+              <Icon type="Review" fill={theme.colors.white} />
               Retry
             </Button>
-            <Button variant="filled" onClick={handleClickShareButton} borderRadius={24}>
+            <Button
+              variant="filled"
+              onClick={handleClickShareButton}
+              borderRadius={24}
+              style={{ gap: 10 }}
+            >
+              <Icon type="Share" fill={theme.colors.white} />
               Share
             </Button>
           </Flex>
@@ -126,6 +149,11 @@ export default function SkinTypeTestResultPage() {
 const Wrapper = styled(Flex)`
   position: relative;
   overflow: hidden;
+`;
+
+const TopDescription = styled(Flex)`
+  padding-top: 46px;
+  z-index: 95;
 `;
 
 const ColorStyle = {
