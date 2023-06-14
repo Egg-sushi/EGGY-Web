@@ -1,3 +1,4 @@
+import { SkinTypeInfo } from '@/api/service/SkinTypeService';
 import type { BaumannAnswer, BaumannQuestion, SkinType, Tip } from '../baumann';
 
 export interface BaumannResultResponse {
@@ -13,13 +14,7 @@ export interface BaumannResultResponse {
     T: number;
   };
   tips: Tip[];
-  info: {
-    id: number;
-    title: SkinType;
-    description: string;
-    characterName: string;
-    hashTags: string;
-  };
+  info: SkinTypeInfo;
 }
 
 type BaumannQuestionImageResponse = {

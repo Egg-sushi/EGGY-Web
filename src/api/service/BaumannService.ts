@@ -39,6 +39,13 @@ class BaumannService extends HTTPInterface {
       .catch(HTTPInterface._handleError);
   }
 
+  public getAllResult(): Promise<Omit<BaumannResultResponse, 'percents'>[]> {
+    return this.baseHTTP
+      .get('result/list')
+      .then(HTTPInterface._handleResponse)
+      .catch(HTTPInterface._handleError);
+  }
+
   public modifyBaumannQNAImage(data: BaumannImage): Promise<BaumannImageResponse> {
     const formData = new FormData();
     formData.append('image', data.image);
