@@ -54,6 +54,7 @@ function CharacterCard({ skinType, characterName, tags, isFrontShow, percents, o
               alt={`skinType-character-image(${characterName})`}
               width={220}
               height={224}
+              style={{ objectFit: 'contain' }}
             />
           </CharacterImage>
           <TagsWrapper gap={10} flexWrap="wrap">

@@ -39,7 +39,7 @@ function SkinTypeDescription({
               Tip. 0{idx + 1}
             </TipHeader>
             <ImageWrapper>
-              <Image src={'/peach.png'} width={316} height={188} alt="tip-image" />
+              <Image src={tip.imageUrl} width={316} height={188} alt="tip-image" />
             </ImageWrapper>
             <Flex flexDirection="column" gap={30} marginTop={26}>
               <Text variant="h3" style={{ fontSize: 30 }}>
