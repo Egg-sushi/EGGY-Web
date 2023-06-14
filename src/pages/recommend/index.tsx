@@ -9,6 +9,7 @@ import { ProductService } from '@/api/service';
 import { SKINTYPE_LIST, isSkinType } from '@/utils';
 import { useUserSkinType } from '@/api/query/userQuery';
 import { Button, CircleCheckBox, Flex, Header, SelectOption, Text, Title } from '@/components';
+import { atLeastPromiseTime } from '@/utils/time';
 
 const Recommend = ['Find your cosmetic', 'Is good for your skin?'];
 
@@ -24,8 +25,11 @@ export default function RecommendPage() {
 
   const handleClickRecommendButton = React.useCallback(async () => {
     try {
-      const res = await ProductService.getRecommendCosmeticBySkinType(skinType);
-      console.log(res);
+      const res = await atLeastPromiseTime(
+        () => ProductService.getRecommendCosmeticBySkinType(skinType),
+        3000,
+      );
+      console.log('res', res);
     } catch (err) {
       alert('WE CAN`T FIND COSMETIC FOR YOU');
     }
