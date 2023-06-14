@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import styled from '@emotion/styled';
@@ -10,7 +10,16 @@ import { ProductService } from '@/api/service';
 import { atLeastPromiseTime } from '@/utils/time';
 import { SKINTYPE_LIST, isSkinType } from '@/utils';
 import { useUserSkinType } from '@/api/query/userQuery';
-import { Button, CircleCheckBox, Flex, Header, SelectOption, Text, Title } from '@/components';
+import {
+  Button,
+  CircleCheckBox,
+  Flex,
+  FullCoverSpinner,
+  Header,
+  SelectOption,
+  Text,
+  Title,
+} from '@/components';
 
 const Recommend = ['Find your cosmetic', 'Is good for your skin?'];
 
@@ -18,6 +27,7 @@ export default function RecommendPage() {
   const link = useLink();
   const { data: userSkinTypeData } = useUserSkinType();
   const [skinType, setSkinType] = React.useState<SkinType>(userSkinTypeData?.skinType ?? 'DRNT');
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   const handleChangeOptionChange = React.useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
     if (isSkinType(e.target.value)) {
@@ -27,11 +37,13 @@ export default function RecommendPage() {
 
   const handleClickRecommendButton = React.useCallback(async () => {
     try {
+      setIsLoading(true);
       const res = await atLeastPromiseTime(
         () => ProductService.getRecommendCosmeticBySkinType(skinType),
-        3000,
+        4000,
       );
       if (res.id) {
+        setIsLoading(false);
         link.to('productItem', String(res.id));
       }
     } catch (err) {
@@ -48,6 +60,7 @@ export default function RecommendPage() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
+      {isLoading && <FullCoverSpinner />}
       <Wrapper as={'section'} flexDirection="column" justifyContent="space-evenly">
         <Title
           size="lg"
