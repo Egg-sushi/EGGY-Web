@@ -4,16 +4,18 @@ import Image from 'next/image';
 import styled from '@emotion/styled';
 
 import { theme } from '@/theme';
+import { useLink } from '@/hooks';
 import { SkinType } from '@/types/baumann';
 import { ProductService } from '@/api/service';
+import { atLeastPromiseTime } from '@/utils/time';
 import { SKINTYPE_LIST, isSkinType } from '@/utils';
 import { useUserSkinType } from '@/api/query/userQuery';
 import { Button, CircleCheckBox, Flex, Header, SelectOption, Text, Title } from '@/components';
-import { atLeastPromiseTime } from '@/utils/time';
 
 const Recommend = ['Find your cosmetic', 'Is good for your skin?'];
 
 export default function RecommendPage() {
+  const link = useLink();
   const { data: userSkinTypeData } = useUserSkinType();
   const [skinType, setSkinType] = React.useState<SkinType>(userSkinTypeData?.skinType ?? 'DRNT');
 
@@ -29,11 +31,13 @@ export default function RecommendPage() {
         () => ProductService.getRecommendCosmeticBySkinType(skinType),
         3000,
       );
-      console.log('res', res);
+      if (res.id) {
+        link.to('productItem', String(res.id));
+      }
     } catch (err) {
       alert('WE CAN`T FIND COSMETIC FOR YOU');
     }
-  }, [skinType]);
+  }, [link, skinType]);
 
   return (
     <>

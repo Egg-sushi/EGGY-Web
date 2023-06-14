@@ -12,7 +12,7 @@ function sleep(time: number) {
   return new Promise((resolve) => setTimeout(resolve, time));
 }
 
-export const atLeastPromiseTime = async (callback: () => Promise<Product>, time: number) => {
+export const atLeastPromiseTime = async <T>(callback: () => Promise<T>, time: number) => {
   await sleep(time);
   const result = await callback();
   return result;

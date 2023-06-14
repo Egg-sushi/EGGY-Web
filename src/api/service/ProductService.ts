@@ -55,7 +55,7 @@ class ProductService extends HTTPInterface {
       .catch(HTTPInterface._handleError);
   }
 
-  public getRecommendCosmeticBySkinType(skinType: SkinType): Promise<Product> {
+  public getRecommendCosmeticBySkinType(skinType: SkinType): Promise<Pick<Product, 'id'>> {
     return this.baseHTTP
       .get(`recommend?skinType=${skinType}`)
       .then(HTTPInterface._handleResponse)
