@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import Text from './Text';
 
 interface Props {
+  width?: React.CSSProperties['width'];
   value?: string;
   label?: string;
   optionList: string[];
@@ -9,11 +10,11 @@ interface Props {
 }
 
 function SelectOption(props: Props) {
-  const { value, label, optionList, onChange, ...restProps } = props;
+  const { value, label, optionList, width = '180px', onChange, ...restProps } = props;
   return (
     <Wrapper>
       {label && <Text variant="body5">{label}</Text>}
-      <SelectList value={value} onChange={onChange} {...restProps}>
+      <SelectList value={value} onChange={onChange} width={width} {...restProps}>
         {optionList.map((filter) => (
           <Item key={filter} value={filter}>
             {filter}
@@ -26,7 +27,7 @@ function SelectOption(props: Props) {
 
 const Wrapper = styled.div``;
 
-const SelectList = styled.select`
+const SelectList = styled.select<{ width: Props['width'] }>`
   outline: none;
   cursor: pointer;
   transition: all 0.1s ease-in;
@@ -36,7 +37,7 @@ const SelectList = styled.select`
   -webkit-appearance: none;
   appearance: none;
   /* and then whatever styles you want*/
-  width: 180px;
+  width: ${({ width }) => width};
   padding: 5px;
 `;
 
