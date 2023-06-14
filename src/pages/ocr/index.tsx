@@ -18,36 +18,37 @@ export default function OCRPage() {
 
   const handleChangeFile = React.useCallback(
     async (e: React.ChangeEvent<HTMLInputElement>) => {
-      const files = e.target.files;
-      if (files && files.length > 0) {
-        setIsLoading(true);
-        const file = files[0];
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onloadend = async () => {
-          setImageUrl(reader.result as string);
-          const imageData = reader.result?.toString()?.split(',')[1];
-          if (imageData) {
-            try {
-              const response = await axios.post<{ text: string }>('/api/ocr', { imageData });
-              const product = await ProductService.getSearchProductByTitle(response.data.text);
-              if (product.data.length > 0) {
-                link.to('productItem', `${product.data[4].id}`);
-              } else {
-                alert('Cannot Find Cosmetic');
-                link.to('request');
-              }
-              // TODO: text를 가지고 백엔드에 검색해봐야 함
-            } catch (error) {
-              console.error(error);
-            } finally {
-              setIsLoading(false);
-            }
-          } else {
-            setIsLoading(false);
-          }
-        };
-      }
+      alert('There is no functional support at the moment.');
+      // const files = e.target.files;
+      // if (files && files.length > 0) {
+      //   setIsLoading(true);
+      //   const file = files[0];
+      //   const reader = new FileReader();
+      //   reader.readAsDataURL(file);
+      //   reader.onloadend = async () => {
+      //     setImageUrl(reader.result as string);
+      //     const imageData = reader.result?.toString()?.split(',')[1];
+      //     if (imageData) {
+      //       try {
+      //         const response = await axios.post<{ text: string }>('/api/ocr', { imageData });
+      //         const product = await ProductService.getSearchProductByTitle(response.data.text);
+      //         if (product.data.length > 0) {
+      //           link.to('productItem', `${product.data[4].id}`);
+      //         } else {
+      //           alert('Cannot Find Cosmetic');
+      //           link.to('request');
+      //         }
+      //         // TODO: text를 가지고 백엔드에 검색해봐야 함
+      //       } catch (error) {
+      //         console.error(error);
+      //       } finally {
+      //         setIsLoading(false);
+      //       }
+      //     } else {
+      //       setIsLoading(false);
+      //     }
+      //   };
+      // }
     },
     [link],
   );
