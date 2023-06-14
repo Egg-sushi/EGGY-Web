@@ -10,6 +10,7 @@ import { SkeletonImage } from '../common';
 interface Props {
   baumann: {
     id: BaumannQuestion['id'];
+    subStepIndex: number;
     question: BaumannQuestion['question'];
     imageUrl: BaumannQuestion['imageUrl'];
     answers: BaumannQNA['Baumann_Answer'];
@@ -29,7 +30,7 @@ function BaumannGRIDPICTUREType({ baumann, activeAnswer, onClickItem }: Props) {
     <Wrapper flexDirection="column" gap={54}>
       <Flex flexDirection="column" gap={10}>
         <Text variant="h3" fontColor={theme.colors.gray400}>
-          Q4
+          Q{baumann.subStepIndex}
         </Text>
         <Question
           variant="h4"
@@ -45,7 +46,12 @@ function BaumannGRIDPICTUREType({ baumann, activeAnswer, onClickItem }: Props) {
             isActive={activeAnswer === answer}
             onClick={(e) => onClickItem(answer, e)}
           >
-            <SkeletonImage src={answer.imageUrl} alt={answer.answer} height={94} />
+            <SkeletonImage
+              src={answer.imageUrl}
+              alt={answer.answer}
+              height={94}
+              objectFit="contain"
+            />
             <Text variant="body4" fontColor={theme.colors.black} align="center">
               {answer.answer}
             </Text>
