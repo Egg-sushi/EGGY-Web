@@ -1,3 +1,4 @@
+import { SkinType } from '@/types/baumann';
 import HTTPInterface from './core';
 import type { Product, ProductFilter, ResponseProductList, UserFilterList } from '@/types/product';
 
@@ -50,6 +51,13 @@ class ProductService extends HTTPInterface {
   public getAllFilters(): Promise<UserFilterList> {
     return this.baseHTTP
       .get('filter')
+      .then(HTTPInterface._handleResponse)
+      .catch(HTTPInterface._handleError);
+  }
+
+  public getRecommendCosmeticBySkinType(skinType: SkinType): Promise<Pick<Product, 'id'>> {
+    return this.baseHTTP
+      .get(`recommend?skinType=${skinType}`)
       .then(HTTPInterface._handleResponse)
       .catch(HTTPInterface._handleError);
   }

@@ -7,6 +7,7 @@ export type NavigationKey =
   | 'products'
   | 'productItem'
   | 'request'
+  | 'recommend'
   | 'login';
 
 export type DynamicNavigationKey = Extract<NavigationKey, 'productItem'>;
@@ -67,6 +68,11 @@ export const NAVIGATION: NavigationEntries = {
     title: 'Request',
     href: '/products/request',
     header: false,
+  },
+  recommend: {
+    title: 'Recommend',
+    href: '/recommend',
+    header: true,
   },
 } as const;
 

@@ -5,6 +5,25 @@ export function isPriceRangeKey(str: string): str is Product['priceRangeName'] {
   return str === 'LOW' || str === 'MIDDLE' || str === 'HIGH';
 }
 
+export const SKINTYPE_LIST: SkinType[] = [
+  'DSPW',
+  'DSPT',
+  'DSNW',
+  'DSNT',
+  'DRPW',
+  'DRPT',
+  'DRNW',
+  'DRNT',
+  'OSPW',
+  'OSPT',
+  'OSNW',
+  'OSNT',
+  'ORPW',
+  'ORPT',
+  'ORNW',
+  'ORNT',
+];
+
 export function isSkinType(str: string): str is SkinType {
   return (
     str === 'DSPW' ||
