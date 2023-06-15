@@ -11,6 +11,17 @@ function Header() {
   const router = useRouter();
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
+  React.useEffect(() => {
+    if (!isOpen || typeof window === 'undefined') {
+      return undefined;
+    }
+    window.document.body.style.overflow = 'hidden';
+
+    return () => {
+      window.document.body.style.removeProperty('overflow');
+    };
+  }, [isOpen]);
+
   return (
     <Wrapper as={'header'} justifyContent="space-between" alignItems="center">
       <Text
