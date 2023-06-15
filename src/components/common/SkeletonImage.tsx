@@ -3,17 +3,7 @@ import Image from 'next/image';
 import styled from '@emotion/styled';
 import { keyframes } from '@emotion/react';
 
-const EVENT_IMAGE_LOAD = 'event_image_load';
-const THRESHOLD = 0.5;
-
-const onIntersection = (entries: IntersectionObserverEntry[], io: IntersectionObserver) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      io.unobserve(entry.target);
-      entry.target.dispatchEvent(new CustomEvent(EVENT_IMAGE_LOAD));
-    }
-  });
-};
+const EVENT_IMAGE_LOAD = 'load';
 
 type Props = {
   src: string;
@@ -55,13 +45,6 @@ function SkeletonImage(props: Props) {
       return () => {
         imageElement.removeEventListener(EVENT_IMAGE_LOAD, handleLoadImage);
       };
-    }
-  }, [imageRef]);
-
-  React.useEffect(() => {
-    const observer = new IntersectionObserver(onIntersection, { threshold: THRESHOLD });
-    if (imageRef.current) {
-      observer.observe(imageRef.current);
     }
   }, [imageRef]);
 

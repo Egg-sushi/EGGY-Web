@@ -12,7 +12,13 @@ function LandingSkintypeTestSection() {
   return (
     <Wrapper>
       <TopPosition>
-        <SkeletonImage src="/peach.png" alt="character-image" objectFit="contain" width={200} />
+        <SkeletonImage
+          src="/peach.png"
+          alt="character-image"
+          objectFit="contain"
+          width={180}
+          height={216}
+        />
       </TopPosition>
       <BottomPosition>
         <Flex flexDirection="column" alignItems="center" gap="0.5rem">
