@@ -188,7 +188,7 @@ export default function AdminResultPage({ results }: Props) {
             />
             해시태그
             <input
-              value={currentResult.info.hashTags ?? ''}
+              value={currentResult.info?.hashTags ?? ''}
               onChange={(e) => handleChangeInfo(e, 'hashTags')}
               style={{ flex: 1, height: 30 }}
             />

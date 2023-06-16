@@ -72,7 +72,7 @@ export default function SkinTypeTestResultPage() {
           <CardWrapper>
             <CharacterCard
               isFrontShow={isFrontShow}
-              tags={calculatedSkinTypeData.data.info.hashTags.split(' ')}
+              tags={calculatedSkinTypeData.data.info?.hashTags.split(' ')}
               skinType={calculatedSkinTypeData.data.type}
               characterName={calculatedSkinTypeData.data.info.characterName}
               percents={calculatedSkinTypeData.data.percents}
