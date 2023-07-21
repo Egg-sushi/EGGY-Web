@@ -33,6 +33,9 @@ export default function Home() {
         <Background>
           <Image src="/background.png" alt="background" fill />
         </Background>
+        <Noise>
+          <Image src="/noise.png" alt="noise" fill />
+        </Noise>
         <LandingIntroSection />
         <LandingWhatWeDoSection />
         <LandingOurniksPlanetSection />
@@ -55,4 +58,13 @@ const Background = styled.div`
   width: 100%;
   height: 100%;
   z-index: 0;
+`;
+
+const Noise = styled.div`
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 160vh;
+  z-index: 1;
+  opacity: 0.5;
 `;
