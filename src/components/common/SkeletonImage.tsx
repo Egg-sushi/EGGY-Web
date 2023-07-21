@@ -102,7 +102,7 @@ const SkeletonBox = styled.div`
   top: -50%;
   transform: translateY(50%);
   border-radius: 4px;
-  background-color: ${({ theme }) => theme.colors.gray100};
+  background-color: transparent;
 
   &::before {
     content: '';
