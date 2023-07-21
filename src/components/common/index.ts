@@ -9,3 +9,4 @@ export { default as SkeletonImage } from './SkeletonImage';
 export { default as CircleCheckBox } from './CircleCheckBox';
 export { default as GenderInputBox } from './GenderInputBox';
 export { default as FullCoverSpinner } from './FullCoverSpinner';
+export { default as ScrollFadeIn } from './ScrollFadeIn';

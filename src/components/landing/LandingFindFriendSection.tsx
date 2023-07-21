@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Button, SkeletonImage, Text } from '../common';
+import { Button, ScrollFadeIn, SkeletonImage, Text } from '../common';
 import { useTheme } from '@emotion/react';
 import { useLink } from '@/hooks';
 
@@ -7,21 +7,23 @@ function LandingFindFriendSection() {
   const theme = useTheme();
   const link = useLink();
   return (
-    <Wrapper>
-      <SkeletonImage src="/ufo.png" alt="ufo-image" width={220} />
-      <Text variant="h3" fontColor={theme.colors.white} align="center">
-        Find a friend who has the same concerns as you!
-      </Text>
-      <StyledButton
-        variant="filled"
-        hierarchy="primary"
-        onClick={() => link.to('skinTypeTestIntro')}
-      >
-        <Text variant="body1" fontColor={theme.colors.white}>
-          Get Started
+    <ScrollFadeIn>
+      <Wrapper>
+        <SkeletonImage src="/ufo.png" alt="ufo-image" width={220} />
+        <Text variant="h3" fontColor={theme.colors.white} align="center">
+          Find a friend who has the same concerns as you!
         </Text>
-      </StyledButton>
-    </Wrapper>
+        <StyledButton
+          variant="filled"
+          hierarchy="primary"
+          onClick={() => link.to('skinTypeTestIntro')}
+        >
+          <Text variant="body1" fontColor={theme.colors.white}>
+            Get Started
+          </Text>
+        </StyledButton>
+      </Wrapper>
+    </ScrollFadeIn>
   );
 }
 

@@ -1,24 +1,27 @@
 import styled from '@emotion/styled';
-import { SkeletonImage, Text } from '../common';
+import { ScrollFadeIn, SkeletonImage, Text } from '../common';
 import { useTheme } from '@emotion/react';
 
 function LandingOurniksPlanetSection() {
   const theme = useTheme();
   return (
-    <Wrapper>
-      <ImageWrapper>
-        <SkeletonImage src="/planet.png" alt="planet-image" objectFit="fill" />
-      </ImageWrapper>
-      <TextWrapper>
-        <Text variant="h2" fontColor={theme.colors.white}>
-          OURNIKS PLANET
-        </Text>
-        <Text variant="body1" fontColor={theme.colors.white} align="center">
-          There are 16 friends on this planet who have their own personalities and charms. These
-          cute friends have different skin complexes. They all want to get their healthy skin back.
-        </Text>
-      </TextWrapper>
-    </Wrapper>
+    <ScrollFadeIn>
+      <Wrapper>
+        <ImageWrapper>
+          <SkeletonImage src="/planet.png" alt="planet-image" objectFit="fill" />
+        </ImageWrapper>
+        <TextWrapper>
+          <Text variant="h2" fontColor={theme.colors.white}>
+            OURNIKS PLANET
+          </Text>
+          <Text variant="body1" fontColor={theme.colors.white} align="center">
+            There are 16 friends on this planet who have their own personalities and charms. These
+            cute friends have different skin complexes. They all want to get their healthy skin
+            back.
+          </Text>
+        </TextWrapper>
+      </Wrapper>
+    </ScrollFadeIn>
   );
 }
 
