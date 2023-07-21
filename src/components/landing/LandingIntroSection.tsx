@@ -51,7 +51,7 @@ const Wrapper = styled.div`
   justify-content: space-evenly;
 
   position: relative;
-  z-index: 1;
+  z-index: 2;
 
   overflow: hidden;
 `;

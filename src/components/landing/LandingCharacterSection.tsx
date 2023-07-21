@@ -1,8 +1,9 @@
 import styled from '@emotion/styled';
 
 import { css, keyframes } from '@emotion/react';
-import { Button, ScrollFadeIn, SkeletonImage, Text } from '../common';
+import { SkeletonImage } from '../common';
 import { Flex } from '../styled';
+import { useScrollFadeIn } from '@/hooks';
 
 const line1 = ['DSNW', 'ORNT', 'OSNW', 'DSNT', 'DRNW'];
 const line2 = ['DRNT', 'DRPT', 'ORPT', 'OSPW', 'DSPT', 'OSPT'];
@@ -11,83 +12,82 @@ const line3 = ['ORNW', 'OSNT', 'ORPW', 'DRPW', 'DSPW'];
 const speed = 8;
 
 function LandingCharacterSection() {
+  const fadeIn = useScrollFadeIn();
   return (
-    <ScrollFadeIn>
-      <Wrapper>
-        <MarQuee direction="left" speed={speed}>
-          <AnimationWrapper>
-            {line1.map((skintype) => (
-              <ProductImage
-                key={skintype}
-                src={`/${skintype}_Silhouette.png`}
-                alt={`${skintype}_Silhouette`}
-                width={140}
-                height={140}
-              />
-            ))}
-          </AnimationWrapper>
-          <AnimationWrapper>
-            {line1.map((skintype) => (
-              <ProductImage
-                key={`${skintype}-after`}
-                src={`/${skintype}_Silhouette.png`}
-                alt={`${skintype}_Silhouette`}
-                width={140}
-                height={140}
-              />
-            ))}
-          </AnimationWrapper>
-        </MarQuee>
-        <MarQuee direction="right" speed={speed}>
-          <AnimationWrapper>
-            {line2.map((skintype) => (
-              <ProductImage
-                key={skintype}
-                src={`/${skintype}_Silhouette.png`}
-                alt={`${skintype}_Silhouette`}
-                width={140}
-                height={140}
-              />
-            ))}
-          </AnimationWrapper>
-          <AnimationWrapper>
-            {line2.map((skintype) => (
-              <ProductImage
-                key={`${skintype}-after`}
-                src={`/${skintype}_Silhouette.png`}
-                alt={`${skintype}_Silhouette`}
-                width={140}
-                height={140}
-              />
-            ))}
-          </AnimationWrapper>
-        </MarQuee>
-        <MarQuee direction="left" speed={speed}>
-          <AnimationWrapper>
-            {line3.map((skintype) => (
-              <ProductImage
-                key={skintype}
-                src={`/${skintype}_Silhouette.png`}
-                alt={`${skintype}_Silhouette`}
-                width={140}
-                height={140}
-              />
-            ))}
-          </AnimationWrapper>
-          <AnimationWrapper>
-            {line3.map((skintype) => (
-              <ProductImage
-                key={`${skintype}-after`}
-                src={`/${skintype}_Silhouette.png`}
-                alt={`${skintype}_Silhouette`}
-                width={140}
-                height={140}
-              />
-            ))}
-          </AnimationWrapper>
-        </MarQuee>
-      </Wrapper>
-    </ScrollFadeIn>
+    <Wrapper {...fadeIn}>
+      <MarQuee direction="left" speed={speed}>
+        <AnimationWrapper>
+          {line1.map((skintype) => (
+            <ProductImage
+              key={skintype}
+              src={`/${skintype}_Silhouette.png`}
+              alt={`${skintype}_Silhouette`}
+              width={140}
+              height={140}
+            />
+          ))}
+        </AnimationWrapper>
+        <AnimationWrapper>
+          {line1.map((skintype) => (
+            <ProductImage
+              key={`${skintype}-after`}
+              src={`/${skintype}_Silhouette.png`}
+              alt={`${skintype}_Silhouette`}
+              width={140}
+              height={140}
+            />
+          ))}
+        </AnimationWrapper>
+      </MarQuee>
+      <MarQuee direction="right" speed={speed}>
+        <AnimationWrapper>
+          {line2.map((skintype) => (
+            <ProductImage
+              key={skintype}
+              src={`/${skintype}_Silhouette.png`}
+              alt={`${skintype}_Silhouette`}
+              width={140}
+              height={140}
+            />
+          ))}
+        </AnimationWrapper>
+        <AnimationWrapper>
+          {line2.map((skintype) => (
+            <ProductImage
+              key={`${skintype}-after`}
+              src={`/${skintype}_Silhouette.png`}
+              alt={`${skintype}_Silhouette`}
+              width={140}
+              height={140}
+            />
+          ))}
+        </AnimationWrapper>
+      </MarQuee>
+      <MarQuee direction="left" speed={speed}>
+        <AnimationWrapper>
+          {line3.map((skintype) => (
+            <ProductImage
+              key={skintype}
+              src={`/${skintype}_Silhouette.png`}
+              alt={`${skintype}_Silhouette`}
+              width={140}
+              height={140}
+            />
+          ))}
+        </AnimationWrapper>
+        <AnimationWrapper>
+          {line3.map((skintype) => (
+            <ProductImage
+              key={`${skintype}-after`}
+              src={`/${skintype}_Silhouette.png`}
+              alt={`${skintype}_Silhouette`}
+              width={140}
+              height={140}
+            />
+          ))}
+        </AnimationWrapper>
+      </MarQuee>
+    </Wrapper>
   );
 }
 
@@ -105,7 +105,7 @@ const Wrapper = styled.div`
 
   overflow: hidden;
   position: relative;
-  z-index: 1;
+  z-index: 2;
 `;
 
 const ProductImage = styled(SkeletonImage)`

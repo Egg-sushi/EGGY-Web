@@ -1,29 +1,28 @@
 import styled from '@emotion/styled';
-import { Button, ScrollFadeIn, SkeletonImage, Text } from '../common';
+import { Button, SkeletonImage, Text } from '../common';
 import { useTheme } from '@emotion/react';
-import { useLink } from '@/hooks';
+import { useLink, useScrollFadeIn } from '@/hooks';
 
 function LandingFindFriendSection() {
   const theme = useTheme();
   const link = useLink();
+  const fadeIn = useScrollFadeIn();
   return (
-    <ScrollFadeIn>
-      <Wrapper>
-        <SkeletonImage src="/ufo.png" alt="ufo-image" width={220} />
-        <Text variant="h3" fontColor={theme.colors.white} align="center">
-          Find a friend who has the same concerns as you!
+    <Wrapper {...fadeIn}>
+      <SkeletonImage src="/ufo.png" alt="ufo-image" width={220} />
+      <Text variant="h3" fontColor={theme.colors.white} align="center">
+        Find a friend who has the same concerns as you!
+      </Text>
+      <StyledButton
+        variant="filled"
+        hierarchy="primary"
+        onClick={() => link.to('skinTypeTestIntro')}
+      >
+        <Text variant="body1" fontColor={theme.colors.white}>
+          Get Started
         </Text>
-        <StyledButton
-          variant="filled"
-          hierarchy="primary"
-          onClick={() => link.to('skinTypeTestIntro')}
-        >
-          <Text variant="body1" fontColor={theme.colors.white}>
-            Get Started
-          </Text>
-        </StyledButton>
-      </Wrapper>
-    </ScrollFadeIn>
+      </StyledButton>
+    </Wrapper>
   );
 }
 
@@ -40,7 +39,7 @@ const Wrapper = styled.div`
   gap: 80px;
 
   position: relative;
-  z-index: 1;
+  z-index: 2;
 `;
 
 const StyledButton = styled(Button)`

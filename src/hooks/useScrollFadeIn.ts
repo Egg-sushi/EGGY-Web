@@ -1,15 +1,6 @@
-import styled from '@emotion/styled';
 import { useCallback, useEffect, useRef } from 'react';
 
-interface Props {
-  direction?: 'up' | 'down' | 'left' | 'right';
-  duration?: number;
-  delay?: number;
-  once?: boolean;
-  children: React.ReactNode;
-}
-
-function ScrollFadeIn({ direction = 'up', duration = 1, delay = 0, once = true, children }: Props) {
+function useScrollFadeIn(direction = 'up', duration = 1, delay = 0, once = true) {
   const ref = useRef<HTMLDivElement>(null);
 
   const handleDirection = (dir: string) => {
@@ -56,13 +47,10 @@ function ScrollFadeIn({ direction = 'up', duration = 1, delay = 0, once = true, 
 
     return () => observer && observer.disconnect();
   }, [handleScroll]);
-  return (
-    <Wrapper ref={ref} style={{ opacity: 0, transform: handleDirection(direction) }}>
-      {children}
-    </Wrapper>
-  );
+  return {
+    ref,
+    style: { opacity: 0, transform: handleDirection(direction) },
+  };
 }
 
-const Wrapper = styled.div``;
-
-export default ScrollFadeIn;
+export default useScrollFadeIn;
