@@ -25,13 +25,13 @@ function Header() {
   return (
     <Wrapper as={'header'} justifyContent="space-between" alignItems="center">
       <Text
-        variant="h2"
+        variant="h3"
         fontColor={theme.colors.gray400}
         fontFamily="monteserrat"
         role="button"
         onClick={() => router.push('/')}
       >
-        EGGY
+        OURNIKS
       </Text>
       <Icon
         type="menu"
