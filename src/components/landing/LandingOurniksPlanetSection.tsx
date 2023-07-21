@@ -8,7 +8,7 @@ function LandingOurniksPlanetSection() {
     <ScrollFadeIn>
       <Wrapper>
         <ImageWrapper>
-          <SkeletonImage src="/planet.png" alt="planet-image" objectFit="fill" />
+          <SkeletonImage src="/planet.png" alt="planet-image" width={400} />
         </ImageWrapper>
         <TextWrapper>
           <Text variant="h2" fontColor={theme.colors.white}>
