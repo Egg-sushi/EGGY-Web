@@ -5,12 +5,13 @@ import useLink from '@/hooks/useLink';
 import { Header } from '@/components';
 import { getRedirectFlag } from '@/utils';
 import {
-  LandingAboutSkintypeTestSection,
-  LandingAboutUsSection,
-  LandingCosmeticSection,
-  LandingNextSection,
-  LandingSkintypeTestSection,
+  LandingIntroSection,
+  LandingWhatWeDoSection,
+  LandingOurniksPlanetSection,
+  LandingCharacterSection,
+  LandingFindFriendSection,
 } from '@/components/landing';
+import Image from 'next/image';
 
 export default function Home() {
   const link = useLink();
@@ -29,11 +30,17 @@ export default function Home() {
       </Head>
       <Header />
       <Main>
-        <LandingSkintypeTestSection />
-        <LandingAboutSkintypeTestSection />
-        <LandingCosmeticSection />
-        <LandingAboutUsSection />
-        <LandingNextSection />
+        <Background>
+          <Image src="/background.png" alt="background" fill />
+        </Background>
+        <Noise>
+          <Image src="/noise.png" alt="noise" fill />
+        </Noise>
+        <LandingIntroSection />
+        <LandingWhatWeDoSection />
+        <LandingOurniksPlanetSection />
+        <LandingCharacterSection />
+        <LandingFindFriendSection />
       </Main>
     </>
   );
@@ -41,4 +48,23 @@ export default function Home() {
 
 const Main = styled.main`
   scroll-snap-type: y proximity;
+  background-color: ${({ theme }) => theme.colors.black};
+  position: relative;
+`;
+
+const Background = styled.div`
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+`;
+
+const Noise = styled.div`
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 160vh;
+  z-index: 1;
+  opacity: 0.5;
 `;

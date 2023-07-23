@@ -1,5 +1,5 @@
-export { default as LandingAboutSkintypeTestSection } from './LandingAboutSkintypeTestSection';
-export { default as LandingAboutUsSection } from './LandingAboutUsSection';
-export { default as LandingCosmeticSection } from './LandingCosmeticSection';
-export { default as LandingNextSection } from './LandingNextSection';
-export { default as LandingSkintypeTestSection } from './LandingSkintypeTestSection';
+export { default as LandingIntroSection } from './LandingIntroSection';
+export { default as LandingWhatWeDoSection } from './LandingWhatWeDoSection';
+export { default as LandingOurniksPlanetSection } from './LandingOurniksPlanetSection';
+export { default as LandingCharacterSection } from './LandingCharacterSection';
+export { default as LandingFindFriendSection } from './LandingFindFriendSection';
