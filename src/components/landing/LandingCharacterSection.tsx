@@ -9,7 +9,7 @@ const line1 = ['DSNW', 'ORNT', 'OSNW', 'DSNT', 'DRNW'];
 const line2 = ['DRNT', 'DRPT', 'ORPT', 'OSPW', 'DSPT', 'OSPT'];
 const line3 = ['ORNW', 'OSNT', 'ORPW', 'DRPW', 'DSPW'];
 
-const speed = 8;
+const speed = 10;
 
 function LandingCharacterSection() {
   const fadeIn = useScrollFadeIn();
