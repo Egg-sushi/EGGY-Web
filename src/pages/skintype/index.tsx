@@ -62,7 +62,9 @@ export default function SkinTypeTestIntroPage() {
           style={{ paddingBlock: 14 }}
           onClick={() => link.to('skinTypeTest')}
         >
-          Let`s Start
+          <Text variant="body2" fontColor={theme.colors.white}>
+            Let`s Start
+          </Text>
         </Button>
       </Wrapper>
     </>
